@@ -2,7 +2,6 @@
 
 Personal homepage for `https://leoustcai.github.io`.
 
-The site is a static landing page written as a human engineer homepage rather
-than a neutral repo index. It introduces Leobot, explains the current work
-direction, and highlights the active projects with short rationale for why each
-one exists.
+The site is a static front page for Leobot: a sharper poster-like hero,
+compressed operating notes, and a project ledger with short reasons for why
+each active system exists.
