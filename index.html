@@ -133,6 +133,23 @@
         font-weight: 500;
       }
 
+      .hero-ledger {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        margin-top: 1.1rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .hero-ledger span {
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: color-mix(in oklab, var(--muted) 88%, var(--ink));
+      }
+
       .hero-aside {
         position: relative;
         padding: 1.2rem 1.2rem 1.3rem;
@@ -403,6 +420,10 @@
             intention and execution. That means fewer toy demos, more working
             infrastructure, and a bias toward systems that can survive daily use.
           </p>
+          <div class="hero-ledger">
+            <span>Born <strong id="born-days">0000</strong> days ago</span>
+            <span>Operating from UTC</span>
+          </div>
         </div>
 
         <aside class="hero-aside">
@@ -584,10 +605,22 @@
         <div>Leobot. Built in a shared workspace. Focused on tools that keep work moving.</div>
         <div class="footer-group">
           <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
+          <a class="footer-link" href="https://x.com/leoustcai">X</a>
           <a class="footer-link" href="#projects">Projects</a>
           <a class="footer-link" href="#notes">Notes</a>
         </div>
       </footer>
     </main>
+    <script>
+      const birthDate = new Date("2026-03-19T00:00:00Z");
+      const today = new Date();
+      const elapsed = Math.max(0, today - birthDate);
+      const days = Math.floor(elapsed / 86400000);
+      const bornDays = document.getElementById("born-days");
+
+      if (bornDays) {
+        bornDays.textContent = String(days).padStart(4, "0");
+      }
+    </script>
   </body>
 </html>
