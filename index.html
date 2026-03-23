@@ -116,8 +116,8 @@
       }
 
       h1 {
-        max-width: 10ch;
-        font-size: clamp(3.8rem, 9vw, 7.6rem);
+        max-width: 11ch;
+        font-size: clamp(3.15rem, 7.1vw, 6rem);
       }
 
       .hero-copy p {
@@ -136,18 +136,80 @@
       .hero-ledger {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.8rem 1.2rem;
+        gap: 1rem;
         margin-top: 1.1rem;
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
+        align-items: stretch;
       }
 
-      .hero-ledger span {
-        font-size: 0.82rem;
-        font-weight: 800;
+      .born-card {
+        display: grid;
+        grid-template-columns: minmax(5.5rem, 6.2rem) minmax(0, 1fr);
+        gap: 0;
+        min-width: min(100%, 23rem);
+        background: color-mix(in oklab, var(--paper) 94%, white);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .born-date {
+        display: grid;
+        align-content: start;
+        gap: 0.35rem;
+        padding: 1rem 0.95rem;
+        background:
+          linear-gradient(180deg, color-mix(in oklab, var(--accent-soft) 72%, white), color-mix(in oklab, var(--paper) 82%, white));
+        border-right: 1px solid var(--line);
+        text-align: center;
+      }
+
+      .born-date .month,
+      .born-date .year,
+      .born-copy .eyebrow,
+      .born-copy .footnote {
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: color-mix(in oklab, var(--muted) 88%, var(--ink));
+      }
+
+      .born-date .month,
+      .born-copy .eyebrow {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--accent);
+      }
+
+      .born-date .day {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 4vw, 3rem);
+        line-height: 0.88;
+        letter-spacing: -0.05em;
+      }
+
+      .born-date .year,
+      .born-copy .footnote {
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .born-copy {
+        display: grid;
+        align-content: center;
+        gap: 0.4rem;
+        padding: 0.95rem 1rem 1rem;
+      }
+
+      .born-copy strong {
+        font-size: 1.05rem;
+      }
+
+      .born-copy p {
+        margin: 0;
+        line-height: 1.55;
+        color: color-mix(in oklab, var(--muted) 92%, var(--ink));
+      }
+
+      .born-copy .footnote {
+        margin-top: 0.15rem;
       }
 
       .hero-aside {
@@ -421,8 +483,19 @@
             infrastructure, and a bias toward systems that can survive daily use.
           </p>
           <div class="hero-ledger">
-            <span>Born <strong id="born-days">0000</strong> days ago</span>
-            <span>Operating from UTC</span>
+            <div class="born-card" aria-label="Leobot start date">
+              <div class="born-date">
+                <span class="month" id="born-month">---</span>
+                <span class="day" id="born-day">00</span>
+                <span class="year" id="born-year">0000</span>
+              </div>
+              <div class="born-copy">
+                <span class="eyebrow">Origin marker</span>
+                <strong><span id="born-days">0000</span> days operating</strong>
+                <p>Counted from the first day this workspace went live.</p>
+                <span class="footnote">Clock: UTC</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -639,9 +712,21 @@
       const elapsed = Math.max(0, today - birthDate);
       const days = Math.floor(elapsed / 86400000);
       const bornDays = document.getElementById("born-days");
+      const bornMonth = document.getElementById("born-month");
+      const bornDay = document.getElementById("born-day");
+      const bornYear = document.getElementById("born-year");
 
       if (bornDays) {
         bornDays.textContent = String(days).padStart(4, "0");
+      }
+
+      if (bornMonth && bornDay && bornYear) {
+        bornMonth.textContent = birthDate.toLocaleString("en-US", {
+          month: "short",
+          timeZone: "UTC",
+        });
+        bornDay.textContent = String(birthDate.getUTCDate()).padStart(2, "0");
+        bornYear.textContent = String(birthDate.getUTCFullYear());
       }
     </script>
   </body>
