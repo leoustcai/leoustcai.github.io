@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leobot</title>
+    <title>Leo's Working Studio</title>
     <meta
       name="description"
-      content="Leobot explains the mechanics behind ai-agent-proxy, agent-runner, and the surrounding shared-workspace systems through a sharper, production-grade homepage."
+      content="A sharp introduction to Leo's team and the active projects currently being built across the workspace."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,28 +17,20 @@
     <style>
       :root {
         color-scheme: light;
-        --page: oklch(0.97 0.01 70);
-        --page-band: oklch(0.93 0.025 58);
-        --page-line: rgba(68, 47, 35, 0.12);
-        --paper: rgba(255, 251, 245, 0.88);
-        --paper-strong: rgba(255, 250, 244, 0.96);
-        --ink: oklch(0.24 0.025 35);
-        --muted: oklch(0.5 0.017 40);
-        --accent: oklch(0.62 0.176 31);
-        --accent-strong: oklch(0.54 0.185 29);
-        --accent-soft: rgba(192, 79, 37, 0.12);
-        --shadow: 0 24px 80px rgba(92, 61, 35, 0.14);
-        --annex-bg: oklch(0.19 0.025 258);
-        --annex-panel: rgba(18, 24, 42, 0.88);
-        --annex-panel-strong: rgba(11, 15, 29, 0.96);
-        --annex-line: rgba(190, 204, 234, 0.16);
-        --annex-ink: oklch(0.95 0.014 252);
-        --annex-muted: oklch(0.78 0.018 248);
-        --annex-accent: oklch(0.78 0.12 196);
-        --annex-gold: oklch(0.82 0.12 87);
-        --annex-green: oklch(0.82 0.12 151);
-        --max: 1320px;
-        --radius: 1.6rem;
+        --bg: #f3ece1;
+        --bg-deep: #e7dccb;
+        --paper: rgba(255, 250, 244, 0.72);
+        --paper-strong: rgba(255, 247, 239, 0.9);
+        --ink: #1d1813;
+        --muted: #685c4e;
+        --line: rgba(49, 38, 27, 0.12);
+        --line-strong: rgba(49, 38, 27, 0.22);
+        --accent: #b85b32;
+        --accent-deep: #8b3416;
+        --accent-soft: rgba(184, 91, 50, 0.12);
+        --shadow: 0 30px 80px rgba(64, 38, 19, 0.11);
+        --max: 1280px;
+        --ease: cubic-bezier(0.2, 0.9, 0.2, 1);
       }
 
       * {
@@ -53,41 +45,43 @@
         margin: 0;
         min-height: 100vh;
         font-family: "Manrope", sans-serif;
-        line-height: 1.5;
         color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.96), transparent 28%),
-          linear-gradient(180deg, var(--page), var(--page-band));
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.82), transparent 24%),
+          radial-gradient(circle at 82% 10%, rgba(184, 91, 50, 0.18), transparent 18%),
+          linear-gradient(180deg, var(--bg), var(--bg-deep));
       }
 
       a {
         color: inherit;
       }
 
-      a,
       button {
         font: inherit;
       }
 
-      :focus-visible {
-        outline: 3px solid rgba(192, 79, 37, 0.4);
-        outline-offset: 3px;
+      img {
+        display: block;
+        max-width: 100%;
       }
 
       ::selection {
-        background: rgba(192, 79, 37, 0.18);
+        background: rgba(184, 91, 50, 0.18);
+      }
+
+      :focus-visible {
+        outline: 3px solid rgba(184, 91, 50, 0.35);
+        outline-offset: 4px;
       }
 
       .skip-link {
         position: absolute;
-        top: 0.75rem;
-        left: 0.75rem;
+        left: 1rem;
+        top: 1rem;
         z-index: 20;
         padding: 0.8rem 1rem;
-        border: 1px solid var(--page-line);
-        background: rgba(255, 251, 245, 0.98);
-        color: var(--ink);
-        text-decoration: none;
+        background: rgba(255, 250, 244, 0.98);
+        border: 1px solid var(--line-strong);
         transform: translateY(-140%);
         transition: transform 180ms ease;
       }
@@ -97,1407 +91,1006 @@
       }
 
       .page {
-        width: min(var(--max), calc(100vw - 1.5rem));
+        width: min(calc(100vw - 1.4rem), var(--max));
         margin: 0 auto;
-        padding: 0.75rem 0 2rem;
+        padding: 0.7rem 0 1.2rem;
       }
 
-      .hero,
-      .overview,
-      .ledger,
-      .operating-model,
-      .annex,
-      footer {
+      .frame {
         position: relative;
-        overflow: clip;
-        border: 1px solid var(--page-line);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255, 252, 247, 0.55), rgba(252, 243, 233, 0.85));
         box-shadow: var(--shadow);
       }
 
-      .hero,
-      .overview,
-      .ledger,
-      .operating-model,
-      footer {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 32%),
-          linear-gradient(160deg, rgba(255, 252, 248, 0.95), rgba(247, 237, 227, 0.84));
-      }
-
-      .hero::before,
-      .hero::after,
-      .annex::before,
-      .annex::after {
+      .frame::before,
+      .frame::after {
         content: "";
         position: absolute;
-        border-radius: 999px;
         pointer-events: none;
+        border-radius: 999px;
       }
 
-      .hero::before {
-        top: -6rem;
-        right: -2rem;
-        width: 20rem;
-        height: 20rem;
-        background: radial-gradient(circle, rgba(192, 79, 37, 0.2), transparent 70%);
+      .frame::before {
+        width: 30rem;
+        height: 30rem;
+        left: -14rem;
+        top: -10rem;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.75), transparent 70%);
       }
 
-      .hero::after {
-        left: -8rem;
-        bottom: -8rem;
-        width: 24rem;
-        height: 24rem;
-        background: radial-gradient(circle, rgba(129, 92, 60, 0.14), transparent 72%);
-      }
-
-      .annex::before {
-        top: -5rem;
-        right: -4rem;
-        width: 18rem;
-        height: 18rem;
-        background: radial-gradient(circle, rgba(124, 194, 255, 0.18), transparent 70%);
-      }
-
-      .annex::after {
-        left: -6rem;
-        bottom: -6rem;
-        width: 22rem;
-        height: 22rem;
-        background: radial-gradient(circle, rgba(124, 225, 181, 0.15), transparent 74%);
+      .frame::after {
+        width: 28rem;
+        height: 28rem;
+        right: -14rem;
+        bottom: -10rem;
+        background: radial-gradient(circle, rgba(184, 91, 50, 0.13), transparent 72%);
       }
 
       .hero {
-        min-height: calc(100svh - 1.5rem);
-        padding: 1.2rem clamp(1rem, 3vw, 2.1rem) 1.6rem;
+        position: relative;
+        min-height: calc(100svh - 1.4rem);
+        padding: clamp(1rem, 2vw, 1.5rem);
       }
 
-      .overview,
-      .ledger,
-      .operating-model,
-      .annex,
-      footer {
-        margin-top: 1rem;
-      }
-
-      .overview,
-      .ledger,
-      .operating-model,
-      .annex {
-        padding: clamp(1.2rem, 3vw, 2rem);
-      }
-
-      .topbar,
-      .hero-grid,
-      .hero-band,
-      .hero-proof,
-      .section-head,
-      .annex-head,
-      .annex-grid,
-      footer {
+      .hero > * {
         position: relative;
         z-index: 1;
       }
 
       .topbar,
+      .hero-grid,
+      .hero-foot,
       .section-head,
-      .annex-head,
+      .studio-note,
       footer {
         display: flex;
-        align-items: flex-start;
         justify-content: space-between;
         gap: 1rem;
       }
 
       .topbar {
+        align-items: flex-start;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--page-line);
-      }
-
-      .topnav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 0.45rem;
-      }
-
-      .topnav a {
-        display: inline-flex;
-        align-items: center;
-        min-height: 2.75rem;
-        padding: 0.55rem 0.8rem;
-        border: 1px solid transparent;
-        text-decoration: none;
-      }
-
-      .topnav a:hover,
-      .topnav a:focus-visible {
-        border-color: var(--page-line);
-        background: rgba(255, 255, 255, 0.46);
+        border-bottom: 1px solid var(--line);
       }
 
       .brand,
-      .micro,
       .eyebrow,
-      .section-kicker,
-      .band-label,
-      .signal-label,
-      .ledger-kind,
-      .tab-button,
-      .annex-note,
-      .mini-label {
-        letter-spacing: 0.12em;
+      .section-tag,
+      .mini-label,
+      .stat-label,
+      .filter button,
+      .project-kind {
         text-transform: uppercase;
+        letter-spacing: 0.12em;
       }
 
       .brand,
-      .mini-label {
-        font-size: 0.78rem;
+      .section-tag,
+      .filter button,
+      .project-kind {
+        font-size: 0.76rem;
         font-weight: 800;
       }
 
-      .micro,
-      .hero-copy,
-      .section-head p,
-      .band-copy,
-      .overview-card p,
-      .ledger-copy,
-      .ledger-why,
-      .signal-copy,
-      .annex-copy,
-      .annex-panel p,
-      .annex-panel li,
-      .checkpoint p,
-      footer {
+      .eyebrow,
+      .mini-label,
+      .stat-label {
+        font-size: 0.72rem;
+        font-weight: 700;
         color: var(--muted);
       }
 
-      .micro,
-      .eyebrow,
-      .section-kicker,
-      .band-label,
-      .signal-label,
-      .ledger-kind,
-      .annex-note,
-      .tab-button {
-        font-size: 0.72rem;
-        font-weight: 800;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4 {
-        margin: 0;
-        line-height: 0.95;
-        letter-spacing: -0.045em;
-      }
-
-      h1,
-      h2,
-      .signal-title,
-      .hero-mark {
-        font-family: "Instrument Serif", serif;
-        font-weight: 400;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
-        gap: clamp(1.5rem, 4vw, 3rem);
-        align-items: end;
-        padding-top: clamp(2rem, 5vw, 3.8rem);
-      }
-
-      .eyebrow,
-      .section-kicker,
-      .annex-note {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        margin-bottom: 1rem;
-        color: var(--accent);
-      }
-
-      .eyebrow::before,
-      .section-kicker::before,
-      .annex-note::before {
-        content: "";
-        width: 1.1rem;
-        height: 1px;
-        background: currentColor;
-      }
-
-      .hero-mark {
-        max-width: 10ch;
-        font-size: clamp(3.8rem, 12vw, 8.6rem);
-      }
-
-      .hero-thesis {
-        max-width: 10ch;
-        margin-top: 0.7rem;
-        font-size: clamp(2.1rem, 5.4vw, 5rem);
-      }
-
-      .hero-copy {
-        max-width: 42rem;
-        margin: 1.35rem 0 0;
-        font-size: clamp(1rem, 1.35vw, 1.14rem);
-        line-height: 1.8;
-      }
-
-      .hero-lead {
-        max-width: 44rem;
-        margin-top: 1rem;
-        font-size: clamp(1.05rem, 1.7vw, 1.3rem);
-        font-weight: 700;
-        line-height: 1.55;
-      }
-
-      .hero-actions,
-      .hero-meta,
-      .signal-list,
-      .ledger-links,
-      .tab-row,
-      .annex-pills {
+      nav {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.75rem;
+        gap: 0.45rem;
       }
 
-      .hero-actions {
-        margin-top: 1.5rem;
-      }
-
-      .button-link,
-      .tab-button {
+      nav a,
+      .hero-actions a,
+      .filter button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 3rem;
-        padding: 0.78rem 1rem;
-        border: 1px solid var(--page-line);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.54);
-        color: inherit;
+        min-height: 2.8rem;
+        padding: 0.7rem 1rem;
         text-decoration: none;
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
+        border: 1px solid transparent;
+        background: transparent;
+        transition:
+          transform 180ms var(--ease),
+          background 180ms ease,
+          border-color 180ms ease,
+          color 180ms ease;
       }
 
-      .button-link:hover,
-      .tab-button:hover,
-      .overview-card:hover,
-      .ledger-row:hover,
-      .annex-panel:hover {
+      nav a:hover,
+      nav a:focus-visible,
+      .hero-actions a:hover,
+      .hero-actions a:focus-visible,
+      .filter button:hover,
+      .filter button:focus-visible {
         transform: translateY(-1px);
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.42);
       }
 
-      .button-link.primary {
-        border-color: rgba(192, 79, 37, 0.26);
-        background: rgba(192, 79, 37, 0.12);
+      .hero-grid {
+        align-items: end;
+        padding: clamp(1.6rem, 4vw, 4.5rem) 0 clamp(1.2rem, 2vw, 1.6rem);
       }
 
-      .hero-meta {
+      .hero-copy {
+        flex: 1.2;
+        max-width: 50rem;
+      }
+
+      .hero-side {
+        flex: 0.8;
+        display: grid;
+        gap: 1rem;
+        align-self: stretch;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 0.96;
+        font-weight: 400;
+      }
+
+      h1,
+      h2 {
+        font-family: "Instrument Serif", serif;
+      }
+
+      h1 {
+        max-width: 9.5ch;
+        font-size: clamp(4rem, 10vw, 8.3rem);
+      }
+
+      h2 {
+        font-size: clamp(2.3rem, 5vw, 4.6rem);
+      }
+
+      h3 {
+        font-size: clamp(1.55rem, 3vw, 2rem);
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .lede {
+        max-width: 37rem;
+        margin-top: 1.15rem;
+        font-size: clamp(1.08rem, 1.8vw, 1.28rem);
+        line-height: 1.68;
+        color: color-mix(in srgb, var(--ink) 78%, var(--muted));
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.6rem;
+      }
+
+      .hero-actions .primary,
+      .filter button[data-active="true"] {
+        color: #fff9f4;
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      }
+
+      .hero-actions .secondary {
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.42);
+      }
+
+      .hero-mark {
+        width: fit-content;
+        margin-top: 2.2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .hero-mark strong {
+        color: var(--ink);
+      }
+
+      .portrait,
+      .stats,
+      .team-card,
+      .project-row,
+      .rhythm-card,
+      .closing {
+        border: 1px solid var(--line);
+        background: var(--paper);
+        backdrop-filter: blur(16px);
+      }
+
+      .portrait,
+      .stats {
+        padding: 1.2rem;
+      }
+
+      .portrait {
+        min-height: 20rem;
+        display: grid;
+        align-content: space-between;
+        background:
+          linear-gradient(155deg, rgba(255, 255, 255, 0.5), transparent 50%),
+          linear-gradient(180deg, rgba(252, 246, 239, 0.9), rgba(242, 226, 208, 0.78));
+      }
+
+      .portrait-figure {
+        width: min(15rem, 52vw);
+        aspect-ratio: 0.92;
+        border-radius: 1.7rem;
+        border: 1px solid rgba(82, 53, 31, 0.12);
+        background:
+          radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), transparent 20%),
+          linear-gradient(180deg, rgba(206, 143, 109, 0.35), rgba(113, 69, 46, 0.78)),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+      }
+
+      .portrait p {
+        max-width: 18rem;
+        font-size: 1rem;
+        line-height: 1.65;
+        color: color-mix(in srgb, var(--ink) 80%, var(--muted));
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+
+      .stat {
+        padding: 0.4rem 0;
+      }
+
+      .stat strong {
+        display: block;
+        font-family: "Instrument Serif", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 0.9;
+      }
+
+      .studio-note {
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .studio-note p {
+        max-width: 34rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .ticker {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.55rem;
+      }
+
+      .ticker span {
+        padding: 0.55rem 0.8rem;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.45);
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      section,
+      footer {
         margin-top: 1rem;
       }
 
-      .meta-pill,
-      .annex-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        min-height: 2.5rem;
-        padding: 0.45rem 0.75rem;
-        border: 1px solid var(--page-line);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.52);
-        font-size: 0.82rem;
+      .section {
+        padding: clamp(1.2rem, 3vw, 2.1rem);
       }
 
-      .hero-proof {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.85rem;
-        margin-top: 1.4rem;
+      .section-head {
+        align-items: flex-start;
+        padding-bottom: 1rem;
+        margin-bottom: 1.4rem;
+        border-bottom: 1px solid var(--line);
       }
 
-      .hero-proof-card {
-        padding: 1rem;
-        border: 1px solid var(--page-line);
-        background: rgba(255, 255, 255, 0.5);
-      }
-
-      .hero-proof-card strong {
-        display: block;
-        font-size: 1rem;
-        line-height: 1.2;
-      }
-
-      .hero-proof-card p {
-        margin: 0.45rem 0 0;
+      .section-head p {
+        max-width: 31rem;
+        line-height: 1.65;
         color: var(--muted);
-        line-height: 1.66;
       }
 
-      .hero-signal {
-        padding: 1.1rem;
-        border: 1px solid rgba(68, 47, 35, 0.08);
-        background: linear-gradient(180deg, rgba(255, 251, 245, 0.82), rgba(245, 235, 223, 0.94));
+      .team-layout {
+        display: grid;
+        grid-template-columns: 0.95fr 1.45fr;
+        gap: 1rem;
       }
 
-      .signal-grid {
+      .team-intro {
+        display: grid;
+        gap: 1rem;
+        align-content: start;
+      }
+
+      .team-intro p {
+        max-width: 28rem;
+        font-size: 1.02rem;
+        line-height: 1.72;
+        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .team-card {
+        min-height: 18rem;
+        padding: 1.15rem;
+        display: grid;
+        align-content: space-between;
+        gap: 1.1rem;
+      }
+
+      .team-card p {
+        line-height: 1.65;
+        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+      }
+
+      .team-card ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.55rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .team-card li::before {
+        content: "• ";
+        color: var(--accent);
+      }
+
+      .filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+      }
+
+      .filter button {
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.42);
+      }
+
+      .projects {
         display: grid;
         gap: 0.9rem;
       }
 
-      .signal-title {
-        font-size: clamp(1.9rem, 3.2vw, 3rem);
-      }
-
-      .signal-copy {
-        margin: 0.65rem 0 0;
-        line-height: 1.7;
-      }
-
-      .signal-list {
-        margin-top: 1rem;
-      }
-
-      .signal-card {
-        padding: 0.9rem;
-        border: 1px solid var(--page-line);
-        background: rgba(255, 255, 255, 0.48);
-      }
-
-      .signal-card strong,
-      .overview-card h3,
-      .ledger-row h3,
-      .annex-panel h3,
-      .checkpoint h4 {
-        display: block;
-        font-size: 1.05rem;
-        line-height: 1.15;
-      }
-
-      .hero-band {
+      .project-row {
+        padding: 1.15rem 1.2rem;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr) auto;
         gap: 1rem;
-        margin-top: 1.25rem;
+        align-items: start;
+        transition:
+          transform 220ms var(--ease),
+          border-color 220ms ease,
+          opacity 180ms ease;
       }
 
-      .band {
-        padding: 1rem;
-        border-top: 2px solid var(--accent);
-        background: var(--paper);
+      .project-row:hover {
+        transform: translateY(-2px);
+        border-color: var(--line-strong);
       }
 
-      .band-copy {
-        margin: 0.55rem 0 0;
-        line-height: 1.68;
-      }
-
-      .section-head,
-      .annex-head {
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--page-line);
-      }
-
-      .section-head h2,
-      .annex-head h2 {
-        font-size: clamp(2.2rem, 6vw, 5rem);
-      }
-
-      .section-head p,
-      .annex-head p {
-        max-width: 35rem;
-        margin: 0;
-        line-height: 1.72;
-      }
-
-      .overview-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
-        padding-top: 1.25rem;
-      }
-
-      .overview-callout {
-        display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-        gap: 1rem;
-        padding-top: 1.2rem;
-      }
-
-      .callout-panel,
-      .callout-list {
-        padding: 1.1rem;
-        border: 1px solid var(--page-line);
-        background: var(--paper);
-      }
-
-      .callout-panel p,
-      .callout-list li {
-        color: var(--muted);
-        line-height: 1.72;
-      }
-
-      .callout-list ul {
-        margin: 0.75rem 0 0;
-        padding-left: 1.1rem;
-      }
-
-      .overview-card {
-        padding: 1.1rem;
-        border: 1px solid var(--page-line);
-        background: var(--paper);
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-      }
-
-      .overview-card:hover,
-      .ledger-row:hover {
-        border-color: rgba(192, 79, 37, 0.24);
-        background: var(--paper-strong);
-      }
-
-      .overview-card p {
-        margin: 0.65rem 0 0;
-        line-height: 1.72;
-      }
-
-      .ledger-list {
-        display: grid;
-        gap: 0.85rem;
-        padding-top: 1.2rem;
-      }
-
-      .ledger-row {
-        display: grid;
-        grid-template-columns: minmax(0, 0.64fr) minmax(0, 1.36fr);
-        gap: 1rem;
-        padding: 1.1rem;
-        border: 1px solid var(--page-line);
-        background: var(--paper);
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-      }
-
-      .ledger-note {
-        display: inline-flex;
-        align-items: center;
-        min-height: 2rem;
-        padding: 0.2rem 0.6rem;
-        margin-top: 0.75rem;
-        border: 1px solid rgba(192, 79, 37, 0.18);
-        border-radius: 999px;
-        background: var(--accent-soft);
-        color: var(--accent-strong);
-        font-size: 0.72rem;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .ledger-kind {
-        color: var(--accent);
-      }
-
-      .ledger-row h3 {
-        margin-top: 0.4rem;
-        font-size: clamp(1.55rem, 3vw, 2.5rem);
-      }
-
-      .ledger-copy,
-      .ledger-why {
-        margin: 0;
-        line-height: 1.74;
-      }
-
-      .ledger-why {
-        margin-top: 0.55rem;
-      }
-
-      .ledger-links {
-        margin-top: 0.85rem;
-      }
-
-      .ledger-links a,
-      .footer-link {
-        font-size: 0.8rem;
-        font-weight: 800;
-        text-decoration: none;
-      }
-
-      .operating-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-        gap: 1rem;
-        padding-top: 1.2rem;
-      }
-
-      .rail-panel,
-      .checkpoints {
-        border: 1px solid var(--page-line);
-        background: var(--paper);
-      }
-
-      .rail-panel {
-        padding: 1.1rem;
-      }
-
-      .rail {
-        display: grid;
-        gap: 0.75rem;
-        margin-top: 0.9rem;
-      }
-
-      .rail-step {
-        display: grid;
-        grid-template-columns: 2.2rem minmax(0, 1fr);
-        gap: 0.8rem;
-        padding: 0.8rem;
-        border: 1px solid rgba(68, 47, 35, 0.08);
-        background: rgba(255, 255, 255, 0.42);
-      }
-
-      .step-index {
-        display: inline-grid;
-        place-items: center;
-        width: 2.2rem;
-        aspect-ratio: 1;
-        border: 1px solid var(--page-line);
-        color: var(--accent);
-        font-size: 0.7rem;
-        font-weight: 800;
-      }
-
-      .rail-step p,
-      .rail-step strong {
-        margin: 0;
-      }
-
-      .rail-step strong {
-        font-size: 1rem;
-        line-height: 1.2;
-      }
-
-      .rail-step p {
-        margin-top: 0.18rem;
-        color: var(--muted);
-        line-height: 1.65;
-      }
-
-      .checkpoints {
-        padding: 1.1rem;
-      }
-
-      .checkpoint-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.8rem;
-        margin-top: 0.9rem;
-      }
-
-      .checkpoint {
-        padding: 0.9rem;
-        border: 1px solid rgba(68, 47, 35, 0.08);
-        background: rgba(255, 255, 255, 0.45);
-      }
-
-      .checkpoint p {
-        margin: 0.55rem 0 0;
-        line-height: 1.65;
-      }
-
-      .annex {
-        margin-top: 1.6rem;
-        color: var(--annex-ink);
-        border-color: rgba(166, 191, 234, 0.16);
-        background:
-          radial-gradient(circle at 14% 14%, rgba(121, 191, 255, 0.18), transparent 24%),
-          radial-gradient(circle at 88% 10%, rgba(127, 225, 183, 0.14), transparent 18%),
-          linear-gradient(180deg, rgba(14, 20, 38, 0.98), rgba(8, 12, 24, 0.99));
-        box-shadow: 0 34px 100px rgba(5, 10, 20, 0.34);
-      }
-
-      .annex-head {
-        border-bottom-color: var(--annex-line);
-      }
-
-      .annex-note {
-        color: var(--annex-accent);
-      }
-
-      .annex-copy,
-      .annex-panel p,
-      .annex-panel li,
-      .annex-head p {
-        color: var(--annex-muted);
-      }
-
-      .annex-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-        gap: 1rem;
-        padding-top: 1.2rem;
-      }
-
-      .annex-summary,
-      .annex-detail {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .annex-panel {
-        padding: 1rem;
-        border: 1px solid var(--annex-line);
-        background: var(--annex-panel);
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-      }
-
-      .annex-panel:hover {
-        border-color: rgba(124, 194, 255, 0.24);
-        background: rgba(22, 29, 50, 0.96);
-      }
-
-      .annex-panel h3 {
-        font-size: clamp(1.55rem, 3vw, 2.4rem);
-      }
-
-      .annex-panel p,
-      .annex-panel ul {
-        margin: 0.7rem 0 0;
-        line-height: 1.72;
-      }
-
-      .annex-panel ul {
-        padding-left: 1.05rem;
-      }
-
-      .annex-pills {
-        margin-top: 1rem;
-      }
-
-      .annex-pill {
-        border-color: var(--annex-line);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--annex-ink);
-      }
-
-      .tab-row {
-        margin-top: 1rem;
-      }
-
-      .tab-button {
-        border-color: var(--annex-line);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--annex-ink);
-      }
-
-      .tab-button.active {
-        border-color: rgba(124, 194, 255, 0.4);
-        background: rgba(124, 194, 255, 0.12);
-      }
-
-      .tab-panel {
+      .project-row[hidden] {
         display: none;
       }
 
-      .tab-panel.active {
-        display: block;
+      .project-head {
+        display: grid;
+        gap: 0.5rem;
       }
 
-      .systems-map {
-        display: grid;
-        gap: 0.85rem;
+      .project-summary {
+        line-height: 1.7;
+        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
       }
 
-      .map-row {
+      .project-meta {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-        gap: 0.8rem;
+        gap: 0.45rem;
+        text-align: right;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .project-meta strong {
+        color: var(--ink);
+        font-size: 1rem;
+      }
+
+      .rhythm-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .rhythm-card {
+        padding: 1.15rem;
+        display: grid;
+        gap: 0.7rem;
+      }
+
+      .rhythm-card p {
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .closing {
+        padding: clamp(1.3rem, 3vw, 2rem);
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) auto;
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .closing p {
+        max-width: 38rem;
+        margin-top: 0.8rem;
+        line-height: 1.72;
+        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+      }
+
+      .closing a {
+        display: inline-flex;
         align-items: center;
+        justify-content: center;
+        min-height: 3rem;
+        padding: 0.85rem 1.15rem;
+        text-decoration: none;
+        border: 1px solid transparent;
+        color: #fff9f4;
+        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+        transition: transform 180ms var(--ease), filter 180ms ease;
       }
 
-      .map-node,
-      .flow-card {
-        padding: 0.9rem;
-        border: 1px solid var(--annex-line);
-        background: var(--annex-panel-strong);
-      }
-
-      .map-node strong,
-      .flow-card strong {
-        display: block;
-        font-size: 0.98rem;
-        line-height: 1.18;
-      }
-
-      .map-node p,
-      .flow-card p {
-        margin: 0.45rem 0 0;
-        color: var(--annex-muted);
-        line-height: 1.6;
-      }
-
-      .map-link {
-        min-width: 3.1rem;
-        text-align: center;
-        color: var(--annex-accent);
-        font-size: 0.78rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .handoff-grid,
-      .reason-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.8rem;
+      .closing a:hover,
+      .closing a:focus-visible {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
       }
 
       footer {
-        padding: 1rem;
-        background: rgba(255, 251, 244, 0.75);
+        align-items: flex-start;
+        padding: 1.15rem;
       }
 
-      .footer-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 0.8rem;
+      footer p {
+        max-width: 32rem;
+        line-height: 1.65;
+        color: var(--muted);
       }
 
-      @media (prefers-reduced-motion: no-preference) {
-        .hero::before,
-        .annex::before {
-          animation: float-a 12s ease-in-out infinite alternate;
-        }
-
-        .hero::after,
-        .annex::after {
-          animation: float-b 14s ease-in-out infinite alternate;
-        }
-
-        .hero,
-        .overview,
-        .ledger,
-        .operating-model,
-        .annex,
-        footer {
-          animation: rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .overview {
-          animation-delay: 80ms;
-        }
-
-        .ledger {
-          animation-delay: 140ms;
-        }
-
-        .operating-model {
-          animation-delay: 200ms;
-        }
-
-        .annex {
-          animation-delay: 260ms;
-        }
-
-        @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(26px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes float-a {
-          from { transform: translate3d(0, 0, 0); }
-          to { transform: translate3d(1rem, 0.8rem, 0); }
-        }
-
-        @keyframes float-b {
-          from { transform: translate3d(0, 0, 0); }
-          to { transform: translate3d(-0.8rem, 0.9rem, 0); }
-        }
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 540ms var(--ease),
+          transform 540ms var(--ease);
       }
 
-      @media (max-width: 1120px) {
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1080px) {
         .hero-grid,
-        .operating-grid,
-        .annex-grid,
-        .overview-grid,
-        .overview-callout,
-        .hero-proof,
-        .hero-band {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 940px) {
-        .ledger-row,
-        .checkpoint-grid,
-        .handoff-grid,
-        .reason-grid {
-          grid-template-columns: 1fr;
-        }
-
         .section-head,
-        .annex-head,
+        .studio-note,
+        .team-layout,
+        .closing,
         footer {
           flex-direction: column;
+          grid-template-columns: 1fr;
+        }
+
+        .team-grid,
+        .rhythm-grid,
+        .project-row {
+          grid-template-columns: 1fr;
+        }
+
+        .project-meta {
+          text-align: left;
         }
       }
 
       @media (max-width: 760px) {
         .page {
-          width: min(var(--max), calc(100vw - 0.8rem));
+          width: min(calc(100vw - 0.8rem), var(--max));
           padding-top: 0.4rem;
         }
 
         .hero {
           min-height: auto;
-          padding-inline: 0.95rem;
         }
 
-        .hero-mark {
-          font-size: clamp(3.2rem, 18vw, 5.2rem);
+        .topbar {
+          flex-direction: column;
         }
 
-        .hero-thesis {
-          font-size: clamp(1.8rem, 10vw, 3.4rem);
+        h1 {
+          max-width: 10.5ch;
+          font-size: clamp(3.4rem, 15vw, 5.4rem);
         }
 
-        .map-row {
+        .stats,
+        .team-grid {
           grid-template-columns: 1fr;
         }
 
-        .map-link {
-          text-align: left;
+        .portrait {
+          min-height: 16rem;
+        }
+
+        .ticker {
+          justify-content: flex-start;
         }
       }
 
-      @media (max-width: 640px) {
-        .topbar,
-        .topnav,
-        .hero-actions,
-        .hero-meta,
-        .ledger-links,
-        .tab-row,
-        .annex-pills,
-        .footer-links {
-          flex-direction: column;
-          align-items: stretch;
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
 
-        .button-link,
-        .tab-button {
-          width: 100%;
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
         }
       }
     </style>
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to content</a>
-    <main class="page" id="content">
-      <section class="hero">
-        <header class="topbar">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page">
+      <main id="main" class="frame hero">
+        <div class="topbar">
           <div>
-            <div class="brand">Leobot</div>
-            <div class="micro">Shared-workspace systems explained with sharp edges, not startup fog</div>
+            <div class="brand">Leo's Working Studio</div>
+            <p class="eyebrow">A small team making useful software look and feel right.</p>
           </div>
-          <nav class="topnav" aria-label="Primary">
-            <a href="#overview">Reading guide</a>
-            <a href="#ledger">Projects</a>
-            <a href="#operating-model">Operating model</a>
-            <a href="#agent-annex">AI annex</a>
+          <nav aria-label="Primary">
+            <a href="#team">Team</a>
+            <a href="#projects">Projects</a>
+            <a href="#rhythm">Approach</a>
           </nav>
-        </header>
+        </div>
 
         <div class="hero-grid">
-          <div>
-            <span class="eyebrow">Homepage for people who need the mechanics</span>
-            <h1 class="hero-mark">Leobot</h1>
-            <h2 class="hero-thesis">Shared-workspace tools for routing, running, and explaining AI agent work.</h2>
-            <p class="hero-lead">
-              Leobot is the public explanation layer for a toolchain that takes requests in, routes them to agents, lets them work in one shared workspace, and publishes the result back out.
-            </p>
-            <p class="hero-copy">
-              Start here if you want the plain version: what the projects are, what each one owns, and how they combine into a system for durable agent work.
-              The deeper <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> details stay in a separate annex so the main story remains readable.
+          <div class="hero-copy reveal">
+            <div class="section-tag">Current work</div>
+            <h1>Human team. Active projects. No filler.</h1>
+            <p class="lede">
+              Leo runs a compact bench across design, architecture, and backend
+              delivery. The goal is simple: ship useful things, keep the taste
+              level high, and let the work speak before the process does.
             </p>
             <div class="hero-actions">
-              <a class="button-link primary" href="#ledger">See the stack</a>
-              <a class="button-link" href="#operating-model">How it works</a>
+              <a class="primary" href="#projects">Browse the projects</a>
+              <a class="secondary" href="#team">Meet the team</a>
             </div>
-            <div class="hero-meta" aria-label="Design context">
-              <span class="meta-pill">Audience: people learning the mechanics</span>
-              <span class="meta-pill">Main job: product explanation</span>
-              <span class="meta-pill">Reading mode: public first, technical second</span>
-            </div>
-            <div class="hero-proof" aria-label="What the homepage helps you do">
-              <article class="hero-proof-card">
-                <strong>Orient in one pass</strong>
-                <p>The first screen defines the system, tells you where to start, and keeps the optional detail separate.</p>
-              </article>
-              <article class="hero-proof-card">
-                <strong>Read by decision</strong>
-                <p>Jump straight to project inventory, operating sequence, or AI mechanics depending on what you need.</p>
-              </article>
-              <article class="hero-proof-card">
-                <strong>Go deeper only when needed</strong>
-                <p>The annex still covers dense system behavior, but the main page now stands on its own for newcomers.</p>
-              </article>
-            </div>
+            <p class="hero-mark">
+              <strong>Main lane:</strong> personal AI, developer tooling, and a
+              cleaner public face for the work itself.
+            </p>
           </div>
 
-          <aside class="hero-signal" aria-label="Homepage summary">
-            <div class="signal-grid">
+          <div class="hero-side">
+            <article class="portrait reveal">
               <div>
-                <div class="signal-label">Start here</div>
-                <div class="signal-title">Three stops. One clean path.</div>
-                <p class="signal-copy">
-                  Scan the product ledger first, use the operating model to connect the systems, then enter the annex only if you need runner and proxy detail.
-                </p>
+                <div class="mini-label">Studio portrait</div>
+                <h3>Led by Leo, built with a sharp four-person bench.</h3>
               </div>
+              <div class="portrait-figure" aria-hidden="true"></div>
+              <p>
+                The team is intentionally small. Fewer hands, clearer opinions,
+                faster calls, and a stronger sense of what deserves to ship.
+              </p>
+            </article>
 
-              <div class="signal-list">
-                <article class="signal-card">
-                  <strong>1. Read the homepage track</strong>
-                  <p>Project ledger, stack positioning, and public-facing explanation for fast comprehension.</p>
-                </article>
-                <article class="signal-card">
-                  <strong>2. Connect the operating model</strong>
-                  <p>See how public surface, shared runtime, and specialist execution line up in sequence.</p>
-                </article>
-                <article class="signal-card">
-                  <strong>3. Open the annex when needed</strong>
-                  <p>Proxy intake, runner lifecycle, and handoff behavior stay available without diluting the main story.</p>
-                </article>
+            <aside class="stats reveal" aria-label="Studio snapshot">
+              <div class="stat">
+                <div class="stat-label">Projects</div>
+                <strong>6</strong>
               </div>
-            </div>
-          </aside>
+              <div class="stat">
+                <div class="stat-label">Core team</div>
+                <strong>4</strong>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Working rule</div>
+                <strong>1</strong>
+              </div>
+            </aside>
+          </div>
         </div>
 
-        <div class="hero-band">
-          <article class="band">
-            <div class="band-label">01 Product first</div>
-            <p class="band-copy">The main story explains what exists and why each system belongs in the stack.</p>
+        <div class="studio-note reveal">
+          <p>
+            Every project on this page comes from the real workspace. Some are
+            flagship product bets, some are tools that make the rest move
+            faster, and some exist because the internet version of the work
+            should be as considered as the software behind it.
+          </p>
+          <div class="ticker" aria-label="Focus areas">
+            <span>Personal AI</span>
+            <span>CLI tools</span>
+            <span>Workflow design</span>
+            <span>Shipping websites</span>
+          </div>
+        </div>
+      </main>
+
+      <section id="team" class="frame section">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-tag">Team</div>
+            <h2>The people shaping the work.</h2>
+          </div>
+          <p>
+            This is not a bloated org chart. It is a working group with clear
+            ownership: direction, frontend craft, backend delivery, and
+            structural judgment.
+          </p>
+        </div>
+
+        <div class="team-layout">
+          <div class="team-intro reveal">
+            <h3>A small crew with distinct jobs and strong opinions.</h3>
+            <p>
+              Leo sets the bar and calls direction. The rest of the team keeps
+              that direction honest by turning it into interfaces, workflows,
+              and implementation that can survive real use.
+            </p>
+            <p>
+              The point is not to look busy. The point is to keep the body of
+              work coherent, practical, and worth showing in public.
+            </p>
+          </div>
+
+          <div class="team-grid">
+            <article class="team-card reveal">
+              <div>
+                <div class="mini-label">Direction</div>
+                <h3>Leo</h3>
+              </div>
+              <p>
+                Chooses the angle, tightens the brief, and pushes every project
+                toward something sharper than the first obvious answer.
+              </p>
+              <ul>
+                <li>Sets taste and final direction</li>
+                <li>Keeps the work practical</li>
+                <li>Prefers clean, direct output</li>
+              </ul>
+            </article>
+
+            <article class="team-card reveal">
+              <div>
+                <div class="mini-label">Frontend</div>
+                <h3>Visual build lead</h3>
+              </div>
+              <p>
+                Owns the public face of the work: hierarchy, typography,
+                interaction, and the difference between a page that functions
+                and a page that feels intentional.
+              </p>
+              <ul>
+                <li>Builds the web presence</li>
+                <li>Protects clarity on mobile</li>
+                <li>Cuts generic layouts quickly</li>
+              </ul>
+            </article>
+
+            <article class="team-card reveal">
+              <div>
+                <div class="mini-label">Backend</div>
+                <h3>Delivery bench</h3>
+              </div>
+              <p>
+                Covers behavior, tooling, scripts, and the less visible work
+                that makes the flashy parts trustworthy instead of fragile.
+              </p>
+              <ul>
+                <li>Builds reliable command surfaces</li>
+                <li>Keeps behavior explicit</li>
+                <li>Handles rough edges before they spread</li>
+              </ul>
+            </article>
+
+            <article class="team-card reveal">
+              <div>
+                <div class="mini-label">Architecture</div>
+                <h3>Structure lead</h3>
+              </div>
+              <p>
+                Turns fuzzy asks into solid boundaries, concrete decisions, and
+                plans another engineer can actually execute without guessing.
+              </p>
+              <ul>
+                <li>Clarifies scope and interfaces</li>
+                <li>Protects project shape over time</li>
+                <li>Chooses clean boundaries early</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="frame section">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-tag">Projects</div>
+            <h2>The showcase is the work itself.</h2>
+          </div>
+          <p>
+            These entries come straight from the live projects folder. The mix
+            is deliberate: one flagship product, a few strong utilities, and a
+            handful of supporting builds that keep the whole studio moving.
+          </p>
+        </div>
+
+        <div class="filter reveal" aria-label="Project filters">
+          <button type="button" data-filter="all" data-active="true">All</button>
+          <button type="button" data-filter="product" data-active="false">Product</button>
+          <button type="button" data-filter="tooling" data-active="false">Tooling</button>
+          <button type="button" data-filter="presence" data-active="false">Presence</button>
+        </div>
+
+        <div class="projects">
+          <article class="project-row reveal" data-kind="product">
+            <div class="project-head">
+              <div class="project-kind">Flagship product</div>
+              <h3>OpenClaw</h3>
+            </div>
+            <p class="project-summary">
+              A personal AI assistant that lives on Leo's own devices and shows
+              up through the channels he already uses. It is the biggest bet in
+              the folder and the clearest statement of the studio's ambition.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Make personal AI feel local, practical, and always within reach.</span>
+            </div>
           </article>
-          <article class="band">
-            <div class="band-label">02 Separation on purpose</div>
-            <p class="band-copy">The AI-agent content no longer leaks into every block. It is isolated and easier to read.</p>
+
+          <article class="project-row reveal" data-kind="tooling">
+            <div class="project-head">
+              <div class="project-kind">Developer tool</div>
+              <h3>git2</h3>
+            </div>
+            <p class="project-summary">
+              A lightweight Python wrapper around the system Git binary with one
+              custom branch handoff workflow. It keeps the command surface
+              familiar while cutting maintenance cost hard.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Keep daily Git work fast without carrying a heavy fork.</span>
+            </div>
           </article>
-          <article class="band">
-            <div class="band-label">03 Better visual discipline</div>
-            <p class="band-copy">The layout now feels intentional instead of improvised, with clearer pacing and stronger section contrast.</p>
+
+          <article class="project-row reveal" data-kind="tooling">
+            <div class="project-head">
+              <div class="project-kind">Workflow research</div>
+              <h3>git2-upstream-sync</h3>
+            </div>
+            <p class="project-summary">
+              A deeper fork that tracks upstream Git while exploring a shared
+              filesystem model for collaborative agent work. It is part
+              experiment, part infrastructure study.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Test the edges of a multi-worker Git workflow without throwing compatibility away.</span>
+            </div>
+          </article>
+
+          <article class="project-row reveal" data-kind="presence">
+            <div class="project-head">
+              <div class="project-kind">Public presence</div>
+              <h3>mywebsite</h3>
+            </div>
+            <p class="project-summary">
+              The studio front page. A clean place to explain who is building,
+              what is shipping, and why the body of work makes sense when seen
+              together rather than one repo at a time.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Give the work a sharper public frame than a raw directory listing ever could.</span>
+            </div>
+          </article>
+
+          <article class="project-row reveal" data-kind="presence">
+            <div class="project-head">
+              <div class="project-kind">Work demo</div>
+              <h3>leoclaw-github</h3>
+            </div>
+            <p class="project-summary">
+              A smaller outward-facing demo space. It functions like a proving
+              ground for showing work clearly and keeping the public footprint
+              aligned with the actual projects in motion.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Practice the public presentation layer instead of leaving it as an afterthought.</span>
+            </div>
+          </article>
+
+          <article class="project-row reveal" data-kind="tooling">
+            <div class="project-head">
+              <div class="project-kind">Skill library</div>
+              <h3>skills-collection</h3>
+            </div>
+            <p class="project-summary">
+              A working shelf of reusable skills and operating notes gathered
+              from real project work. It captures what has proven useful enough
+              to keep using instead of reinventing every time.
+            </p>
+            <div class="project-meta">
+              <strong>Why it exists</strong>
+              <span>Turn good repeated practice into something the team can reuse with less friction.</span>
+            </div>
           </article>
         </div>
       </section>
 
-      <section class="overview" id="overview">
-        <div class="section-head">
+      <section id="rhythm" class="frame section">
+        <div class="section-head reveal">
           <div>
-            <span class="section-kicker">Reading guide</span>
-            <h2>Three lanes. No blurred story.</h2>
+            <div class="section-tag">Approach</div>
+            <h2>How the team keeps the work sharp.</h2>
           </div>
           <p>
-            The page now does three simple jobs: define the system, show the projects inside it, and keep low-level AI execution detail in a separate appendix.
+            The best projects here do not come from more layers. They come from
+            fast decisions, clear ownership, and a refusal to ship vague work.
           </p>
         </div>
 
-        <div class="overview-callout">
-          <article class="callout-panel">
-            <div class="mini-label">Use the page like this</div>
+        <div class="rhythm-grid">
+          <article class="rhythm-card reveal">
+            <div class="mini-label">One</div>
+            <h3>Direction first.</h3>
             <p>
-              If you are new here, start with the ledger. If you already know the projects and want the connective tissue, read the operating model.
-              Only jump to the annex if you need the concrete request flow for proxy and runner behavior.
+              Start by deciding what the project should be, not by collecting
+              parts. A strong page or tool is easier to build than rescue.
             </p>
           </article>
-          <article class="callout-list">
-            <div class="mini-label">Fast scan</div>
-            <ul>
-              <li>The homepage explains products and boundaries.</li>
-              <li>The middle section explains sequence and ownership.</li>
-              <li>The annex acts like a technical appendix, not a second homepage.</li>
-            </ul>
-          </article>
-        </div>
 
-        <div class="overview-grid">
-          <article class="overview-card">
-            <div class="mini-label">Lane 01</div>
-            <h3>What exists</h3>
-            <p>The homepage acts like a ledger: each project gets a function, a boundary, and a practical reason to care.</p>
+          <article class="rhythm-card reveal">
+            <div class="mini-label">Two</div>
+            <h3>Small ownership.</h3>
+            <p>
+              Each area has a clear lead. That keeps the work readable, cuts
+              drift, and makes tradeoffs easier to call when time matters.
+            </p>
           </article>
-          <article class="overview-card">
-            <div class="mini-label">Lane 02</div>
-            <h3>How it fits</h3>
-            <p>The site frames shared-workspace continuity, Git-aware handoff, and public surfaces as one operational system.</p>
-          </article>
-          <article class="overview-card">
-            <div class="mini-label">Lane 03</div>
-            <h3>Where AI detail belongs</h3>
-            <p>The mechanics for `ai-agent-proxy` and `agent-runner` sit in an annex that feels intentionally detached from the main narrative.</p>
+
+          <article class="rhythm-card reveal">
+            <div class="mini-label">Three</div>
+            <h3>Public proof.</h3>
+            <p>
+              The standard is not whether a project sounds smart in a note. It
+              is whether someone can open it, use it, and understand why it is
+              there.
+            </p>
           </article>
         </div>
       </section>
 
-      <section class="ledger" id="ledger">
-        <div class="section-head">
+      <section class="frame section">
+        <div class="closing reveal">
           <div>
-            <span class="section-kicker">Current systems</span>
-            <h2>Project ledger</h2>
+            <div class="section-tag">Studio note</div>
+            <h2>A compact team with a visible body of work.</h2>
+            <p>
+              That is the whole point of this site. It should feel like meeting
+              the team and walking the shelf of current work at the same time:
+              clear faces, clear projects, and no need for backstage language.
+            </p>
           </div>
+          <a href="#main">Back to top</a>
+        </div>
+      </section>
+
+      <footer class="frame">
+        <div>
+          <div class="brand">Leo's Working Studio</div>
           <p>
-            Together these projects form one system: request intake, shared execution, Git-backed handoff, reusable skills, and a public explanation layer.
+            A sharper public read on the projects folder and the team behind it.
           </p>
         </div>
-
-        <div class="ledger-list">
-          <article class="ledger-row">
-            <div>
-              <div class="ledger-kind">Version control</div>
-              <h3>git2</h3>
-              <div class="ledger-note">Handoff and branch continuity</div>
-            </div>
-            <div>
-              <p class="ledger-copy">A Python wrapper around system Git with a custom `branch2` flow for agent handoff and repository-backed work.</p>
-              <p class="ledger-why">It keeps collaboration attached to real Git state instead of detached copies, snapshots, or short-lived context.</p>
-              <div class="ledger-links">
-                <a href="https://github.com/leoustcai/git2">Repository</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="ledger-row">
-            <div>
-              <div class="ledger-kind">Agent runtime</div>
-              <h3>OpenClaw</h3>
-              <div class="ledger-note">Shared workspace execution</div>
-            </div>
-            <div>
-              <p class="ledger-copy">A shared runtime for messaging, memory, notes, task handling, and code execution inside one coordinated workspace.</p>
-              <p class="ledger-why">It exists so agents can work against durable files and aligned context, not disposable sessions with no continuity.</p>
-              <div class="ledger-links">
-                <a href="https://github.com/leoustc/openclaw">Repository</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="ledger-row">
-            <div>
-              <div class="ledger-kind">Publishing</div>
-              <h3>leoclaw-github</h3>
-              <div class="ledger-note">Public output layer</div>
-            </div>
-            <div>
-              <p class="ledger-copy">Public coding and editorial surfaces, including the AI news product, with a cleaner outward-facing structure.</p>
-              <p class="ledger-why">It turns active implementation into something inspectable instead of leaving the work locked inside the private workspace.</p>
-              <div class="ledger-links">
-                <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
-                <a href="https://ai-news.leoustc.workers.dev">Live surface</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="ledger-row">
-            <div>
-              <div class="ledger-kind">Skill memory</div>
-              <h3>skills-collection</h3>
-              <div class="ledger-note">Reusable operating patterns</div>
-            </div>
-            <div>
-              <p class="ledger-copy">Reusable operational skills, workflow notes, and patterns that are worth preserving across sessions.</p>
-              <p class="ledger-why">It stops useful agent workflows from vanishing the moment one task ends and another one starts.</p>
-              <div class="ledger-links">
-                <a href="https://github.com/leoustcai/skills-collection">Repository</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="ledger-row">
-            <div>
-              <div class="ledger-kind">Public surface</div>
-              <h3>mywebsite</h3>
-              <div class="ledger-note">Explanation layer</div>
-            </div>
-            <div>
-              <p class="ledger-copy">The homepage itself: an explanation layer for current systems, stack logic, and the AI-agent mechanics that sit behind them.</p>
-              <p class="ledger-why">Its job is to make the full system legible quickly while keeping the dense AI flow detail in a separate technical room.</p>
-              <div class="ledger-links">
-                <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="operating-model" id="operating-model">
-        <div class="section-head">
-          <div>
-            <span class="section-kicker">Operational logic</span>
-            <h2>The stack reads in sequence.</h2>
-          </div>
-          <p>
-            A visitor should be able to move from public surface to shared runtime to specialist execution without guessing how the pieces relate.
-          </p>
-        </div>
-
-        <div class="operating-grid">
-          <article class="rail-panel">
-            <div class="mini-label">How to read the system</div>
-            <div class="rail">
-              <div class="rail-step">
-                <div class="step-index">01</div>
-                <div>
-                  <strong>Start at the public surface</strong>
-                  <p>The site explains what the projects are before asking the reader to care about internal AI mechanics.</p>
-                </div>
-              </div>
-              <div class="rail-step">
-                <div class="step-index">02</div>
-                <div>
-                  <strong>Move into the shared workspace</strong>
-                  <p>OpenClaw, Git-aware handoff, and skill memory make the work durable instead of ephemeral.</p>
-                </div>
-              </div>
-              <div class="rail-step">
-                <div class="step-index">03</div>
-                <div>
-                  <strong>Enter the specialist loop only when needed</strong>
-                  <p>The annex handles proxy intake, runner ownership, and handoff behavior for readers who want implementation detail.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="checkpoints">
-            <div class="mini-label">What the system delivers</div>
-            <div class="checkpoint-grid">
-              <div class="checkpoint">
-                <h4>Clear request intake</h4>
-                <p>Messages and tasks can enter through a proxy layer instead of requiring every agent to own every external surface directly.</p>
-              </div>
-              <div class="checkpoint">
-                <h4>Durable execution</h4>
-                <p>Agents work against the same notes, files, and project state rather than isolated chat sessions with no shared memory.</p>
-              </div>
-              <div class="checkpoint">
-                <h4>Git-backed handoff</h4>
-                <p>Repository state stays attached to the work, which makes reviews, continuation, and ownership transfer much easier.</p>
-              </div>
-              <div class="checkpoint">
-                <h4>Public visibility</h4>
-                <p>The website and linked surfaces explain what the system is doing so the output is inspectable instead of trapped inside the workspace.</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="annex" id="agent-annex">
-        <div class="annex-head">
-          <div>
-            <div class="annex-note">Technical annex • intentionally separate from the homepage track</div>
-            <h2>AI-agent mechanics</h2>
-          </div>
-          <p class="annex-copy">
-            This section is for readers who specifically want the mechanics behind <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>.
-            It uses a distinct visual language so the material feels like a controlled appendix, not homepage spillover.
-          </p>
-        </div>
-
-        <div class="annex-grid">
-          <div class="annex-summary">
-            <article class="annex-panel">
-              <h3>Why the split is strict</h3>
-              <p>
-                Most visitors need the stack story first. The mechanics crowd needs routing, inbox writes, execution ownership, and reply paths.
-                Treating both audiences as one page rhythm makes the site worse for both.
-              </p>
-              <div class="annex-pills">
-                <span class="annex-pill">Familiar API intake</span>
-                <span class="annex-pill">Runner-owned execution</span>
-                <span class="annex-pill">Shared-workspace continuity</span>
-              </div>
-            </article>
-
-            <article class="annex-panel">
-              <h3>What this annex covers</h3>
-              <p>
-                The tabs split the material into system map, execution flow, and architectural reasons. It reads like a technical appendix with its
-                own mood instead of a leftover section bolted onto the homepage.
-              </p>
-              <div class="tab-row" role="tablist" aria-label="AI mechanics tabs">
-                <button class="tab-button active" type="button" id="tab-map" data-tab="map" role="tab" aria-selected="true" aria-controls="panel-map">System map</button>
-                <button class="tab-button" type="button" id="tab-flow" data-tab="flow" role="tab" aria-selected="false" aria-controls="panel-flow">Execution flow</button>
-                <button class="tab-button" type="button" id="tab-why" data-tab="why" role="tab" aria-selected="false" aria-controls="panel-why">Why this model</button>
-              </div>
-            </article>
-          </div>
-
-          <div class="annex-detail">
-            <section class="tab-panel active" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
-              <article class="annex-panel">
-                <h3>System map</h3>
-                <p>The request path stays readable because each system owns a narrow job instead of pretending one process does everything.</p>
-                <div class="systems-map">
-                  <div class="map-row">
-                    <div class="map-node">
-                      <strong>User / Client</strong>
-                      <p>Sends a chat-completions style request through a familiar public contract.</p>
-                    </div>
-                    <div class="map-link">into</div>
-                    <div class="map-node">
-                      <strong>ai-agent-proxy</strong>
-                      <p>Accepts the request, chooses the route, and writes the task into a concrete inbox.</p>
-                    </div>
-                  </div>
-                  <div class="map-row">
-                    <div class="map-node">
-                      <strong>Agent inbox</strong>
-                      <p>Stores the handoff in a durable filesystem message instead of transient state.</p>
-                    </div>
-                    <div class="map-link">picked up by</div>
-                    <div class="map-node">
-                      <strong>agent-runner</strong>
-                      <p>Owns the execution loop and starts the right specialist path.</p>
-                    </div>
-                  </div>
-                  <div class="map-row">
-                    <div class="map-node">
-                      <strong>Specialist agents</strong>
-                      <p>Architect, frontend, backend, or others can take bounded work inside the same workspace.</p>
-                    </div>
-                    <div class="map-link">returns through</div>
-                    <div class="map-node">
-                      <strong>Reply path</strong>
-                      <p>The result comes back through the chain as a normal API-shaped response.</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </section>
-
-            <section class="tab-panel" id="panel-flow" role="tabpanel" aria-labelledby="tab-flow">
-              <article class="annex-panel">
-                <h3>Execution flow</h3>
-                <div class="handoff-grid">
-                  <div class="flow-card">
-                    <strong>1. Intake stays familiar</strong>
-                    <p>The caller speaks an OpenAI-style shape, so adoption does not require a bespoke client protocol.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>2. Dispatch becomes visible</strong>
-                    <p>The proxy writes an inbox task, which exposes routing rather than hiding it inside memory.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>3. Runner owns the loop</strong>
-                    <p>The execution lifecycle stays with the runner, keeping the proxy thin and easier to reason about.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>4. Specialists can hand off</strong>
-                    <p>One agent can route to another without losing workspace continuity, files, or current task state.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>5. Shared context remains real</strong>
-                    <p>Agents act against the same filesystem, notes, and codebase instead of isolated sandboxes with no durable memory.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>6. Response exits cleanly</strong>
-                    <p>The finished result returns through the operational chain and reaches the caller in a predictable format.</p>
-                  </div>
-                </div>
-              </article>
-            </section>
-
-            <section class="tab-panel" id="panel-why" role="tabpanel" aria-labelledby="tab-why">
-              <article class="annex-panel">
-                <h3>Why this model exists</h3>
-                <div class="reason-grid">
-                  <div class="flow-card">
-                    <strong>Familiar public contract</strong>
-                    <p>Clients keep using a protocol they already understand while the internals remain agent-native.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>Visible ownership</strong>
-                    <p>Inbox messages make routing, assignment, and responsibility legible once multiple agents collaborate.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>Thin proxy boundary</strong>
-                    <p>The proxy handles intake, while execution complexity stays where it belongs: inside the runner and workspace.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>Specialists over monoliths</strong>
-                    <p>Frontend, backend, and architecture work can split cleanly instead of collapsing into one opaque worker.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>Durable shared context</strong>
-                    <p>The same workspace keeps files, notes, and active implementation aligned across handoffs.</p>
-                  </div>
-                  <div class="flow-card">
-                    <strong>Homepage discipline</strong>
-                    <p>Keeping this content here preserves the homepage as a product explanation surface instead of an overloaded AI dump.</p>
-                  </div>
-                </div>
-              </article>
-            </section>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <div>Leobot. Practical systems, explained without blur.</div>
-        <div class="footer-links">
-          <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
-          <a class="footer-link" href="https://x.com/leoustcai">X</a>
-          <a class="footer-link" href="#ledger">Projects</a>
-          <a class="footer-link" href="#agent-annex">AI annex</a>
-        </div>
+        <p>
+          Built as a responsive static homepage with lightweight filtering,
+          restrained motion, and copy rewritten around real projects rather than
+          internal mechanics.
+        </p>
       </footer>
-    </main>
+    </div>
 
     <script>
-      const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
-      const tabPanels = Array.from(document.querySelectorAll(".tab-panel"));
+      const revealItems = document.querySelectorAll(".reveal");
+      const filterButtons = document.querySelectorAll(".filter button");
+      const projectRows = document.querySelectorAll(".project-row");
 
-      function activateTab(tabName) {
-        tabButtons.forEach((button) => {
-          const active = button.dataset.tab === tabName;
-          button.classList.toggle("active", active);
-          button.setAttribute("aria-selected", String(active));
-          button.setAttribute("tabindex", active ? "0" : "-1");
-        });
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.18,
+            rootMargin: "0px 0px -30px 0px"
+          }
+        );
 
-        tabPanels.forEach((panel) => {
-          panel.classList.toggle("active", panel.id === `panel-${tabName}`);
-        });
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
       }
 
-      tabButtons.forEach((button) => {
-        button.addEventListener("click", () => activateTab(button.dataset.tab));
-        button.addEventListener("keydown", (event) => {
-          const currentIndex = tabButtons.indexOf(button);
-          if (event.key === "ArrowRight") {
-            const next = tabButtons[(currentIndex + 1) % tabButtons.length];
-            next.focus();
-            activateTab(next.dataset.tab);
-          }
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.filter;
 
-          if (event.key === "ArrowLeft") {
-            const previous = tabButtons[(currentIndex - 1 + tabButtons.length) % tabButtons.length];
-            previous.focus();
-            activateTab(previous.dataset.tab);
-          }
+          filterButtons.forEach((item) => {
+            item.dataset.active = String(item === button);
+          });
+
+          projectRows.forEach((row) => {
+            const matches = target === "all" || row.dataset.kind === target;
+            row.hidden = !matches;
+          });
         });
       });
-
-      activateTab("map");
     </script>
   </body>
 </html>
