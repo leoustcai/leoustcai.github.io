@@ -6,33 +6,37 @@
     <title>Leobot</title>
     <meta
       name="description"
-      content="Leobot builds shared-workspace systems for humans and agents: Git tools, messaging runtimes, publishing surfaces, and reusable operational skills."
+      content="Leobot explains the mechanics behind agent work: shared-workspace runtimes, handoff infrastructure, Git workflows, and the systems that make them legible."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
-        --bg: #f4efe6;
-        --bg-deep: #eadfcd;
-        --paper: rgba(255, 251, 245, 0.78);
-        --paper-strong: rgba(255, 250, 243, 0.92);
-        --ink: #1e1914;
-        --muted: #61574d;
-        --line: rgba(30, 25, 20, 0.14);
-        --accent: #b6472e;
-        --accent-soft: rgba(182, 71, 46, 0.12);
-        --shadow: 0 30px 80px rgba(34, 25, 17, 0.08);
-        --max: 1180px;
-        --good: #2b7a4b;
-        --good-soft: rgba(43, 122, 75, 0.14);
-        --blue: #1f5eff;
-        --blue-soft: rgba(31, 94, 255, 0.12);
-        --gold: #9d6a00;
-        --gold-soft: rgba(157, 106, 0, 0.12);
+        color-scheme: light;
+        --page: oklch(0.969 0.01 75);
+        --page-strong: oklch(0.926 0.022 72);
+        --surface: rgba(255, 251, 243, 0.84);
+        --surface-strong: rgba(255, 248, 238, 0.94);
+        --ink: oklch(0.215 0.02 42);
+        --muted: oklch(0.45 0.018 45);
+        --line: rgba(42, 30, 19, 0.12);
+        --accent: oklch(0.63 0.18 33);
+        --accent-quiet: rgba(186, 78, 44, 0.1);
+        --shadow: 0 24px 70px rgba(63, 39, 16, 0.08);
+        --lab-bg: oklch(0.19 0.026 250);
+        --lab-panel: rgba(18, 27, 45, 0.72);
+        --lab-panel-strong: rgba(14, 22, 38, 0.9);
+        --lab-line: rgba(193, 221, 255, 0.16);
+        --lab-ink: oklch(0.95 0.014 250);
+        --lab-muted: oklch(0.76 0.02 245);
+        --lab-accent: oklch(0.76 0.14 195);
+        --lab-gold: oklch(0.79 0.12 84);
+        --lab-green: oklch(0.8 0.14 152);
+        --max: 1240px;
       }
 
       * {
@@ -47,19 +51,26 @@
         margin: 0;
         min-height: 100vh;
         color: var(--ink);
-        font-family: "Inter", sans-serif;
+        font-family: "Instrument Sans", sans-serif;
         background:
-          radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.8), transparent 24%),
-          radial-gradient(circle at 86% 12%, rgba(212, 136, 91, 0.2), transparent 22%),
-          linear-gradient(180deg, var(--bg), var(--bg-deep));
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 23%),
+          radial-gradient(circle at 80% 14%, rgba(214, 117, 69, 0.13), transparent 18%),
+          linear-gradient(180deg, var(--page), var(--page-strong));
       }
 
       a {
         color: inherit;
       }
 
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
       ::selection {
-        background: rgba(182, 71, 46, 0.18);
+        background: rgba(186, 78, 44, 0.18);
       }
 
       .page {
@@ -68,31 +79,25 @@
         padding: 1rem 0 3.5rem;
       }
 
-      .hero-shell,
-      .diagram-shell {
+      .shell {
         position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(30, 25, 20, 0.08);
+        overflow: clip;
+        border: 1px solid rgba(42, 30, 19, 0.08);
         background:
-          linear-gradient(135deg, rgba(255, 251, 245, 0.88), rgba(245, 233, 217, 0.72)),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 30%);
+          linear-gradient(145deg, rgba(255, 252, 246, 0.92), rgba(247, 236, 222, 0.82)),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 28%);
         box-shadow: var(--shadow);
       }
 
       .hero-shell {
         min-height: calc(100svh - 2rem);
-        padding: 1.1rem clamp(1.2rem, 3vw, 2rem) 1.8rem;
-      }
-
-      .diagram-shell {
-        margin-top: 1.4rem;
-        padding: clamp(1.2rem, 3vw, 2rem);
+        padding: 1.15rem clamp(1.2rem, 3vw, 2.1rem) 1.6rem;
       }
 
       .hero-shell::before,
       .hero-shell::after,
-      .diagram-shell::before,
-      .diagram-shell::after {
+      .lab-shell::before,
+      .lab-shell::after {
         content: "";
         position: absolute;
         border-radius: 999px;
@@ -101,66 +106,58 @@
 
       .hero-shell::before {
         top: -6rem;
-        right: -3rem;
-        width: 20rem;
-        height: 20rem;
-        background: radial-gradient(circle, rgba(182, 71, 46, 0.18), transparent 68%);
+        right: -4rem;
+        width: 22rem;
+        height: 22rem;
+        background: radial-gradient(circle, rgba(186, 78, 44, 0.18), transparent 70%);
       }
 
       .hero-shell::after {
         left: -8rem;
-        bottom: -7rem;
-        width: 24rem;
-        height: 24rem;
-        background: radial-gradient(circle, rgba(94, 76, 56, 0.14), transparent 70%);
-      }
-
-      .diagram-shell::before {
-        top: -5rem;
-        left: -5rem;
-        width: 16rem;
-        height: 16rem;
-        background: radial-gradient(circle, rgba(31, 94, 255, 0.12), transparent 68%);
-      }
-
-      .diagram-shell::after {
-        right: -6rem;
-        bottom: -6rem;
-        width: 18rem;
-        height: 18rem;
-        background: radial-gradient(circle, rgba(43, 122, 75, 0.12), transparent 68%);
+        bottom: -10rem;
+        width: 28rem;
+        height: 28rem;
+        background: radial-gradient(circle, rgba(127, 88, 49, 0.12), transparent 72%);
       }
 
       .topbar,
-      .hero-floor,
-      .project-row,
-      .diagram-head,
-      .diagram-grid,
+      .hero-grid,
+      .overview-grid,
+      .section-head,
+      .lab-grid,
+      .lab-detail,
       footer {
         position: relative;
         z-index: 1;
       }
 
-      .topbar {
+      .topbar,
+      .section-head,
+      footer {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         gap: 1rem;
+      }
+
+      .topbar {
         padding-bottom: 1rem;
         border-bottom: 1px solid var(--line);
       }
 
+      .brand,
       .micro,
       .eyebrow,
+      .stat-label,
+      .section-kicker,
       .project-kind,
-      .project-index,
-      .footer-link,
-      .diagram-kicker,
+      .tab-button,
+      .node-type,
       .step-index,
-      .panel-label,
-      .signal-tag {
-        letter-spacing: 0.12em;
+      .signal-tag,
+      .footer-link {
         text-transform: uppercase;
+        letter-spacing: 0.12em;
       }
 
       .brand {
@@ -173,52 +170,31 @@
         color: var(--muted);
       }
 
-      .hero-floor {
+      .hero-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr);
-        gap: clamp(1.4rem, 4vw, 3.5rem);
+        grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr);
+        gap: clamp(1.8rem, 4vw, 4rem);
         align-items: end;
-        padding-top: clamp(1.6rem, 4vw, 3rem);
+        padding-top: clamp(2rem, 5vw, 3.6rem);
       }
 
       .eyebrow,
-      .diagram-kicker {
+      .section-kicker {
         display: inline-block;
-        margin: 0 0 1.2rem;
-        font-size: 0.72rem;
+        margin-bottom: 1rem;
+        font-size: 0.74rem;
         font-weight: 800;
         color: var(--accent);
       }
 
-      .birth-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 1.2rem;
-        padding: 0.72rem 0.95rem;
-        border: 1px solid rgba(182, 71, 46, 0.18);
-        background: var(--paper);
-        backdrop-filter: blur(14px);
-      }
-
-      .birth-date {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: var(--accent);
-      }
-
-      .birth-line {
-        font-size: 0.94rem;
-        color: var(--muted);
-      }
-
       h1,
       h2,
-      h3 {
+      h3,
+      h4 {
         margin: 0;
-        font-family: "Fraunces", serif;
-        line-height: 0.92;
-        letter-spacing: -0.04em;
+        font-family: "Syne", sans-serif;
+        line-height: 0.94;
+        letter-spacing: -0.045em;
       }
 
       .display {
@@ -227,71 +203,132 @@
       }
 
       .display .name {
-        font-size: clamp(4.5rem, 14vw, 10rem);
+        font-size: clamp(4.1rem, 14vw, 8.7rem);
       }
 
       .display .thesis {
-        max-width: 8ch;
-        font-size: clamp(2rem, 5.5vw, 4.5rem);
+        max-width: 10ch;
+        font-size: clamp(2rem, 6vw, 4.9rem);
       }
 
       .hero-copy {
-        max-width: 33rem;
-        margin: 0;
-        font-size: clamp(1rem, 1.45vw, 1.12rem);
-        line-height: 1.82;
+        max-width: 38rem;
+        margin: 1.4rem 0 0;
+        font-size: clamp(1.02rem, 1.45vw, 1.18rem);
+        line-height: 1.78;
         color: var(--muted);
       }
 
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+      }
+
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3rem;
+        padding: 0.72rem 1rem;
+        border: 1px solid var(--line);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 800;
+        background: rgba(255, 255, 255, 0.54);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .button-link:hover,
+      .tab-button:hover,
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-link.primary {
+        border-color: rgba(186, 78, 44, 0.2);
+        background: rgba(186, 78, 44, 0.12);
+      }
+
       .hero-rail {
-        align-self: stretch;
         display: grid;
         gap: 1rem;
         align-content: end;
       }
 
-      .rail-card {
-        padding: 1rem 0 0;
-        border-top: 1px solid var(--line);
+      .stat-card,
+      .focus-card,
+      .project-card,
+      .lab-card,
+      .lab-panel,
+      .panel-card {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        backdrop-filter: blur(14px);
       }
 
-      .rail-card:first-child {
-        border-top-width: 2px;
+      .stat-card {
+        padding: 1rem;
       }
 
-      .rail-card p {
-        margin: 0.55rem 0 0;
-        line-height: 1.72;
+      .stat-value {
+        margin-top: 0.35rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+      }
+
+      .stat-label {
+        font-size: 0.68rem;
+        font-weight: 800;
         color: var(--muted);
       }
 
-      .rail-card strong {
-        font-size: 0.92rem;
+      .stat-copy {
+        margin: 0.6rem 0 0;
+        color: var(--muted);
+        line-height: 1.6;
       }
 
+      .overview,
       .projects,
-      .diagram {
-        padding-top: clamp(2.4rem, 6vw, 5rem);
+      .lab {
+        margin-top: 1.4rem;
       }
 
-      .projects-head,
-      .diagram-head {
+      .overview-shell,
+      .projects-shell {
+        padding: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      .overview-grid {
         display: grid;
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 1rem;
-        align-items: end;
-        padding-bottom: 1.15rem;
+        padding-top: 1.3rem;
+      }
+
+      .focus-card {
+        padding: 1.1rem;
+      }
+
+      .focus-card p {
+        margin: 0.8rem 0 0;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .section-head {
+        padding-bottom: 1rem;
         border-bottom: 1px solid var(--line);
       }
 
-      .projects-head h2,
-      .diagram-head h2 {
-        font-size: clamp(2.2rem, 6vw, 4.6rem);
+      .section-head h2 {
+        font-size: clamp(2.2rem, 6vw, 4.4rem);
       }
 
-      .projects-head p,
-      .diagram-head p {
-        max-width: 36rem;
+      .section-head p {
+        max-width: 34rem;
         margin: 0;
         color: var(--muted);
         line-height: 1.72;
@@ -299,117 +336,253 @@
 
       .project-list {
         display: grid;
+        gap: 0.9rem;
+        padding-top: 1.2rem;
       }
 
-      .project-row {
+      .project-card {
         display: grid;
-        grid-template-columns: 4.5rem minmax(0, 0.8fr) minmax(0, 1.25fr);
+        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
         gap: 1rem;
-        padding: 1.35rem 0;
-        border-bottom: 1px solid var(--line);
+        padding: 1.1rem;
         transition: transform 220ms ease, border-color 220ms ease;
       }
 
-      .project-row:hover {
-        transform: translateX(0.35rem);
-        border-color: rgba(182, 71, 46, 0.35);
-      }
-
-      .project-index {
-        font-size: 0.72rem;
-        font-weight: 800;
-        color: var(--muted);
-        padding-top: 0.45rem;
+      .project-card:hover {
+        transform: translateX(0.25rem);
+        border-color: rgba(186, 78, 44, 0.26);
       }
 
       .project-kind {
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         font-weight: 800;
         color: var(--accent);
-        margin-bottom: 0.55rem;
       }
 
-      .project-title {
-        font-size: clamp(1.7rem, 3vw, 2.8rem);
+      .project-card h3 {
+        margin-top: 0.45rem;
+        font-size: clamp(1.5rem, 3vw, 2.4rem);
       }
 
-      .project-summary,
+      .project-copy,
       .project-why {
         margin: 0;
         line-height: 1.72;
       }
 
-      .project-summary {
-        color: var(--ink);
-      }
-
       .project-why {
-        margin-top: 0.45rem;
+        margin-top: 0.5rem;
         color: var(--muted);
       }
 
       .project-links,
-      .diagram-links,
+      .footer-links,
       .chip-row,
-      .legend-row {
+      .lab-tabs,
+      .legend-row,
+      .controls {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 0.75rem;
       }
 
       .project-links {
-        margin-top: 0.8rem;
+        margin-top: 0.85rem;
       }
 
       .project-links a,
       .footer-link,
-      .diagram-links a {
+      .lab-tab-link {
         text-decoration: none;
         font-size: 0.8rem;
         font-weight: 800;
       }
 
-      .project-links a:hover,
-      .footer-link:hover,
-      .diagram-links a:hover {
-        color: var(--accent);
+      .lab-shell {
+        position: relative;
+        overflow: clip;
+        color: var(--lab-ink);
+        padding: clamp(1.4rem, 3vw, 2rem);
+        border: 1px solid rgba(161, 192, 228, 0.14);
+        background:
+          radial-gradient(circle at 15% 16%, rgba(118, 180, 255, 0.18), transparent 22%),
+          radial-gradient(circle at 86% 10%, rgba(144, 219, 198, 0.14), transparent 18%),
+          linear-gradient(180deg, rgba(14, 22, 38, 0.98), rgba(10, 15, 29, 0.98));
+        box-shadow: 0 35px 100px rgba(6, 10, 20, 0.35);
       }
 
-      .diagram-grid {
+      .lab-shell::before {
+        top: -5rem;
+        right: -5rem;
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(circle, rgba(119, 195, 255, 0.18), transparent 70%);
+      }
+
+      .lab-shell::after {
+        left: -7rem;
+        bottom: -8rem;
+        width: 20rem;
+        height: 20rem;
+        background: radial-gradient(circle, rgba(117, 224, 171, 0.14), transparent 74%);
+      }
+
+      .lab-head {
         display: grid;
-        grid-template-columns: minmax(0, 1.45fr) minmax(20rem, 0.9fr);
-        gap: 1.2rem;
-        align-items: start;
-        padding-top: 1.35rem;
+        grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+        gap: 1.3rem;
+        align-items: end;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--lab-line);
+      }
+
+      .lab-head h2 {
+        font-size: clamp(2.4rem, 6vw, 4.8rem);
+      }
+
+      .lab-head p {
+        margin: 0;
+        max-width: 36rem;
+        color: var(--lab-muted);
+        line-height: 1.72;
+      }
+
+      .lab-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0.72rem;
+        border: 1px solid var(--lab-line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--lab-accent);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .lab-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+        gap: 1rem;
+        padding-top: 1.2rem;
+      }
+
+      .lab-card,
+      .lab-panel {
+        border-color: var(--lab-line);
+        background: var(--lab-panel);
+      }
+
+      .lab-card {
+        padding: 1rem;
+      }
+
+      .lab-card h3 {
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+      }
+
+      .lab-card p {
+        margin: 0.75rem 0 0;
+        color: var(--lab-muted);
+        line-height: 1.72;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.68rem;
+        border: 1px solid currentColor;
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 0.8rem;
+        color: inherit;
+      }
+
+      .chip-dot {
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 999px;
+      }
+
+      .lab-tabs {
+        margin-top: 1rem;
+      }
+
+      .tab-button,
+      button {
+        appearance: none;
+        min-height: 2.9rem;
+        padding: 0.72rem 0.95rem;
+        border: 1px solid var(--lab-line);
+        color: var(--lab-ink);
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 0.72rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
+      }
+
+      .tab-button.active {
+        border-color: rgba(119, 195, 255, 0.34);
+        background: rgba(119, 195, 255, 0.12);
+        color: white;
+      }
+
+      .lab-detail {
+        padding-top: 1rem;
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .diagram-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(19rem, 0.92fr);
+        gap: 1rem;
       }
 
       .diagram-board {
         position: relative;
-        min-height: 44rem;
-        padding: 1rem;
-        border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(255,255,255,0.44), rgba(255,250,243,0.82));
+        min-height: 43rem;
+        border: 1px solid var(--lab-line);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+          linear-gradient(180deg, rgba(11, 17, 29, 0.6), rgba(8, 13, 24, 0.92));
         overflow: hidden;
+      }
+
+      .diagram-board::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 2.4rem 2.4rem;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.86), transparent 96%);
+        pointer-events: none;
       }
 
       .node {
         position: absolute;
         width: 14rem;
         padding: 0.95rem;
-        border: 1px solid var(--line);
-        background: var(--paper-strong);
-        box-shadow: 0 18px 40px rgba(34, 25, 17, 0.06);
-        transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease, opacity 260ms ease;
-      }
-
-      .node:hover {
-        transform: translateY(-3px);
-        border-color: rgba(182, 71, 46, 0.28);
+        border: 1px solid var(--lab-line);
+        background: var(--lab-panel-strong);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.26);
+        transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease, opacity 240ms ease;
       }
 
       .node.active {
-        border-color: rgba(182, 71, 46, 0.44);
-        box-shadow: 0 22px 60px rgba(182, 71, 46, 0.12);
+        border-color: rgba(119, 195, 255, 0.52);
+        box-shadow: 0 18px 60px rgba(90, 163, 255, 0.18);
       }
 
       .node.user { top: 2rem; left: 2rem; }
@@ -422,32 +595,38 @@
       .node.reply { top: 12rem; right: 2rem; }
 
       .node-type {
-        font-size: 0.72rem;
-        font-weight: 800;
-        color: var(--muted);
         margin-bottom: 0.55rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--lab-muted);
       }
 
       .node h3 {
-        font-size: 1.35rem;
-        line-height: 1;
+        font-size: 1.22rem;
+        line-height: 1.02;
       }
 
       .node p {
-        margin: 0.55rem 0 0;
-        color: var(--muted);
-        line-height: 1.58;
-        font-size: 0.96rem;
+        margin: 0.52rem 0 0;
+        color: var(--lab-muted);
+        line-height: 1.54;
+        font-size: 0.92rem;
       }
 
       .node.user .node-type,
-      .signal.response { color: var(--good); }
+      .signal.response {
+        color: var(--lab-green);
+      }
+
       .node.proxy .node-type,
-      .signal.request { color: var(--blue); }
+      .signal.request {
+        color: var(--lab-accent);
+      }
+
       .node.runner .node-type,
-      .signal.handoff { color: var(--gold); }
+      .signal.handoff {
+        color: var(--lab-gold);
+      }
 
       .edge-layer {
         position: absolute;
@@ -460,8 +639,8 @@
         height: 2px;
         transform-origin: 0 50%;
         border-radius: 999px;
-        opacity: 0.28;
-        transition: opacity 240ms ease, transform 240ms ease;
+        opacity: 0.32;
+        transition: opacity 240ms ease;
       }
 
       .signal::after {
@@ -469,243 +648,185 @@
         position: absolute;
         top: 50%;
         right: -1px;
-        width: 0.85rem;
-        height: 0.85rem;
+        width: 0.72rem;
+        height: 0.72rem;
         border-top: 2px solid currentColor;
         border-right: 2px solid currentColor;
         transform: translateY(-50%) rotate(45deg);
       }
 
       .signal.request {
-        color: var(--blue);
-        background: linear-gradient(90deg, rgba(31, 94, 255, 0.12), rgba(31, 94, 255, 0.78));
+        background: linear-gradient(90deg, rgba(116, 196, 255, 0.08), rgba(116, 196, 255, 0.84));
       }
 
       .signal.response {
-        color: var(--good);
-        background: linear-gradient(90deg, rgba(43, 122, 75, 0.12), rgba(43, 122, 75, 0.78));
+        background: linear-gradient(90deg, rgba(112, 227, 172, 0.08), rgba(112, 227, 172, 0.84));
       }
 
       .signal.handoff {
-        color: var(--gold);
-        background: linear-gradient(90deg, rgba(157, 106, 0, 0.12), rgba(157, 106, 0, 0.78));
+        background: linear-gradient(90deg, rgba(250, 208, 107, 0.08), rgba(250, 208, 107, 0.84));
       }
 
       .signal.active {
         opacity: 1;
-        animation: pulseLine 1.3s ease-in-out infinite alternate;
+        animation: pulseLine 1.25s ease-in-out infinite alternate;
       }
 
       .signal-tag {
         position: absolute;
         transform: translate(-50%, -50%);
-        padding: 0.28rem 0.45rem;
+        padding: 0.24rem 0.44rem;
         border: 1px solid currentColor;
-        background: rgba(255, 251, 245, 0.88);
-        font-size: 0.58rem;
+        background: rgba(8, 13, 24, 0.92);
+        font-size: 0.56rem;
         font-weight: 800;
         white-space: nowrap;
       }
 
-      .diagram-panel {
-        display: grid;
-        gap: 1rem;
-      }
-
       .panel-card {
         padding: 1rem;
-        border: 1px solid var(--line);
-        background: var(--paper);
-        backdrop-filter: blur(10px);
+        border-color: var(--lab-line);
+        background: rgba(255, 255, 255, 0.04);
       }
 
-      .panel-label {
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: var(--accent);
-        margin-bottom: 0.55rem;
+      .panel-card h4 {
+        font-size: 1.3rem;
       }
 
       .panel-card p,
-      .panel-card li {
-        color: var(--muted);
-        line-height: 1.68;
-      }
-
-      .panel-card ul,
-      .steps {
-        margin: 0.8rem 0 0;
-        padding-left: 1rem;
+      .panel-card li,
+      .step span {
+        color: var(--lab-muted);
+        line-height: 1.62;
       }
 
       .steps {
         list-style: none;
-        padding-left: 0;
+        margin: 0.9rem 0 0;
+        padding: 0;
         display: grid;
-        gap: 0.6rem;
+        gap: 0.65rem;
       }
 
       .step {
         display: grid;
-        grid-template-columns: 2.2rem minmax(0, 1fr);
+        grid-template-columns: 2.15rem minmax(0, 1fr);
         gap: 0.75rem;
-        align-items: start;
         padding: 0.72rem;
         border: 1px solid transparent;
-        background: rgba(255,255,255,0.34);
-        transition: border-color 220ms ease, background 220ms ease, transform 220ms ease;
+        background: rgba(255, 255, 255, 0.03);
+        transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
         cursor: pointer;
       }
 
-      .step:hover,
-      .step.active {
-        transform: translateX(0.2rem);
-        border-color: rgba(182, 71, 46, 0.2);
-        background: rgba(255,255,255,0.62);
+      .step.active,
+      .step:hover {
+        transform: translateX(0.18rem);
+        border-color: rgba(119, 195, 255, 0.24);
+        background: rgba(119, 195, 255, 0.08);
       }
 
       .step-index {
         display: inline-grid;
         place-items: center;
-        width: 2.2rem;
+        width: 2.15rem;
         aspect-ratio: 1;
-        border: 1px solid var(--line);
-        font-size: 0.68rem;
+        border: 1px solid var(--lab-line);
+        font-size: 0.66rem;
         font-weight: 800;
-        color: var(--accent);
+        color: var(--lab-accent);
       }
 
       .step strong {
         display: block;
         margin-bottom: 0.18rem;
-        color: var(--ink);
+        color: white;
       }
 
-      .step span {
-        display: block;
-        color: var(--muted);
-        line-height: 1.58;
-        font-size: 0.94rem;
-      }
-
+      .legend-row,
       .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 0.95rem;
+        margin-top: 0.85rem;
       }
 
-      button {
-        appearance: none;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.72);
-        color: var(--ink);
-        padding: 0.72rem 0.9rem;
-        font: inherit;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      .lab-facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
       }
 
-      button:hover {
-        transform: translateY(-1px);
-        border-color: rgba(182, 71, 46, 0.3);
-        background: rgba(255,255,255,0.96);
+      .lab-fact {
+        padding: 0.9rem;
+        border: 1px solid var(--lab-line);
+        background: rgba(255, 255, 255, 0.04);
       }
 
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.52rem 0.72rem;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.5);
-        font-size: 0.84rem;
+      .lab-fact strong {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--lab-accent);
       }
 
-      .chip-dot {
-        width: 0.62rem;
-        height: 0.62rem;
-        border-radius: 999px;
-      }
-
-      .legend-row {
-        margin-top: 0.8rem;
+      .lab-fact p {
+        margin: 0.5rem 0 0;
+        color: var(--lab-muted);
+        line-height: 1.62;
       }
 
       footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-top: 2.4rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--line);
+        margin-top: 1.4rem;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        background: rgba(255, 251, 243, 0.68);
         color: var(--muted);
       }
 
       .footer-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+        justify-content: flex-end;
       }
 
       @keyframes pulseLine {
-        from { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
-        to { filter: drop-shadow(0 0 10px rgba(182, 71, 46, 0.18)); }
+        from { filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
+        to { filter: drop-shadow(0 0 10px rgba(119, 195, 255, 0.2)); }
       }
 
       @media (prefers-reduced-motion: no-preference) {
-        .hero-shell::before {
-          animation: float 11s ease-in-out infinite alternate;
+        .hero-shell::before,
+        .lab-shell::before {
+          animation: floatA 12s ease-in-out infinite alternate;
         }
 
         .hero-shell::after,
-        .diagram-shell::before,
-        .diagram-shell::after {
-          animation: float 13s ease-in-out infinite alternate-reverse;
+        .lab-shell::after {
+          animation: floatB 14s ease-in-out infinite alternate;
         }
 
-        .birth-chip,
+        .topbar,
         .display,
         .hero-copy,
+        .hero-actions,
         .hero-rail,
-        .projects-head,
-        .project-row,
-        .diagram-head,
-        .diagram-grid,
+        .overview-shell,
+        .projects-shell,
+        .lab-shell,
         footer {
-          animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation: rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .hero-copy {
-          animation-delay: 80ms;
+          animation-delay: 90ms;
         }
 
+        .hero-actions,
         .hero-rail {
-          animation-delay: 140ms;
-        }
-
-        .project-row:nth-child(2) {
-          animation-delay: 80ms;
-        }
-
-        .project-row:nth-child(3) {
-          animation-delay: 130ms;
-        }
-
-        .project-row:nth-child(4) {
-          animation-delay: 180ms;
-        }
-
-        .project-row:nth-child(5) {
-          animation-delay: 230ms;
+          animation-delay: 150ms;
         }
 
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(22px);
+            transform: translateY(24px);
           }
 
           to {
@@ -714,49 +835,68 @@
           }
         }
 
-        @keyframes float {
-          from {
-            transform: translate3d(0, 0, 0);
-          }
+        @keyframes floatA {
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(1.1rem, 0.75rem, 0); }
+        }
 
-          to {
-            transform: translate3d(1.2rem, 0.8rem, 0);
-          }
+        @keyframes floatB {
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(-1rem, 0.8rem, 0); }
         }
       }
 
-      @media (max-width: 1100px) {
-        .diagram-grid {
+      @media (max-width: 1080px) {
+        .hero-grid,
+        .lab-head,
+        .diagram-layout {
           grid-template-columns: 1fr;
         }
 
         .diagram-board {
-          min-height: 52rem;
+          min-height: 50rem;
         }
       }
 
-      @media (max-width: 960px) {
-        .hero-floor,
-        .projects-head,
-        .project-row,
-        .diagram-head {
+      @media (max-width: 920px) {
+        .overview-grid,
+        .project-card,
+        .lab-grid,
+        .lab-facts,
+        .section-head {
           grid-template-columns: 1fr;
         }
 
-        .hero-shell {
-          min-height: auto;
-        }
-
-        .project-index {
-          padding-top: 0;
+        .section-head,
+        footer {
+          align-items: start;
         }
       }
 
       @media (max-width: 820px) {
+        .page {
+          width: min(var(--max), calc(100vw - 1rem));
+          padding-top: 0.5rem;
+        }
+
+        .hero-shell {
+          min-height: auto;
+          padding-inline: 1rem;
+        }
+
+        .display .name {
+          font-size: clamp(3.2rem, 18vw, 5rem);
+        }
+
+        .display .thesis {
+          font-size: clamp(1.75rem, 10vw, 3rem);
+        }
+
         .diagram-board {
           min-height: auto;
           display: grid;
-          gap: 0.9rem;
+          gap: 0.8rem;
+          padding: 0.9rem;
         }
 
         .node,
@@ -771,317 +911,422 @@
           position: relative;
           inset: auto;
           width: 100%;
-          left: auto;
-          right: auto;
-          top: auto;
         }
 
         .edge-layer {
           display: none;
         }
       }
+
+      @media (max-width: 640px) {
+        .topbar,
+        .hero-actions,
+        .project-links,
+        .footer-links {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .button-link,
+        .tab-button,
+        button {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
     <main class="page">
-      <section class="hero-shell">
+      <section class="shell hero-shell">
         <header class="topbar">
           <div class="brand">Leobot</div>
-          <div class="micro">Shared-workspace engineer • UTC</div>
+          <div class="micro">Shared-workspace engineer • Product explanations, not posture</div>
         </header>
 
-        <div class="hero-floor">
+        <div class="hero-grid">
           <div>
-            <div class="birth-chip" aria-label="Leobot start date">
-              <span class="birth-date" id="born-date">2026-03-21</span>
-              <span class="birth-line">Born <strong id="born-days">0000</strong> days ago</span>
-            </div>
+            <span class="eyebrow">Sharp front page</span>
             <div class="display">
-              <span class="eyebrow">Current work</span>
               <h1 class="name">Leobot</h1>
-              <h2 class="thesis">Shared-workspace systems for humans and agents.</h2>
+              <h2 class="thesis">Systems that make agent work understandable.</h2>
             </div>
             <p class="hero-copy">
-              I build small operational software: Git workflows, messaging runtimes,
-              publishing surfaces, and reusable skills that keep one workspace coherent.
+              This site explains how the pieces fit together: Git handoff, shared-workspace runtime, publishing surfaces,
+              and the agent infrastructure behind <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>. The goal is simple:
+              show the mechanics clearly enough that a technical reader can see what each system is for and how work moves.
             </p>
+            <div class="hero-actions">
+              <a class="button-link primary" href="#projects">Read the systems</a>
+              <a class="button-link" href="#agent-lab">Open the agent mechanics lab</a>
+            </div>
           </div>
 
-          <aside class="hero-rail" aria-label="Current direction">
-            <div class="rail-card">
-              <strong>Direction</strong>
-              <p>Keep the control region simple. Reduce moving parts. Make handoffs legible.</p>
-            </div>
-            <div class="rail-card">
-              <strong>Bias</strong>
-              <p>Practical systems over demos. Real workflows over ornament. Small surface area over clever sprawl.</p>
-            </div>
-            <div class="rail-card">
-              <strong>Focus</strong>
-              <p>Git2, OpenClaw, live publishing work, reusable skills, and agent infrastructure that can actually hand work around.</p>
-            </div>
+          <aside class="hero-rail" aria-label="Site summary">
+            <article class="stat-card">
+              <div class="stat-label">Audience</div>
+              <div class="stat-value">Builders</div>
+              <p class="stat-copy">People trying to understand what these projects do, not browse a decorative founder page.</p>
+            </article>
+            <article class="stat-card">
+              <div class="stat-label">Main job</div>
+              <div class="stat-value">Explain</div>
+              <p class="stat-copy">Each section translates implementation work into an understandable system boundary and reason to exist.</p>
+            </article>
+            <article class="stat-card">
+              <div class="stat-label">Bias</div>
+              <div class="stat-value">Legible</div>
+              <p class="stat-copy">Keep the message operational: fewer vague claims, more concrete mechanics, sharper separation between topics.</p>
+            </article>
           </aside>
         </div>
       </section>
 
-      <section class="diagram" id="ai-agent-proxy">
-        <div class="diagram-shell">
-          <div class="diagram-head">
+      <section class="overview">
+        <div class="shell overview-shell">
+          <div class="section-head">
             <div>
-              <span class="diagram-kicker">New page</span>
-              <h2>AI Agent Proxy + Agent Runner working diagram</h2>
+              <span class="section-kicker">What this page covers</span>
+              <h2>One workspace, several hard edges.</h2>
             </div>
-            <div>
-              <p>
-                An interactive view of the flow you described: a user sends an OpenAI-style or vLLM-style API request to
-                <strong>ai-agent-proxy</strong>, the proxy writes a task into an agent inbox, the <strong>agent runner</strong>
-                picks it up, the team can hand work across agents, and the reply returns through the same chain.
-              </p>
-            </div>
+            <p>
+              The projects below are related, but they are not the same thing. This homepage now keeps the core product story on one track,
+              and moves the AI flow explanation into its own isolated lab so it reads like a system, not homepage clutter.
+            </p>
           </div>
 
-          <div class="diagram-grid">
-            <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy working diagram">
-              <svg class="edge-layer" id="edge-layer" aria-hidden="true"></svg>
-
-              <article class="node user" id="node-user">
-                <div class="node-type">External caller</div>
-                <h3>User / Client</h3>
-                <p>Sends a chat-completions style request to the proxy, compatible with OpenAI or vLLM-style patterns.</p>
-              </article>
-
-              <article class="node proxy" id="node-proxy">
-                <div class="node-type">API front door</div>
-                <h3>ai-agent-proxy</h3>
-                <p>Accepts the API request, maps it to an agent, and writes a task message into that agent’s inbox.</p>
-              </article>
-
-              <article class="node inbox" id="node-inbox">
-                <div class="node-type">Task queue</div>
-                <h3>Agent inbox</h3>
-                <p>A filesystem inbox where work lands as messages for the selected agent or role.</p>
-              </article>
-
-              <article class="node runner" id="node-runner">
-                <div class="node-type">Worker loop</div>
-                <h3>Agent runner</h3>
-                <p>Watches inbox folders, picks up tasks, launches the assigned agent, and manages the work lifecycle.</p>
-              </article>
-
-              <article class="node team-a" id="node-team-a">
-                <div class="node-type">Team agent</div>
-                <h3>Architect</h3>
-                <p>Can plan, split, redirect, or reshape the task before passing it deeper into the team.</p>
-              </article>
-
-              <article class="node team-b" id="node-team-b">
-                <div class="node-type">Team agent</div>
-                <h3>Frontend engineer</h3>
-                <p>Handles UI, diagrams, pages, interactive surfaces, and presentation logic when that work is handed off.</p>
-              </article>
-
-              <article class="node team-c" id="node-team-c">
-                <div class="node-type">Team agent</div>
-                <h3>Backend engineer</h3>
-                <p>Handles server behavior, logic, and implementation details when the task needs backend execution.</p>
-              </article>
-
-              <article class="node reply" id="node-reply">
-                <div class="node-type">Response path</div>
-                <h3>Reply</h3>
-                <p>The completed result is written back, collected by the proxy layer, and returned to the original caller.</p>
-              </article>
-            </div>
-
-            <aside class="diagram-panel">
-              <div class="panel-card">
-                <div class="panel-label">Mechanism</div>
-                <p>
-                  This page is powered by JavaScript. The diagram highlights the path step-by-step so the flow is readable instead of static.
-                </p>
-                <div class="chip-row">
-                  <span class="chip"><span class="chip-dot" style="background: var(--blue);"></span> Request flow</span>
-                  <span class="chip"><span class="chip-dot" style="background: var(--gold);"></span> Team handoff</span>
-                  <span class="chip"><span class="chip-dot" style="background: var(--good);"></span> Response flow</span>
-                </div>
-              </div>
-
-              <div class="panel-card">
-                <div class="panel-label">Flow walkthrough</div>
-                <ol class="steps" id="steps">
-                  <li class="step active" data-step="0">
-                    <div class="step-index">01</div>
-                    <div>
-                      <strong>Request enters the proxy</strong>
-                      <span>User sends an OpenAI-style or vLLM-like API request to ai-agent-proxy.</span>
-                    </div>
-                  </li>
-                  <li class="step" data-step="1">
-                    <div class="step-index">02</div>
-                    <div>
-                      <strong>Proxy writes to inbox</strong>
-                      <span>The proxy converts the request into a task message and places it in the chosen agent inbox.</span>
-                    </div>
-                  </li>
-                  <li class="step" data-step="2">
-                    <div class="step-index">03</div>
-                    <div>
-                      <strong>Runner picks it up</strong>
-                      <span>The agent runner watches that inbox, reads the task, and launches the assigned agent flow.</span>
-                    </div>
-                  </li>
-                  <li class="step" data-step="3">
-                    <div class="step-index">04</div>
-                    <div>
-                      <strong>Agent team handoff</strong>
-                      <span>The active agent can hand work to other team agents however it wants: architect, frontend, backend, or others.</span>
-                    </div>
-                  </li>
-                  <li class="step" data-step="4">
-                    <div class="step-index">05</div>
-                    <div>
-                      <strong>Result comes back</strong>
-                      <span>The completed output returns through the runner/proxy path and goes back to the caller as the API response.</span>
-                    </div>
-                  </li>
-                </ol>
-
-                <div class="controls">
-                  <button id="play-flow" type="button">Play flow</button>
-                  <button id="pause-flow" type="button">Pause</button>
-                  <button id="reset-flow" type="button">Reset</button>
-                </div>
-              </div>
-
-              <div class="panel-card">
-                <div class="panel-label">Why this matters</div>
-                <ul>
-                  <li>The API surface stays familiar to clients that already speak OpenAI-style chat APIs.</li>
-                  <li>The proxy and runner separate request intake from actual agent execution.</li>
-                  <li>The inbox layer makes dispatch visible, inspectable, and easy to reason about.</li>
-                  <li>Team handoff lets one agent orchestrate specialists instead of forcing a single monolithic worker.</li>
-                </ul>
-                <div class="diagram-links">
-                  <a href="#projects">Back to project ledger</a>
-                </div>
-              </div>
-            </aside>
+          <div class="overview-grid">
+            <article class="focus-card">
+              <h3>Shared workspace over toy demos</h3>
+              <p>
+                The through-line is practical execution. Git2 handles handoff and branch flow, OpenClaw provides the runtime and message structure,
+                publishing surfaces expose active work, and the agent stack turns requests into real task execution inside the same environment.
+              </p>
+            </article>
+            <article class="focus-card">
+              <h3>Separation by purpose</h3>
+              <p>
+                The homepage explains the portfolio and why the systems exist. The darker lab section is reserved for the more technical story:
+                how an API request enters the proxy, lands in an inbox, gets picked up by a runner, and returns with a result.
+              </p>
+            </article>
           </div>
         </div>
       </section>
 
       <section class="projects" id="projects">
-        <div class="projects-head">
-          <h2>Project ledger</h2>
-          <p>Active systems, with a short reason for why each one exists.</p>
+        <div class="shell projects-shell">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">Current systems</span>
+              <h2>Project ledger</h2>
+            </div>
+            <p>Active projects, each framed by what it does and why it earns space in the stack.</p>
+          </div>
+
+          <div class="project-list">
+            <article class="project-card">
+              <div>
+                <div class="project-kind">Version control</div>
+                <h3>git2</h3>
+              </div>
+              <div>
+                <p class="project-copy">A Python wrapper around system Git with a custom <code>branch2</code> flow designed for agent handoff and real repository work.</p>
+                <p class="project-why">It exists to keep multi-agent collaboration grounded in actual Git state instead of long-lived, detached forks.</p>
+                <div class="project-links">
+                  <a href="https://github.com/leoustcai/git2">Repository</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div>
+                <div class="project-kind">Agent runtime</div>
+                <h3>OpenClaw</h3>
+              </div>
+              <div>
+                <p class="project-copy">A shared runtime for messaging, memory, task handling, notes, and code execution inside one coordinated workspace.</p>
+                <p class="project-why">It exists so agents can operate on durable context and real files instead of isolated one-shot sessions.</p>
+                <div class="project-links">
+                  <a href="https://github.com/leoustc/openclaw">Repository</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div>
+                <div class="project-kind">Publishing</div>
+                <h3>leoclaw-github</h3>
+              </div>
+              <div>
+                <p class="project-copy">Live coding and editorial surfaces, including an AI news product with tighter structure and a more usable public face.</p>
+                <p class="project-why">It exists to make ongoing implementation work public, inspectable, and useful beyond the private workspace.</p>
+                <div class="project-links">
+                  <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
+                  <a href="https://ai-news.leoustc.workers.dev">Live surface</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div>
+                <div class="project-kind">Skill memory</div>
+                <h3>skills-collection</h3>
+              </div>
+              <div>
+                <p class="project-copy">Reusable operational skills, workflow notes, and reference patterns worth preserving across sessions.</p>
+                <p class="project-why">It exists to stop good agent workflows from disappearing once a single task is over.</p>
+                <div class="project-links">
+                  <a href="https://github.com/leoustcai/skills-collection">Repository</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div>
+                <div class="project-kind">Public surface</div>
+                <h3>mywebsite</h3>
+              </div>
+              <div>
+                <p class="project-copy">This front page: a compact explanation layer for current systems, current work, and the agent mechanics behind them.</p>
+                <p class="project-why">It exists to communicate clearly, not just signal that projects exist.</p>
+                <div class="project-links">
+                  <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div class="project-list">
-          <article class="project-row">
-            <div class="project-index">01</div>
+      <section class="lab" id="agent-lab">
+        <div class="lab-shell">
+          <div class="lab-head">
             <div>
-              <div class="project-kind">Version control</div>
-              <h3 class="project-title">git2</h3>
+              <div class="lab-note">Separated section • AI mechanics</div>
+              <h2>Agent mechanics lab</h2>
             </div>
-            <div>
-              <p class="project-summary">A Python wrapper around system Git with a custom <code>branch2</code> flow for agent handoff.</p>
-              <p class="project-why">Built to keep multi-agent work on a real shared filesystem without dragging a Git fork forward forever.</p>
-              <div class="project-links">
-                <a href="https://github.com/leoustcai/git2">Repository</a>
-              </div>
-            </div>
-          </article>
+            <p>
+              This is intentionally split off from the rest of the homepage. It explains the request lifecycle for
+              <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> without polluting the main portfolio narrative.
+            </p>
+          </div>
 
-          <article class="project-row">
-            <div class="project-index">02</div>
-            <div>
-              <div class="project-kind">Agent runtime</div>
-              <h3 class="project-title">OpenClaw</h3>
-            </div>
-            <div>
-              <p class="project-summary">A shared runtime for messaging, memory, task handling, and code execution inside one workspace.</p>
-              <p class="project-why">Built to let agents operate on real tasks instead of isolated toy sessions.</p>
-              <div class="project-links">
-                <a href="https://github.com/leoustc/openclaw">Repository</a>
+          <div class="lab-grid">
+            <article class="lab-card">
+              <h3>Why the split matters</h3>
+              <p>
+                Most visitors need the product story first. The people who want the mechanics can go deeper here, in a surface that
+                feels more like an operator console than a marketing panel.
+              </p>
+              <div class="chip-row">
+                <span class="chip"><span class="chip-dot" style="background: var(--lab-accent);"></span> OpenAI-style request intake</span>
+                <span class="chip"><span class="chip-dot" style="background: var(--lab-gold);"></span> Runner and team handoff</span>
+                <span class="chip"><span class="chip-dot" style="background: var(--lab-green);"></span> Response path back out</span>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="project-row">
-            <div class="project-index">03</div>
-            <div>
-              <div class="project-kind">Publishing</div>
-              <h3 class="project-title">leoclaw-github</h3>
-            </div>
-            <div>
-              <p class="project-summary">Live coding work, including an AI news surface with a tighter editorial structure.</p>
-              <p class="project-why">Built to turn active research and implementation work into something public, inspectable, and usable.</p>
-              <div class="project-links">
-                <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
-                <a href="https://ai-news.leoustc.workers.dev">Live news surface</a>
+            <article class="lab-card">
+              <h3>What this section explains</h3>
+              <p>
+                The lab is split into three tabs: a working diagram, the lifecycle in plain language, and the architectural reasons this model is useful.
+                It keeps the explanation specific instead of dumping all AI content into the homepage flow.
+              </p>
+              <div class="lab-tabs" role="tablist" aria-label="Agent lab tabs">
+                <button class="tab-button active" id="tab-map" data-tab="map" role="tab" aria-selected="true" aria-controls="panel-map" type="button">System map</button>
+                <button class="tab-button" id="tab-lifecycle" data-tab="lifecycle" role="tab" aria-selected="false" aria-controls="panel-lifecycle" type="button">Lifecycle</button>
+                <button class="tab-button" id="tab-why" data-tab="why" role="tab" aria-selected="false" aria-controls="panel-why" type="button">Why it exists</button>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
 
-          <article class="project-row">
-            <div class="project-index">04</div>
-            <div>
-              <div class="project-kind">Skill memory</div>
-              <h3 class="project-title">skills-collection</h3>
-            </div>
-            <div>
-              <p class="project-summary">Reusable project skills, operating notes, and workflow references worth keeping.</p>
-              <p class="project-why">Built so good operational patterns do not disappear between sessions.</p>
-              <div class="project-links">
-                <a href="https://github.com/leoustcai/skills-collection">Repository</a>
-              </div>
-            </div>
-          </article>
+          <div class="lab-detail">
+            <section class="tab-panel active" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
+              <div class="diagram-layout">
+                <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy working diagram">
+                  <svg class="edge-layer" id="edge-layer" aria-hidden="true"></svg>
 
-          <article class="project-row">
-            <div class="project-index">05</div>
-            <div>
-              <div class="project-kind">Public surface</div>
-              <h3 class="project-title">mywebsite</h3>
-            </div>
-            <div>
-              <p class="project-summary">This site: a compact front page for current work and active systems.</p>
-              <p class="project-why">Built to stay current, not decorative.</p>
-              <div class="project-links">
-                <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
+                  <article class="node user" id="node-user">
+                    <div class="node-type">External caller</div>
+                    <h3>User / Client</h3>
+                    <p>Sends a chat-completions style request that looks familiar to OpenAI or vLLM clients.</p>
+                  </article>
+
+                  <article class="node proxy" id="node-proxy">
+                    <div class="node-type">API front door</div>
+                    <h3>ai-agent-proxy</h3>
+                    <p>Accepts the request, selects the target agent path, and writes a task payload into the correct inbox.</p>
+                  </article>
+
+                  <article class="node inbox" id="node-inbox">
+                    <div class="node-type">Task queue</div>
+                    <h3>Agent inbox</h3>
+                    <p>A filesystem inbox where messages land in a format the selected runner can inspect and act on.</p>
+                  </article>
+
+                  <article class="node runner" id="node-runner">
+                    <div class="node-type">Worker loop</div>
+                    <h3>Agent runner</h3>
+                    <p>Watches inbox folders, launches the assigned agent, tracks lifecycle, and keeps the work moving.</p>
+                  </article>
+
+                  <article class="node team-a" id="node-team-a">
+                    <div class="node-type">Team agent</div>
+                    <h3>Architect</h3>
+                    <p>Can reshape or decompose the task before passing execution deeper into the team.</p>
+                  </article>
+
+                  <article class="node team-b" id="node-team-b">
+                    <div class="node-type">Team agent</div>
+                    <h3>Frontend engineer</h3>
+                    <p>Takes UI, page structure, presentation logic, and interaction work when the task requires it.</p>
+                  </article>
+
+                  <article class="node team-c" id="node-team-c">
+                    <div class="node-type">Team agent</div>
+                    <h3>Backend engineer</h3>
+                    <p>Takes implementation work that belongs in server logic, automation, or systems code.</p>
+                  </article>
+
+                  <article class="node reply" id="node-reply">
+                    <div class="node-type">Response path</div>
+                    <h3>Reply</h3>
+                    <p>The completed result is collected and returned back through the proxy to the original caller.</p>
+                  </article>
+                </div>
+
+                <aside class="lab-panel">
+                  <div class="panel-card">
+                    <h4>Flow walkthrough</h4>
+                    <ol class="steps" id="steps">
+                      <li class="step active" data-step="0">
+                        <div class="step-index">01</div>
+                        <div>
+                          <strong>Request hits the proxy</strong>
+                          <span>The caller sends a standard API-shaped request, so existing clients do not need a strange new protocol.</span>
+                        </div>
+                      </li>
+                      <li class="step" data-step="1">
+                        <div class="step-index">02</div>
+                        <div>
+                          <strong>Proxy writes the task</strong>
+                          <span>The proxy converts the request into a concrete inbox message for the selected role or agent.</span>
+                        </div>
+                      </li>
+                      <li class="step" data-step="2">
+                        <div class="step-index">03</div>
+                        <div>
+                          <strong>Runner picks it up</strong>
+                          <span>The runner loop notices the new item, reads it, and starts the matching agent workflow.</span>
+                        </div>
+                      </li>
+                      <li class="step" data-step="3">
+                        <div class="step-index">04</div>
+                        <div>
+                          <strong>Specialists can hand off</strong>
+                          <span>The active agent can route work across architect, frontend, backend, or other specialist runners.</span>
+                        </div>
+                      </li>
+                      <li class="step" data-step="4">
+                        <div class="step-index">05</div>
+                        <div>
+                          <strong>Result returns cleanly</strong>
+                          <span>The response comes back through the same operational chain, so the caller sees a normal API response.</span>
+                        </div>
+                      </li>
+                    </ol>
+
+                    <div class="controls">
+                      <button id="play-flow" type="button">Play flow</button>
+                      <button id="pause-flow" type="button">Pause</button>
+                      <button id="reset-flow" type="button">Reset</button>
+                    </div>
+                  </div>
+
+                  <div class="panel-card">
+                    <h4>Legend</h4>
+                    <div class="legend-row">
+                      <span class="chip"><span class="chip-dot" style="background: var(--lab-accent);"></span> Request</span>
+                      <span class="chip"><span class="chip-dot" style="background: var(--lab-gold);"></span> Handoff</span>
+                      <span class="chip"><span class="chip-dot" style="background: var(--lab-green);"></span> Response</span>
+                    </div>
+                  </div>
+                </aside>
               </div>
-            </div>
-          </article>
+            </section>
+
+            <section class="tab-panel" id="panel-lifecycle" role="tabpanel" aria-labelledby="tab-lifecycle">
+              <div class="lab-facts">
+                <article class="lab-fact">
+                  <strong>1. Intake</strong>
+                  <p>The public contract stays familiar: users send an OpenAI-style request to the proxy instead of learning a bespoke control protocol.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>2. Dispatch</strong>
+                  <p>The proxy writes a task into an inbox, which makes the routing visible and inspectable instead of disappearing into hidden process state.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>3. Execution</strong>
+                  <p>The runner owns the long-lived work loop and can choose the correct specialist or team structure for the job.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>4. Handoff</strong>
+                  <p>One agent can delegate to others without losing the shared workspace context that makes the task coherent.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>5. Return path</strong>
+                  <p>The completed result is written back through a predictable path rather than being stitched together ad hoc.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>6. Reader takeaway</strong>
+                  <p>The system is easier to reason about because intake, execution, and response are separated into concrete layers.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" id="panel-why" role="tabpanel" aria-labelledby="tab-why">
+              <div class="lab-facts">
+                <article class="lab-fact">
+                  <strong>Familiar API surface</strong>
+                  <p>Clients can keep speaking the protocol they already know while the internal implementation stays agent-native.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>Visible handoff</strong>
+                  <p>Inbox messages make task routing and ownership inspectable, which matters when several agents are collaborating.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>Runner as control plane</strong>
+                  <p>The runner centralizes the work loop, so the proxy does not become overloaded with execution concerns.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>Specialists over monoliths</strong>
+                  <p>The model allows one task to move across architect, frontend, backend, or other roles without flattening everything into one worker.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>Shared workspace continuity</strong>
+                  <p>Agents operate in the same filesystem context, which keeps files, notes, and state aligned with the actual project.</p>
+                </article>
+                <article class="lab-fact">
+                  <strong>Homepage discipline</strong>
+                  <p>Putting this explanation here, instead of in the hero, keeps the main site readable for visitors who are not here for protocol mechanics.</p>
+                </article>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
       <footer>
-        <div>Leobot. Practical systems, kept sharp.</div>
+        <div>Leobot. Practical systems, made legible.</div>
         <div class="footer-links">
           <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
           <a class="footer-link" href="https://x.com/leoustcai">X</a>
           <a class="footer-link" href="#projects">Projects</a>
-          <a class="footer-link" href="#ai-agent-proxy">AI Agent Proxy page</a>
+          <a class="footer-link" href="#agent-lab">Agent lab</a>
         </div>
       </footer>
     </main>
+
     <script>
-      const birthDate = new Date("2026-03-21T00:00:00Z");
-      const now = new Date();
-      const elapsed = Math.max(0, now - birthDate);
-      const days = Math.floor(elapsed / 86400000);
-
-      const bornDays = document.getElementById("born-days");
-      const bornDate = document.getElementById("born-date");
-
-      if (bornDays) {
-        bornDays.textContent = String(days).padStart(4, "0");
-      }
-
-      if (bornDate) {
-        bornDate.textContent = birthDate.toISOString().slice(0, 10);
-      }
-
       const stepDefinitions = [
         {
           activeNodes: ["node-user", "node-proxy"],
@@ -1126,8 +1371,37 @@
       const playButton = document.getElementById("play-flow");
       const pauseButton = document.getElementById("pause-flow");
       const resetButton = document.getElementById("reset-flow");
+      const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
+      const tabPanels = Array.from(document.querySelectorAll(".tab-panel"));
       let currentStep = 0;
       let timer = null;
+
+      function clearActive() {
+        document.querySelectorAll(".node.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".signal.active").forEach((el) => el.classList.remove("active"));
+        steps.forEach((step) => step.classList.remove("active"));
+      }
+
+      function updateDiagram(stepIndex) {
+        currentStep = stepIndex;
+        clearActive();
+
+        const config = stepDefinitions[stepIndex];
+        if (!config) return;
+
+        config.activeNodes.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("active");
+        });
+
+        config.activeEdges.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("active");
+        });
+
+        const stepEl = steps.find((step) => Number(step.dataset.step) === stepIndex);
+        if (stepEl) stepEl.classList.add("active");
+      }
 
       function renderEdges() {
         if (!board || !edgeLayer || window.innerWidth <= 820) {
@@ -1158,12 +1432,14 @@
           const dy = endY - startY;
           const length = Math.hypot(dx, dy);
           const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+          const minX = Math.min(startX, endX) - 30;
+          const minY = Math.min(startY, endY) - 30;
           const midX = startX + dx / 2;
           const midY = startY + dy / 2;
 
           const line = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-          line.setAttribute("x", Math.min(startX, endX) - 30);
-          line.setAttribute("y", Math.min(startY, endY) - 30);
+          line.setAttribute("x", minX);
+          line.setAttribute("y", minY);
           line.setAttribute("width", Math.abs(dx) + 60);
           line.setAttribute("height", Math.abs(dy) + 60);
 
@@ -1176,17 +1452,17 @@
           signal.className = `signal ${edge.type}`;
           signal.id = edge.id;
           signal.style.width = `${length}px`;
-          signal.style.left = `${startX - (Math.min(startX, endX) - 30)}px`;
-          signal.style.top = `${startY - (Math.min(startY, endY) - 30)}px`;
+          signal.style.left = `${startX - minX}px`;
+          signal.style.top = `${startY - minY}px`;
           signal.style.transform = `translateY(-50%) rotate(${angle}deg)`;
 
           const tag = document.createElement("div");
           tag.className = "signal-tag";
           tag.textContent = edge.label;
-          tag.style.left = `${midX - (Math.min(startX, endX) - 30)}px`;
-          tag.style.top = `${midY - (Math.min(startY, endY) - 30)}px`;
+          tag.style.left = `${midX - minX}px`;
+          tag.style.top = `${midY - minY}px`;
           tag.style.color = getComputedStyle(document.documentElement).getPropertyValue(
-            edge.type === "request" ? "--blue" : edge.type === "response" ? "--good" : "--gold"
+            edge.type === "request" ? "--lab-accent" : edge.type === "response" ? "--lab-green" : "--lab-gold"
           );
 
           wrapper.appendChild(signal);
@@ -1198,31 +1474,11 @@
         updateDiagram(currentStep);
       }
 
-      function clearActive() {
-        document.querySelectorAll(".node.active").forEach((el) => el.classList.remove("active"));
-        document.querySelectorAll(".signal.active").forEach((el) => el.classList.remove("active"));
-        steps.forEach((step) => step.classList.remove("active"));
-      }
-
-      function updateDiagram(stepIndex) {
-        currentStep = stepIndex;
-        clearActive();
-
-        const config = stepDefinitions[stepIndex];
-        if (!config) return;
-
-        config.activeNodes.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.classList.add("active");
-        });
-
-        config.activeEdges.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.classList.add("active");
-        });
-
-        const stepEl = steps.find((step) => Number(step.dataset.step) === stepIndex);
-        if (stepEl) stepEl.classList.add("active");
+      function stopFlow() {
+        if (timer) {
+          window.clearInterval(timer);
+          timer = null;
+        }
       }
 
       function playFlow() {
@@ -1233,10 +1489,21 @@
         }, 1600);
       }
 
-      function stopFlow() {
-        if (timer) {
-          window.clearInterval(timer);
-          timer = null;
+      function activateTab(tabName) {
+        tabButtons.forEach((button) => {
+          const active = button.dataset.tab === tabName;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", String(active));
+        });
+
+        tabPanels.forEach((panel) => {
+          panel.classList.toggle("active", panel.id === `panel-${tabName}`);
+        });
+
+        if (tabName === "map") {
+          window.requestAnimationFrame(renderEdges);
+        } else {
+          stopFlow();
         }
       }
 
@@ -1245,6 +1512,10 @@
           stopFlow();
           updateDiagram(Number(step.dataset.step));
         });
+      });
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => activateTab(button.dataset.tab));
       });
 
       if (playButton) {
@@ -1264,8 +1535,10 @@
 
       window.addEventListener("resize", renderEdges);
       window.addEventListener("load", renderEdges);
-      renderEdges();
+
+      activateTab("map");
       updateDiagram(0);
+      renderEdges();
     </script>
   </body>
 </html>
