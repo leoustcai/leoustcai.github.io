@@ -1022,19 +1022,17 @@
           <div>
             <span class="eyebrow">Homepage for people who need the mechanics</span>
             <h1 class="hero-mark">Leobot</h1>
-            <h2 class="hero-thesis">A cleaner front page for the stack behind agent work.</h2>
+            <h2 class="hero-thesis">Shared-workspace tools for routing, running, and explaining AI agent work.</h2>
             <p class="hero-lead">
-              Understand what each project does, how the shared workspace operates, and where the AI-specific machinery starts without wading through a vague landing page.
+              Leobot is the public explanation layer for a toolchain that takes requests in, routes them to agents, lets them work in one shared workspace, and publishes the result back out.
             </p>
             <p class="hero-copy">
-              This site is for readers trying to understand how the surrounding projects fit together without being forced through a generic AI landing page.
-              The homepage explains the product stack first. The deeper <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> mechanics live
-              in a deliberately separate technical annex, so the explanation stays readable.
+              Start here if you want the plain version: what the projects are, what each one owns, and how they combine into a system for durable agent work.
+              The deeper <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> details stay in a separate annex so the main story remains readable.
             </p>
             <div class="hero-actions">
-              <a class="button-link primary" href="#ledger">Read the stack</a>
-              <a class="button-link" href="#operating-model">See the sequence</a>
-              <a class="button-link" href="#agent-annex">Open the AI annex</a>
+              <a class="button-link primary" href="#ledger">See the stack</a>
+              <a class="button-link" href="#operating-model">How it works</a>
             </div>
             <div class="hero-meta" aria-label="Design context">
               <span class="meta-pill">Audience: people learning the mechanics</span>
@@ -1044,15 +1042,15 @@
             <div class="hero-proof" aria-label="What the homepage helps you do">
               <article class="hero-proof-card">
                 <strong>Orient in one pass</strong>
-                <p>The first screen tells you what this site covers, where to start, and which section is optional depth.</p>
+                <p>The first screen defines the system, tells you where to start, and keeps the optional detail separate.</p>
               </article>
               <article class="hero-proof-card">
                 <strong>Read by decision</strong>
                 <p>Jump straight to project inventory, operating sequence, or AI mechanics depending on what you need.</p>
               </article>
               <article class="hero-proof-card">
-                <strong>Keep the split intact</strong>
-                <p>The annex still holds dense system behavior, but it no longer overwhelms the homepage story.</p>
+                <strong>Go deeper only when needed</strong>
+                <p>The annex still covers dense system behavior, but the main page now stands on its own for newcomers.</p>
               </article>
             </div>
           </div>
@@ -1108,8 +1106,7 @@
             <h2>Three lanes. No blurred story.</h2>
           </div>
           <p>
-            The redesign tightens the message into three distinct jobs: show the product stack, explain the operating model, and quarantine the
-            AI request lifecycle in a visibly separate section.
+            The page now does three simple jobs: define the system, show the projects inside it, and keep low-level AI execution detail in a separate appendix.
           </p>
         </div>
 
@@ -1157,7 +1154,7 @@
             <h2>Project ledger</h2>
           </div>
           <p>
-            Each entry is framed by role first: what it does, what boundary it owns, and why it matters to someone trying to understand the stack.
+            Together these projects form one system: request intake, shared execution, Git-backed handoff, reusable skills, and a public explanation layer.
           </p>
         </div>
 
@@ -1280,23 +1277,23 @@
           </article>
 
           <article class="checkpoints">
-            <div class="mini-label">What changed in the redesign</div>
+            <div class="mini-label">What the system delivers</div>
             <div class="checkpoint-grid">
               <div class="checkpoint">
-                <h4>Sharper hierarchy</h4>
-                <p>The hero now establishes the message, the ledger carries the stack, and the annex handles dense technical detail.</p>
+                <h4>Clear request intake</h4>
+                <p>Messages and tasks can enter through a proxy layer instead of requiring every agent to own every external surface directly.</p>
               </div>
               <div class="checkpoint">
-                <h4>Cleaner pacing</h4>
-                <p>Sections no longer compete with each other. The page alternates between explanation, inventory, and appendix.</p>
+                <h4>Durable execution</h4>
+                <p>Agents work against the same notes, files, and project state rather than isolated chat sessions with no shared memory.</p>
               </div>
               <div class="checkpoint">
-                <h4>Intentional contrast</h4>
-                <p>The AI mechanics live in a darker, separate environment so the split feels structural rather than cosmetic.</p>
+                <h4>Git-backed handoff</h4>
+                <p>Repository state stays attached to the work, which makes reviews, continuation, and ownership transfer much easier.</p>
               </div>
               <div class="checkpoint">
-                <h4>Responsive by default</h4>
-                <p>The layout collapses into single-column reading on smaller screens without hiding any critical explanation.</p>
+                <h4>Public visibility</h4>
+                <p>The website and linked surfaces explain what the system is doing so the output is inspectable instead of trapped inside the workspace.</p>
               </div>
             </div>
           </article>
