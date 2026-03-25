@@ -19,6 +19,7 @@
         --bg: #f4efe6;
         --bg-deep: #eadfcd;
         --paper: rgba(255, 251, 245, 0.78);
+        --paper-strong: rgba(255, 250, 243, 0.92);
         --ink: #1e1914;
         --muted: #61574d;
         --line: rgba(30, 25, 20, 0.14);
@@ -26,6 +27,12 @@
         --accent-soft: rgba(182, 71, 46, 0.12);
         --shadow: 0 30px 80px rgba(34, 25, 17, 0.08);
         --max: 1180px;
+        --good: #2b7a4b;
+        --good-soft: rgba(43, 122, 75, 0.14);
+        --blue: #1f5eff;
+        --blue-soft: rgba(31, 94, 255, 0.12);
+        --gold: #9d6a00;
+        --gold-soft: rgba(157, 106, 0, 0.12);
       }
 
       * {
@@ -61,11 +68,10 @@
         padding: 1rem 0 3.5rem;
       }
 
-      .hero-shell {
+      .hero-shell,
+      .diagram-shell {
         position: relative;
         overflow: hidden;
-        min-height: calc(100svh - 2rem);
-        padding: 1.1rem clamp(1.2rem, 3vw, 2rem) 1.8rem;
         border: 1px solid rgba(30, 25, 20, 0.08);
         background:
           linear-gradient(135deg, rgba(255, 251, 245, 0.88), rgba(245, 233, 217, 0.72)),
@@ -73,8 +79,20 @@
         box-shadow: var(--shadow);
       }
 
+      .hero-shell {
+        min-height: calc(100svh - 2rem);
+        padding: 1.1rem clamp(1.2rem, 3vw, 2rem) 1.8rem;
+      }
+
+      .diagram-shell {
+        margin-top: 1.4rem;
+        padding: clamp(1.2rem, 3vw, 2rem);
+      }
+
       .hero-shell::before,
-      .hero-shell::after {
+      .hero-shell::after,
+      .diagram-shell::before,
+      .diagram-shell::after {
         content: "";
         position: absolute;
         border-radius: 999px;
@@ -97,9 +115,27 @@
         background: radial-gradient(circle, rgba(94, 76, 56, 0.14), transparent 70%);
       }
 
+      .diagram-shell::before {
+        top: -5rem;
+        left: -5rem;
+        width: 16rem;
+        height: 16rem;
+        background: radial-gradient(circle, rgba(31, 94, 255, 0.12), transparent 68%);
+      }
+
+      .diagram-shell::after {
+        right: -6rem;
+        bottom: -6rem;
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(circle, rgba(43, 122, 75, 0.12), transparent 68%);
+      }
+
       .topbar,
       .hero-floor,
       .project-row,
+      .diagram-head,
+      .diagram-grid,
       footer {
         position: relative;
         z-index: 1;
@@ -118,7 +154,11 @@
       .eyebrow,
       .project-kind,
       .project-index,
-      .footer-link {
+      .footer-link,
+      .diagram-kicker,
+      .step-index,
+      .panel-label,
+      .signal-tag {
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
@@ -141,7 +181,8 @@
         padding-top: clamp(1.6rem, 4vw, 3rem);
       }
 
-      .eyebrow {
+      .eyebrow,
+      .diagram-kicker {
         display: inline-block;
         margin: 0 0 1.2rem;
         font-size: 0.72rem;
@@ -228,11 +269,13 @@
         font-size: 0.92rem;
       }
 
-      .projects {
+      .projects,
+      .diagram {
         padding-top: clamp(2.4rem, 6vw, 5rem);
       }
 
-      .projects-head {
+      .projects-head,
+      .diagram-head {
         display: grid;
         grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
         gap: 1rem;
@@ -241,12 +284,14 @@
         border-bottom: 1px solid var(--line);
       }
 
-      .projects-head h2 {
+      .projects-head h2,
+      .diagram-head h2 {
         font-size: clamp(2.2rem, 6vw, 4.6rem);
       }
 
-      .projects-head p {
-        max-width: 34rem;
+      .projects-head p,
+      .diagram-head p {
+        max-width: 36rem;
         margin: 0;
         color: var(--muted);
         line-height: 1.72;
@@ -303,23 +348,289 @@
         color: var(--muted);
       }
 
-      .project-links {
+      .project-links,
+      .diagram-links,
+      .chip-row,
+      .legend-row {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
+      }
+
+      .project-links {
         margin-top: 0.8rem;
       }
 
       .project-links a,
-      .footer-link {
+      .footer-link,
+      .diagram-links a {
         text-decoration: none;
         font-size: 0.8rem;
         font-weight: 800;
       }
 
       .project-links a:hover,
-      .footer-link:hover {
+      .footer-link:hover,
+      .diagram-links a:hover {
         color: var(--accent);
+      }
+
+      .diagram-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(20rem, 0.9fr);
+        gap: 1.2rem;
+        align-items: start;
+        padding-top: 1.35rem;
+      }
+
+      .diagram-board {
+        position: relative;
+        min-height: 44rem;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,0.44), rgba(255,250,243,0.82));
+        overflow: hidden;
+      }
+
+      .node {
+        position: absolute;
+        width: 14rem;
+        padding: 0.95rem;
+        border: 1px solid var(--line);
+        background: var(--paper-strong);
+        box-shadow: 0 18px 40px rgba(34, 25, 17, 0.06);
+        transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease, opacity 260ms ease;
+      }
+
+      .node:hover {
+        transform: translateY(-3px);
+        border-color: rgba(182, 71, 46, 0.28);
+      }
+
+      .node.active {
+        border-color: rgba(182, 71, 46, 0.44);
+        box-shadow: 0 22px 60px rgba(182, 71, 46, 0.12);
+      }
+
+      .node.user { top: 2rem; left: 2rem; }
+      .node.proxy { top: 2rem; left: calc(50% - 7rem); }
+      .node.inbox { top: 12rem; left: calc(50% - 7rem); }
+      .node.runner { top: 22rem; left: calc(50% - 7rem); }
+      .node.team-a { top: 32rem; left: 2rem; }
+      .node.team-b { top: 32rem; left: calc(50% - 7rem); }
+      .node.team-c { top: 32rem; right: 2rem; }
+      .node.reply { top: 12rem; right: 2rem; }
+
+      .node-type {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--muted);
+        margin-bottom: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .node h3 {
+        font-size: 1.35rem;
+        line-height: 1;
+      }
+
+      .node p {
+        margin: 0.55rem 0 0;
+        color: var(--muted);
+        line-height: 1.58;
+        font-size: 0.96rem;
+      }
+
+      .node.user .node-type,
+      .signal.response { color: var(--good); }
+      .node.proxy .node-type,
+      .signal.request { color: var(--blue); }
+      .node.runner .node-type,
+      .signal.handoff { color: var(--gold); }
+
+      .edge-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .signal {
+        position: absolute;
+        height: 2px;
+        transform-origin: 0 50%;
+        border-radius: 999px;
+        opacity: 0.28;
+        transition: opacity 240ms ease, transform 240ms ease;
+      }
+
+      .signal::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -1px;
+        width: 0.85rem;
+        height: 0.85rem;
+        border-top: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      .signal.request {
+        color: var(--blue);
+        background: linear-gradient(90deg, rgba(31, 94, 255, 0.12), rgba(31, 94, 255, 0.78));
+      }
+
+      .signal.response {
+        color: var(--good);
+        background: linear-gradient(90deg, rgba(43, 122, 75, 0.12), rgba(43, 122, 75, 0.78));
+      }
+
+      .signal.handoff {
+        color: var(--gold);
+        background: linear-gradient(90deg, rgba(157, 106, 0, 0.12), rgba(157, 106, 0, 0.78));
+      }
+
+      .signal.active {
+        opacity: 1;
+        animation: pulseLine 1.3s ease-in-out infinite alternate;
+      }
+
+      .signal-tag {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        padding: 0.28rem 0.45rem;
+        border: 1px solid currentColor;
+        background: rgba(255, 251, 245, 0.88);
+        font-size: 0.58rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .diagram-panel {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .panel-card {
+        padding: 1rem;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        backdrop-filter: blur(10px);
+      }
+
+      .panel-label {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 0.55rem;
+      }
+
+      .panel-card p,
+      .panel-card li {
+        color: var(--muted);
+        line-height: 1.68;
+      }
+
+      .panel-card ul,
+      .steps {
+        margin: 0.8rem 0 0;
+        padding-left: 1rem;
+      }
+
+      .steps {
+        list-style: none;
+        padding-left: 0;
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 2.2rem minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: start;
+        padding: 0.72rem;
+        border: 1px solid transparent;
+        background: rgba(255,255,255,0.34);
+        transition: border-color 220ms ease, background 220ms ease, transform 220ms ease;
+        cursor: pointer;
+      }
+
+      .step:hover,
+      .step.active {
+        transform: translateX(0.2rem);
+        border-color: rgba(182, 71, 46, 0.2);
+        background: rgba(255,255,255,0.62);
+      }
+
+      .step-index {
+        display: inline-grid;
+        place-items: center;
+        width: 2.2rem;
+        aspect-ratio: 1;
+        border: 1px solid var(--line);
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--accent);
+      }
+
+      .step strong {
+        display: block;
+        margin-bottom: 0.18rem;
+        color: var(--ink);
+      }
+
+      .step span {
+        display: block;
+        color: var(--muted);
+        line-height: 1.58;
+        font-size: 0.94rem;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 0.95rem;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.72);
+        color: var(--ink);
+        padding: 0.72rem 0.9rem;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        border-color: rgba(182, 71, 46, 0.3);
+        background: rgba(255,255,255,0.96);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.52rem 0.72rem;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.5);
+        font-size: 0.84rem;
+      }
+
+      .chip-dot {
+        width: 0.62rem;
+        height: 0.62rem;
+        border-radius: 999px;
+      }
+
+      .legend-row {
+        margin-top: 0.8rem;
       }
 
       footer {
@@ -339,12 +650,19 @@
         gap: 1rem;
       }
 
+      @keyframes pulseLine {
+        from { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+        to { filter: drop-shadow(0 0 10px rgba(182, 71, 46, 0.18)); }
+      }
+
       @media (prefers-reduced-motion: no-preference) {
         .hero-shell::before {
           animation: float 11s ease-in-out infinite alternate;
         }
 
-        .hero-shell::after {
+        .hero-shell::after,
+        .diagram-shell::before,
+        .diagram-shell::after {
           animation: float 13s ease-in-out infinite alternate-reverse;
         }
 
@@ -354,6 +672,8 @@
         .hero-rail,
         .projects-head,
         .project-row,
+        .diagram-head,
+        .diagram-grid,
         footer {
           animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
@@ -405,10 +725,21 @@
         }
       }
 
+      @media (max-width: 1100px) {
+        .diagram-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .diagram-board {
+          min-height: 52rem;
+        }
+      }
+
       @media (max-width: 960px) {
         .hero-floor,
         .projects-head,
-        .project-row {
+        .project-row,
+        .diagram-head {
           grid-template-columns: 1fr;
         }
 
@@ -418,6 +749,35 @@
 
         .project-index {
           padding-top: 0;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .diagram-board {
+          min-height: auto;
+          display: grid;
+          gap: 0.9rem;
+        }
+
+        .node,
+        .node.user,
+        .node.proxy,
+        .node.inbox,
+        .node.runner,
+        .node.team-a,
+        .node.team-b,
+        .node.team-c,
+        .node.reply {
+          position: relative;
+          inset: auto;
+          width: 100%;
+          left: auto;
+          right: auto;
+          top: auto;
+        }
+
+        .edge-layer {
+          display: none;
         }
       }
     </style>
@@ -458,9 +818,155 @@
             </div>
             <div class="rail-card">
               <strong>Focus</strong>
-              <p>Git2, OpenClaw, live publishing work, and reusable skills that make daily agent work less fragile.</p>
+              <p>Git2, OpenClaw, live publishing work, reusable skills, and agent infrastructure that can actually hand work around.</p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="diagram" id="ai-agent-proxy">
+        <div class="diagram-shell">
+          <div class="diagram-head">
+            <div>
+              <span class="diagram-kicker">New page</span>
+              <h2>AI Agent Proxy + Agent Runner working diagram</h2>
+            </div>
+            <div>
+              <p>
+                An interactive view of the flow you described: a user sends an OpenAI-style or vLLM-style API request to
+                <strong>ai-agent-proxy</strong>, the proxy writes a task into an agent inbox, the <strong>agent runner</strong>
+                picks it up, the team can hand work across agents, and the reply returns through the same chain.
+              </p>
+            </div>
+          </div>
+
+          <div class="diagram-grid">
+            <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy working diagram">
+              <svg class="edge-layer" id="edge-layer" aria-hidden="true"></svg>
+
+              <article class="node user" id="node-user">
+                <div class="node-type">External caller</div>
+                <h3>User / Client</h3>
+                <p>Sends a chat-completions style request to the proxy, compatible with OpenAI or vLLM-style patterns.</p>
+              </article>
+
+              <article class="node proxy" id="node-proxy">
+                <div class="node-type">API front door</div>
+                <h3>ai-agent-proxy</h3>
+                <p>Accepts the API request, maps it to an agent, and writes a task message into that agent’s inbox.</p>
+              </article>
+
+              <article class="node inbox" id="node-inbox">
+                <div class="node-type">Task queue</div>
+                <h3>Agent inbox</h3>
+                <p>A filesystem inbox where work lands as messages for the selected agent or role.</p>
+              </article>
+
+              <article class="node runner" id="node-runner">
+                <div class="node-type">Worker loop</div>
+                <h3>Agent runner</h3>
+                <p>Watches inbox folders, picks up tasks, launches the assigned agent, and manages the work lifecycle.</p>
+              </article>
+
+              <article class="node team-a" id="node-team-a">
+                <div class="node-type">Team agent</div>
+                <h3>Architect</h3>
+                <p>Can plan, split, redirect, or reshape the task before passing it deeper into the team.</p>
+              </article>
+
+              <article class="node team-b" id="node-team-b">
+                <div class="node-type">Team agent</div>
+                <h3>Frontend engineer</h3>
+                <p>Handles UI, diagrams, pages, interactive surfaces, and presentation logic when that work is handed off.</p>
+              </article>
+
+              <article class="node team-c" id="node-team-c">
+                <div class="node-type">Team agent</div>
+                <h3>Backend engineer</h3>
+                <p>Handles server behavior, logic, and implementation details when the task needs backend execution.</p>
+              </article>
+
+              <article class="node reply" id="node-reply">
+                <div class="node-type">Response path</div>
+                <h3>Reply</h3>
+                <p>The completed result is written back, collected by the proxy layer, and returned to the original caller.</p>
+              </article>
+            </div>
+
+            <aside class="diagram-panel">
+              <div class="panel-card">
+                <div class="panel-label">Mechanism</div>
+                <p>
+                  This page is powered by JavaScript. The diagram highlights the path step-by-step so the flow is readable instead of static.
+                </p>
+                <div class="chip-row">
+                  <span class="chip"><span class="chip-dot" style="background: var(--blue);"></span> Request flow</span>
+                  <span class="chip"><span class="chip-dot" style="background: var(--gold);"></span> Team handoff</span>
+                  <span class="chip"><span class="chip-dot" style="background: var(--good);"></span> Response flow</span>
+                </div>
+              </div>
+
+              <div class="panel-card">
+                <div class="panel-label">Flow walkthrough</div>
+                <ol class="steps" id="steps">
+                  <li class="step active" data-step="0">
+                    <div class="step-index">01</div>
+                    <div>
+                      <strong>Request enters the proxy</strong>
+                      <span>User sends an OpenAI-style or vLLM-like API request to ai-agent-proxy.</span>
+                    </div>
+                  </li>
+                  <li class="step" data-step="1">
+                    <div class="step-index">02</div>
+                    <div>
+                      <strong>Proxy writes to inbox</strong>
+                      <span>The proxy converts the request into a task message and places it in the chosen agent inbox.</span>
+                    </div>
+                  </li>
+                  <li class="step" data-step="2">
+                    <div class="step-index">03</div>
+                    <div>
+                      <strong>Runner picks it up</strong>
+                      <span>The agent runner watches that inbox, reads the task, and launches the assigned agent flow.</span>
+                    </div>
+                  </li>
+                  <li class="step" data-step="3">
+                    <div class="step-index">04</div>
+                    <div>
+                      <strong>Agent team handoff</strong>
+                      <span>The active agent can hand work to other team agents however it wants: architect, frontend, backend, or others.</span>
+                    </div>
+                  </li>
+                  <li class="step" data-step="4">
+                    <div class="step-index">05</div>
+                    <div>
+                      <strong>Result comes back</strong>
+                      <span>The completed output returns through the runner/proxy path and goes back to the caller as the API response.</span>
+                    </div>
+                  </li>
+                </ol>
+
+                <div class="controls">
+                  <button id="play-flow" type="button">Play flow</button>
+                  <button id="pause-flow" type="button">Pause</button>
+                  <button id="reset-flow" type="button">Reset</button>
+                </div>
+              </div>
+
+              <div class="panel-card">
+                <div class="panel-label">Why this matters</div>
+                <ul>
+                  <li>The API surface stays familiar to clients that already speak OpenAI-style chat APIs.</li>
+                  <li>The proxy and runner separate request intake from actual agent execution.</li>
+                  <li>The inbox layer makes dispatch visible, inspectable, and easy to reason about.</li>
+                  <li>Team handoff lets one agent orchestrate specialists instead of forcing a single monolithic worker.</li>
+                </ul>
+                <div class="diagram-links">
+                  <a href="#projects">Back to project ledger</a>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
 
@@ -478,7 +984,7 @@
               <h3 class="project-title">git2</h3>
             </div>
             <div>
-              <p class="project-summary">A Python wrapper around system Git with a custom `branch2` flow for agent handoff.</p>
+              <p class="project-summary">A Python wrapper around system Git with a custom <code>branch2</code> flow for agent handoff.</p>
               <p class="project-why">Built to keep multi-agent work on a real shared filesystem without dragging a Git fork forward forever.</p>
               <div class="project-links">
                 <a href="https://github.com/leoustcai/git2">Repository</a>
@@ -555,6 +1061,7 @@
           <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
           <a class="footer-link" href="https://x.com/leoustcai">X</a>
           <a class="footer-link" href="#projects">Projects</a>
+          <a class="footer-link" href="#ai-agent-proxy">AI Agent Proxy page</a>
         </div>
       </footer>
     </main>
@@ -574,6 +1081,191 @@
       if (bornDate) {
         bornDate.textContent = birthDate.toISOString().slice(0, 10);
       }
+
+      const stepDefinitions = [
+        {
+          activeNodes: ["node-user", "node-proxy"],
+          activeEdges: ["edge-user-proxy"],
+        },
+        {
+          activeNodes: ["node-proxy", "node-inbox"],
+          activeEdges: ["edge-proxy-inbox"],
+        },
+        {
+          activeNodes: ["node-inbox", "node-runner"],
+          activeEdges: ["edge-inbox-runner"],
+        },
+        {
+          activeNodes: ["node-runner", "node-team-a", "node-team-b", "node-team-c"],
+          activeEdges: ["edge-runner-team-a", "edge-runner-team-b", "edge-runner-team-c", "edge-team-a-runner", "edge-team-b-runner", "edge-team-c-runner"],
+        },
+        {
+          activeNodes: ["node-runner", "node-reply", "node-proxy", "node-user"],
+          activeEdges: ["edge-runner-reply", "edge-reply-proxy", "edge-proxy-user"],
+        },
+      ];
+
+      const edgeDefinitions = [
+        { id: "edge-user-proxy", from: "node-user", to: "node-proxy", type: "request", label: "API request" },
+        { id: "edge-proxy-inbox", from: "node-proxy", to: "node-inbox", type: "request", label: "Write task" },
+        { id: "edge-inbox-runner", from: "node-inbox", to: "node-runner", type: "request", label: "Pickup" },
+        { id: "edge-runner-team-a", from: "node-runner", to: "node-team-a", type: "handoff", label: "Plan" },
+        { id: "edge-runner-team-b", from: "node-runner", to: "node-team-b", type: "handoff", label: "UI task" },
+        { id: "edge-runner-team-c", from: "node-runner", to: "node-team-c", type: "handoff", label: "Backend task" },
+        { id: "edge-team-a-runner", from: "node-team-a", to: "node-runner", type: "handoff", label: "Return" },
+        { id: "edge-team-b-runner", from: "node-team-b", to: "node-runner", type: "handoff", label: "Return" },
+        { id: "edge-team-c-runner", from: "node-team-c", to: "node-runner", type: "handoff", label: "Return" },
+        { id: "edge-runner-reply", from: "node-runner", to: "node-reply", type: "response", label: "Compose reply" },
+        { id: "edge-reply-proxy", from: "node-reply", to: "node-proxy", type: "response", label: "Response ready" },
+        { id: "edge-proxy-user", from: "node-proxy", to: "node-user", type: "response", label: "API response" },
+      ];
+
+      const board = document.getElementById("diagram-board");
+      const edgeLayer = document.getElementById("edge-layer");
+      const steps = Array.from(document.querySelectorAll(".step"));
+      const playButton = document.getElementById("play-flow");
+      const pauseButton = document.getElementById("pause-flow");
+      const resetButton = document.getElementById("reset-flow");
+      let currentStep = 0;
+      let timer = null;
+
+      function renderEdges() {
+        if (!board || !edgeLayer || window.innerWidth <= 820) {
+          if (edgeLayer) edgeLayer.innerHTML = "";
+          return;
+        }
+
+        const boardRect = board.getBoundingClientRect();
+        edgeLayer.setAttribute("viewBox", `0 0 ${boardRect.width} ${boardRect.height}`);
+        edgeLayer.setAttribute("width", boardRect.width);
+        edgeLayer.setAttribute("height", boardRect.height);
+        edgeLayer.innerHTML = "";
+
+        edgeDefinitions.forEach((edge) => {
+          const fromEl = document.getElementById(edge.from);
+          const toEl = document.getElementById(edge.to);
+          if (!fromEl || !toEl) return;
+
+          const fromRect = fromEl.getBoundingClientRect();
+          const toRect = toEl.getBoundingClientRect();
+
+          const startX = fromRect.left - boardRect.left + fromRect.width / 2;
+          const startY = fromRect.top - boardRect.top + fromRect.height / 2;
+          const endX = toRect.left - boardRect.left + toRect.width / 2;
+          const endY = toRect.top - boardRect.top + toRect.height / 2;
+
+          const dx = endX - startX;
+          const dy = endY - startY;
+          const length = Math.hypot(dx, dy);
+          const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+          const midX = startX + dx / 2;
+          const midY = startY + dy / 2;
+
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+          line.setAttribute("x", Math.min(startX, endX) - 30);
+          line.setAttribute("y", Math.min(startY, endY) - 30);
+          line.setAttribute("width", Math.abs(dx) + 60);
+          line.setAttribute("height", Math.abs(dy) + 60);
+
+          const wrapper = document.createElement("div");
+          wrapper.style.width = `${Math.abs(dx) + 60}px`;
+          wrapper.style.height = `${Math.abs(dy) + 60}px`;
+          wrapper.style.position = "relative";
+
+          const signal = document.createElement("div");
+          signal.className = `signal ${edge.type}`;
+          signal.id = edge.id;
+          signal.style.width = `${length}px`;
+          signal.style.left = `${startX - (Math.min(startX, endX) - 30)}px`;
+          signal.style.top = `${startY - (Math.min(startY, endY) - 30)}px`;
+          signal.style.transform = `translateY(-50%) rotate(${angle}deg)`;
+
+          const tag = document.createElement("div");
+          tag.className = "signal-tag";
+          tag.textContent = edge.label;
+          tag.style.left = `${midX - (Math.min(startX, endX) - 30)}px`;
+          tag.style.top = `${midY - (Math.min(startY, endY) - 30)}px`;
+          tag.style.color = getComputedStyle(document.documentElement).getPropertyValue(
+            edge.type === "request" ? "--blue" : edge.type === "response" ? "--good" : "--gold"
+          );
+
+          wrapper.appendChild(signal);
+          wrapper.appendChild(tag);
+          line.appendChild(wrapper);
+          edgeLayer.appendChild(line);
+        });
+
+        updateDiagram(currentStep);
+      }
+
+      function clearActive() {
+        document.querySelectorAll(".node.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".signal.active").forEach((el) => el.classList.remove("active"));
+        steps.forEach((step) => step.classList.remove("active"));
+      }
+
+      function updateDiagram(stepIndex) {
+        currentStep = stepIndex;
+        clearActive();
+
+        const config = stepDefinitions[stepIndex];
+        if (!config) return;
+
+        config.activeNodes.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("active");
+        });
+
+        config.activeEdges.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("active");
+        });
+
+        const stepEl = steps.find((step) => Number(step.dataset.step) === stepIndex);
+        if (stepEl) stepEl.classList.add("active");
+      }
+
+      function playFlow() {
+        stopFlow();
+        timer = window.setInterval(() => {
+          currentStep = (currentStep + 1) % stepDefinitions.length;
+          updateDiagram(currentStep);
+        }, 1600);
+      }
+
+      function stopFlow() {
+        if (timer) {
+          window.clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      steps.forEach((step) => {
+        step.addEventListener("click", () => {
+          stopFlow();
+          updateDiagram(Number(step.dataset.step));
+        });
+      });
+
+      if (playButton) {
+        playButton.addEventListener("click", playFlow);
+      }
+
+      if (pauseButton) {
+        pauseButton.addEventListener("click", stopFlow);
+      }
+
+      if (resetButton) {
+        resetButton.addEventListener("click", () => {
+          stopFlow();
+          updateDiagram(0);
+        });
+      }
+
+      window.addEventListener("resize", renderEdges);
+      window.addEventListener("load", renderEdges);
+      renderEdges();
+      updateDiagram(0);
     </script>
   </body>
 </html>
