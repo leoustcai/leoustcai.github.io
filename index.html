@@ -6,7 +6,7 @@
     <title>Leobot</title>
     <meta
       name="description"
-      content="Leobot explains the mechanics behind agent work: shared-workspace runtimes, handoff infrastructure, Git workflows, and the systems that make them legible."
+      content="Leobot explains the mechanics behind ai-agent-proxy, agent-runner, and the surrounding shared-workspace systems with a sharper, production-grade homepage."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,26 +17,26 @@
     <style>
       :root {
         color-scheme: light;
-        --page: oklch(0.969 0.01 75);
-        --page-strong: oklch(0.926 0.022 72);
-        --surface: rgba(255, 251, 243, 0.84);
-        --surface-strong: rgba(255, 248, 238, 0.94);
-        --ink: oklch(0.215 0.02 42);
-        --muted: oklch(0.45 0.018 45);
-        --line: rgba(42, 30, 19, 0.12);
-        --accent: oklch(0.63 0.18 33);
-        --accent-quiet: rgba(186, 78, 44, 0.1);
-        --shadow: 0 24px 70px rgba(63, 39, 16, 0.08);
-        --lab-bg: oklch(0.19 0.026 250);
-        --lab-panel: rgba(18, 27, 45, 0.72);
-        --lab-panel-strong: rgba(14, 22, 38, 0.9);
-        --lab-line: rgba(193, 221, 255, 0.16);
-        --lab-ink: oklch(0.95 0.014 250);
-        --lab-muted: oklch(0.76 0.02 245);
-        --lab-accent: oklch(0.76 0.14 195);
-        --lab-gold: oklch(0.79 0.12 84);
-        --lab-green: oklch(0.8 0.14 152);
-        --max: 1240px;
+        --page: oklch(0.963 0.014 78);
+        --page-deep: oklch(0.915 0.025 73);
+        --paper: rgba(255, 249, 240, 0.82);
+        --paper-strong: rgba(255, 252, 247, 0.9);
+        --paper-line: rgba(54, 36, 23, 0.12);
+        --ink: oklch(0.23 0.023 40);
+        --muted: oklch(0.45 0.018 44);
+        --accent: oklch(0.61 0.175 34);
+        --accent-soft: rgba(186, 84, 43, 0.11);
+        --shadow: 0 30px 80px rgba(80, 52, 22, 0.12);
+        --deck-bg: oklch(0.19 0.028 252);
+        --deck-panel: rgba(16, 25, 42, 0.76);
+        --deck-panel-strong: rgba(12, 18, 32, 0.92);
+        --deck-line: rgba(189, 213, 244, 0.16);
+        --deck-ink: oklch(0.95 0.014 250);
+        --deck-muted: oklch(0.78 0.02 245);
+        --deck-accent: oklch(0.76 0.14 196);
+        --deck-gold: oklch(0.8 0.12 85);
+        --deck-green: oklch(0.8 0.14 152);
+        --max: 1260px;
       }
 
       * {
@@ -50,54 +50,55 @@
       body {
         margin: 0;
         min-height: 100vh;
-        color: var(--ink);
         font-family: "Instrument Sans", sans-serif;
+        color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 23%),
-          radial-gradient(circle at 80% 14%, rgba(214, 117, 69, 0.13), transparent 18%),
-          linear-gradient(180deg, var(--page), var(--page-strong));
+          radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.95), transparent 20%),
+          radial-gradient(circle at 82% 11%, rgba(205, 115, 70, 0.16), transparent 18%),
+          linear-gradient(180deg, var(--page), var(--page-deep));
       }
 
       a {
         color: inherit;
       }
 
-      button,
-      input,
-      textarea,
-      select {
+      button {
         font: inherit;
       }
 
       ::selection {
-        background: rgba(186, 78, 44, 0.18);
+        background: rgba(186, 84, 43, 0.18);
       }
 
       .page {
         width: min(var(--max), calc(100vw - 2rem));
         margin: 0 auto;
-        padding: 1rem 0 3.5rem;
+        padding: 1rem 0 3rem;
+      }
+
+      .shell,
+      .deck-shell {
+        position: relative;
+        overflow: clip;
       }
 
       .shell {
-        position: relative;
-        overflow: clip;
-        border: 1px solid rgba(42, 30, 19, 0.08);
+        border: 1px solid rgba(54, 36, 23, 0.08);
         background:
-          linear-gradient(145deg, rgba(255, 252, 246, 0.92), rgba(247, 236, 222, 0.82)),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 28%);
+          linear-gradient(150deg, rgba(255, 253, 248, 0.94), rgba(248, 237, 223, 0.84)),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 28%);
         box-shadow: var(--shadow);
       }
 
       .hero-shell {
         min-height: calc(100svh - 2rem);
-        padding: 1.15rem clamp(1.2rem, 3vw, 2.1rem) 1.6rem;
+        padding: 1.2rem clamp(1rem, 3vw, 2rem) 1.5rem;
       }
 
       .hero-shell::before,
       .hero-shell::after,
-      .lab-shell::before,
-      .lab-shell::after {
+      .deck-shell::before,
+      .deck-shell::after {
         content: "";
         position: absolute;
         border-radius: 999px;
@@ -105,27 +106,44 @@
       }
 
       .hero-shell::before {
-        top: -6rem;
+        top: -5rem;
         right: -4rem;
         width: 22rem;
         height: 22rem;
-        background: radial-gradient(circle, rgba(186, 78, 44, 0.18), transparent 70%);
+        background: radial-gradient(circle, rgba(186, 84, 43, 0.18), transparent 72%);
       }
 
       .hero-shell::after {
         left: -8rem;
-        bottom: -10rem;
+        bottom: -9rem;
         width: 28rem;
         height: 28rem;
-        background: radial-gradient(circle, rgba(127, 88, 49, 0.12), transparent 72%);
+        background: radial-gradient(circle, rgba(130, 96, 59, 0.14), transparent 72%);
+      }
+
+      .deck-shell::before {
+        top: -6rem;
+        right: -5rem;
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(circle, rgba(118, 189, 255, 0.18), transparent 70%);
+      }
+
+      .deck-shell::after {
+        left: -7rem;
+        bottom: -8rem;
+        width: 22rem;
+        height: 22rem;
+        background: radial-gradient(circle, rgba(111, 226, 172, 0.13), transparent 74%);
       }
 
       .topbar,
       .hero-grid,
-      .overview-grid,
+      .story,
       .section-head,
-      .lab-grid,
-      .lab-detail,
+      .deck-head,
+      .deck-grid,
+      .deck-detail,
       footer {
         position: relative;
         z-index: 1;
@@ -133,6 +151,7 @@
 
       .topbar,
       .section-head,
+      .deck-head,
       footer {
         display: flex;
         align-items: center;
@@ -142,22 +161,24 @@
 
       .topbar {
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--paper-line);
       }
 
       .brand,
       .micro,
       .eyebrow,
-      .stat-label,
       .section-kicker,
+      .meta-label,
+      .track-label,
       .project-kind,
       .tab-button,
       .node-type,
       .step-index,
       .signal-tag,
-      .footer-link {
-        text-transform: uppercase;
+      .footer-link,
+      .deck-note {
         letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
 
       .brand {
@@ -165,26 +186,21 @@
         font-weight: 800;
       }
 
-      .micro {
-        font-size: 0.74rem;
+      .micro,
+      .meta-copy,
+      .project-why,
+      .track p,
+      .section-head p,
+      .deck-head p,
+      .panel-card p,
+      .panel-card li,
+      .fact p,
+      footer {
         color: var(--muted);
       }
 
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr);
-        gap: clamp(1.8rem, 4vw, 4rem);
-        align-items: end;
-        padding-top: clamp(2rem, 5vw, 3.6rem);
-      }
-
-      .eyebrow,
-      .section-kicker {
-        display: inline-block;
-        margin-bottom: 1rem;
+      .micro {
         font-size: 0.74rem;
-        font-weight: 800;
-        color: var(--accent);
       }
 
       h1,
@@ -193,164 +209,217 @@
       h4 {
         margin: 0;
         font-family: "Syne", sans-serif;
-        line-height: 0.94;
+        line-height: 0.95;
         letter-spacing: -0.045em;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.22fr) minmax(20rem, 0.78fr);
+        gap: clamp(1.5rem, 4vw, 3.6rem);
+        align-items: end;
+        padding-top: clamp(2rem, 5vw, 3.6rem);
+      }
+
+      .eyebrow,
+      .section-kicker {
+        display: inline-block;
+        margin-bottom: 1rem;
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--accent);
       }
 
       .display {
         display: grid;
-        gap: 0.9rem;
+        gap: 0.8rem;
       }
 
-      .display .name {
-        font-size: clamp(4.1rem, 14vw, 8.7rem);
+      .name {
+        font-size: clamp(4rem, 13vw, 8.8rem);
       }
 
-      .display .thesis {
-        max-width: 10ch;
-        font-size: clamp(2rem, 6vw, 4.9rem);
+      .thesis {
+        max-width: 11ch;
+        font-size: clamp(2rem, 5.7vw, 5rem);
       }
 
       .hero-copy {
-        max-width: 38rem;
-        margin: 1.4rem 0 0;
+        max-width: 41rem;
+        margin: 1.35rem 0 0;
         font-size: clamp(1.02rem, 1.45vw, 1.18rem);
         line-height: 1.78;
-        color: var(--muted);
+      }
+
+      .hero-actions,
+      .hero-meta,
+      .project-links,
+      .tab-row,
+      .chip-row,
+      .legend-row,
+      .controls,
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
       }
 
       .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
         margin-top: 1.5rem;
       }
 
-      .button-link {
+      .button-link,
+      .tab-button,
+      button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         min-height: 3rem;
         padding: 0.72rem 1rem;
-        border: 1px solid var(--line);
+        border: 1px solid var(--paper-line);
+        background: rgba(255, 255, 255, 0.55);
+        color: inherit;
         text-decoration: none;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 800;
-        background: rgba(255, 255, 255, 0.54);
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
       }
 
       .button-link:hover,
       .tab-button:hover,
-      button:hover {
+      button:hover,
+      .project-card:hover,
+      .step:hover {
         transform: translateY(-1px);
       }
 
       .button-link.primary {
-        border-color: rgba(186, 78, 44, 0.2);
-        background: rgba(186, 78, 44, 0.12);
+        border-color: rgba(186, 84, 43, 0.2);
+        background: rgba(186, 84, 43, 0.12);
       }
 
       .hero-rail {
         display: grid;
-        gap: 1rem;
-        align-content: end;
+        gap: 0.9rem;
       }
 
-      .stat-card,
-      .focus-card,
+      .meta-card,
+      .track,
       .project-card,
-      .lab-card,
-      .lab-panel,
-      .panel-card {
-        border: 1px solid var(--line);
-        background: var(--surface);
+      .deck-card,
+      .deck-panel,
+      .panel-card,
+      .fact {
+        border: 1px solid var(--paper-line);
+        background: var(--paper);
         backdrop-filter: blur(14px);
       }
 
-      .stat-card {
+      .meta-card {
         padding: 1rem;
       }
 
-      .stat-value {
-        margin-top: 0.35rem;
-        font-family: "Syne", sans-serif;
-        font-size: clamp(2rem, 5vw, 3.4rem);
-      }
-
-      .stat-label {
+      .meta-label {
         font-size: 0.68rem;
         font-weight: 800;
         color: var(--muted);
       }
 
-      .stat-copy {
-        margin: 0.6rem 0 0;
-        color: var(--muted);
-        line-height: 1.6;
+      .meta-value {
+        margin-top: 0.35rem;
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3.1rem);
+      }
+
+      .meta-copy {
+        margin: 0.55rem 0 0;
+        line-height: 1.65;
+      }
+
+      .hero-meta {
+        margin-top: 1rem;
+      }
+
+      .story {
+        margin-top: 1.4rem;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 1rem;
+      }
+
+      .track {
+        padding: 1.15rem;
+      }
+
+      .track-label {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--accent);
+      }
+
+      .track h3 {
+        margin-top: 0.5rem;
+        font-size: clamp(1.5rem, 3vw, 2.35rem);
+      }
+
+      .track p {
+        margin: 0.75rem 0 0;
+        line-height: 1.72;
       }
 
       .overview,
       .projects,
-      .lab {
+      .deck {
         margin-top: 1.4rem;
       }
 
       .overview-shell,
       .projects-shell {
-        padding: clamp(1.4rem, 3vw, 2rem);
-      }
-
-      .overview-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: 1rem;
-        padding-top: 1.3rem;
-      }
-
-      .focus-card {
-        padding: 1.1rem;
-      }
-
-      .focus-card p {
-        margin: 0.8rem 0 0;
-        color: var(--muted);
-        line-height: 1.72;
+        padding: clamp(1.35rem, 3vw, 2rem);
       }
 
       .section-head {
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--paper-line);
       }
 
-      .section-head h2 {
-        font-size: clamp(2.2rem, 6vw, 4.4rem);
+      .section-head h2,
+      .deck-head h2 {
+        font-size: clamp(2.1rem, 6vw, 4.8rem);
       }
 
-      .section-head p {
-        max-width: 34rem;
+      .section-head p,
+      .deck-head p {
+        max-width: 35rem;
         margin: 0;
-        color: var(--muted);
         line-height: 1.72;
+      }
+
+      .tracks-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        padding-top: 1.25rem;
       }
 
       .project-list {
         display: grid;
-        gap: 0.9rem;
+        gap: 1rem;
         padding-top: 1.2rem;
       }
 
       .project-card {
         display: grid;
-        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+        grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
         gap: 1rem;
         padding: 1.1rem;
-        transition: transform 220ms ease, border-color 220ms ease;
+        transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
       }
 
       .project-card:hover {
-        transform: translateX(0.25rem);
-        border-color: rgba(186, 78, 44, 0.26);
+        border-color: rgba(186, 84, 43, 0.24);
+        background: var(--paper-strong);
       }
 
       .project-kind {
@@ -361,7 +430,7 @@
 
       .project-card h3 {
         margin-top: 0.45rem;
-        font-size: clamp(1.5rem, 3vw, 2.4rem);
+        font-size: clamp(1.55rem, 3vw, 2.45rem);
       }
 
       .project-copy,
@@ -371,121 +440,85 @@
       }
 
       .project-why {
-        margin-top: 0.5rem;
-        color: var(--muted);
-      }
-
-      .project-links,
-      .footer-links,
-      .chip-row,
-      .lab-tabs,
-      .legend-row,
-      .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
+        margin-top: 0.55rem;
       }
 
       .project-links {
-        margin-top: 0.85rem;
+        margin-top: 0.8rem;
       }
 
       .project-links a,
-      .footer-link,
-      .lab-tab-link {
-        text-decoration: none;
+      .footer-link {
         font-size: 0.8rem;
         font-weight: 800;
+        text-decoration: none;
       }
 
-      .lab-shell {
-        position: relative;
-        overflow: clip;
-        color: var(--lab-ink);
-        padding: clamp(1.4rem, 3vw, 2rem);
-        border: 1px solid rgba(161, 192, 228, 0.14);
+      .deck-shell {
+        color: var(--deck-ink);
+        padding: clamp(1.35rem, 3vw, 2rem);
+        border: 1px solid rgba(163, 195, 228, 0.15);
         background:
-          radial-gradient(circle at 15% 16%, rgba(118, 180, 255, 0.18), transparent 22%),
-          radial-gradient(circle at 86% 10%, rgba(144, 219, 198, 0.14), transparent 18%),
-          linear-gradient(180deg, rgba(14, 22, 38, 0.98), rgba(10, 15, 29, 0.98));
-        box-shadow: 0 35px 100px rgba(6, 10, 20, 0.35);
+          radial-gradient(circle at 14% 15%, rgba(117, 189, 255, 0.18), transparent 24%),
+          radial-gradient(circle at 88% 12%, rgba(140, 220, 197, 0.14), transparent 18%),
+          linear-gradient(180deg, rgba(14, 22, 38, 0.98), rgba(9, 14, 26, 0.99));
+        box-shadow: 0 35px 100px rgba(7, 12, 22, 0.35);
       }
 
-      .lab-shell::before {
-        top: -5rem;
-        right: -5rem;
-        width: 18rem;
-        height: 18rem;
-        background: radial-gradient(circle, rgba(119, 195, 255, 0.18), transparent 70%);
-      }
-
-      .lab-shell::after {
-        left: -7rem;
-        bottom: -8rem;
-        width: 20rem;
-        height: 20rem;
-        background: radial-gradient(circle, rgba(117, 224, 171, 0.14), transparent 74%);
-      }
-
-      .lab-head {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
-        gap: 1.3rem;
-        align-items: end;
+      .deck-head {
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--lab-line);
+        border-bottom: 1px solid var(--deck-line);
       }
 
-      .lab-head h2 {
-        font-size: clamp(2.4rem, 6vw, 4.8rem);
-      }
-
-      .lab-head p {
-        margin: 0;
-        max-width: 36rem;
-        color: var(--lab-muted);
-        line-height: 1.72;
-      }
-
-      .lab-note {
+      .deck-note {
         display: inline-flex;
         align-items: center;
-        gap: 0.55rem;
+        gap: 0.5rem;
         margin-bottom: 1rem;
-        padding: 0.5rem 0.72rem;
-        border: 1px solid var(--lab-line);
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--deck-line);
         background: rgba(255, 255, 255, 0.04);
-        color: var(--lab-accent);
+        color: var(--deck-accent);
         font-size: 0.72rem;
         font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
       }
 
-      .lab-grid {
+      .deck-head p,
+      .deck-card p,
+      .fact p,
+      .panel-card p,
+      .panel-card li,
+      .step span,
+      .node p {
+        color: var(--deck-muted);
+      }
+
+      .deck-grid {
         display: grid;
-        grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+        grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
         gap: 1rem;
         padding-top: 1.2rem;
       }
 
-      .lab-card,
-      .lab-panel {
-        border-color: var(--lab-line);
-        background: var(--lab-panel);
+      .deck-card,
+      .deck-panel,
+      .panel-card,
+      .fact {
+        border-color: var(--deck-line);
+        background: var(--deck-panel);
       }
 
-      .lab-card {
+      .deck-card,
+      .panel-card {
         padding: 1rem;
       }
 
-      .lab-card h3 {
-        font-size: clamp(1.7rem, 3vw, 2.5rem);
+      .deck-card h3 {
+        font-size: clamp(1.6rem, 3vw, 2.45rem);
       }
 
-      .lab-card p {
+      .deck-card p {
         margin: 0.75rem 0 0;
-        color: var(--lab-muted);
         line-height: 1.72;
       }
 
@@ -497,40 +530,33 @@
         border: 1px solid currentColor;
         background: rgba(255, 255, 255, 0.04);
         font-size: 0.8rem;
-        color: inherit;
       }
 
       .chip-dot {
-        width: 0.6rem;
-        height: 0.6rem;
+        width: 0.58rem;
+        height: 0.58rem;
         border-radius: 999px;
       }
 
-      .lab-tabs {
+      .tab-row {
         margin-top: 1rem;
       }
 
       .tab-button,
       button {
-        appearance: none;
-        min-height: 2.9rem;
-        padding: 0.72rem 0.95rem;
-        border: 1px solid var(--lab-line);
-        color: var(--lab-ink);
+        border-color: var(--deck-line);
         background: rgba(255, 255, 255, 0.04);
+        color: var(--deck-ink);
         font-size: 0.72rem;
-        font-weight: 800;
-        cursor: pointer;
-        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
       }
 
       .tab-button.active {
-        border-color: rgba(119, 195, 255, 0.34);
-        background: rgba(119, 195, 255, 0.12);
+        border-color: rgba(119, 194, 255, 0.34);
+        background: rgba(119, 194, 255, 0.12);
         color: white;
       }
 
-      .lab-detail {
+      .deck-detail {
         padding-top: 1rem;
       }
 
@@ -544,17 +570,17 @@
 
       .diagram-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1.3fr) minmax(19rem, 0.92fr);
+        grid-template-columns: minmax(0, 1.28fr) minmax(18rem, 0.92fr);
         gap: 1rem;
       }
 
       .diagram-board {
         position: relative;
         min-height: 43rem;
-        border: 1px solid var(--lab-line);
+        border: 1px solid var(--deck-line);
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
-          linear-gradient(180deg, rgba(11, 17, 29, 0.6), rgba(8, 13, 24, 0.92));
+          linear-gradient(180deg, rgba(11, 17, 29, 0.62), rgba(7, 12, 24, 0.94));
         overflow: hidden;
       }
 
@@ -574,14 +600,14 @@
         position: absolute;
         width: 14rem;
         padding: 0.95rem;
-        border: 1px solid var(--lab-line);
-        background: var(--lab-panel-strong);
+        border: 1px solid var(--deck-line);
+        background: var(--deck-panel-strong);
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.26);
         transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease, opacity 240ms ease;
       }
 
       .node.active {
-        border-color: rgba(119, 195, 255, 0.52);
+        border-color: rgba(119, 194, 255, 0.52);
         box-shadow: 0 18px 60px rgba(90, 163, 255, 0.18);
       }
 
@@ -598,7 +624,7 @@
         margin-bottom: 0.55rem;
         font-size: 0.68rem;
         font-weight: 800;
-        color: var(--lab-muted);
+        color: var(--deck-muted);
       }
 
       .node h3 {
@@ -608,24 +634,23 @@
 
       .node p {
         margin: 0.52rem 0 0;
-        color: var(--lab-muted);
-        line-height: 1.54;
+        line-height: 1.55;
         font-size: 0.92rem;
       }
 
       .node.user .node-type,
       .signal.response {
-        color: var(--lab-green);
+        color: var(--deck-green);
       }
 
       .node.proxy .node-type,
       .signal.request {
-        color: var(--lab-accent);
+        color: var(--deck-accent);
       }
 
       .node.runner .node-type,
       .signal.handoff {
-        color: var(--lab-gold);
+        color: var(--deck-gold);
       }
 
       .edge-layer {
@@ -683,21 +708,8 @@
         white-space: nowrap;
       }
 
-      .panel-card {
-        padding: 1rem;
-        border-color: var(--lab-line);
-        background: rgba(255, 255, 255, 0.04);
-      }
-
       .panel-card h4 {
-        font-size: 1.3rem;
-      }
-
-      .panel-card p,
-      .panel-card li,
-      .step span {
-        color: var(--lab-muted);
-        line-height: 1.62;
+        font-size: 1.28rem;
       }
 
       .steps {
@@ -721,9 +733,8 @@
 
       .step.active,
       .step:hover {
-        transform: translateX(0.18rem);
-        border-color: rgba(119, 195, 255, 0.24);
-        background: rgba(119, 195, 255, 0.08);
+        border-color: rgba(119, 194, 255, 0.24);
+        background: rgba(119, 194, 255, 0.08);
       }
 
       .step-index {
@@ -731,10 +742,10 @@
         place-items: center;
         width: 2.15rem;
         aspect-ratio: 1;
-        border: 1px solid var(--lab-line);
+        border: 1px solid var(--deck-line);
         font-size: 0.66rem;
         font-weight: 800;
-        color: var(--lab-accent);
+        color: var(--deck-accent);
       }
 
       .step strong {
@@ -748,38 +759,34 @@
         margin-top: 0.85rem;
       }
 
-      .lab-facts {
+      .fact-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.85rem;
       }
 
-      .lab-fact {
+      .fact {
         padding: 0.9rem;
-        border: 1px solid var(--lab-line);
-        background: rgba(255, 255, 255, 0.04);
       }
 
-      .lab-fact strong {
+      .fact strong {
         display: block;
         font-size: 0.78rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: var(--lab-accent);
+        color: var(--deck-accent);
       }
 
-      .lab-fact p {
+      .fact p {
         margin: 0.5rem 0 0;
-        color: var(--lab-muted);
         line-height: 1.62;
       }
 
       footer {
         margin-top: 1.4rem;
         padding: 1rem;
-        border: 1px solid var(--line);
+        border: 1px solid var(--paper-line);
         background: rgba(255, 251, 243, 0.68);
-        color: var(--muted);
       }
 
       .footer-links {
@@ -788,17 +795,17 @@
 
       @keyframes pulseLine {
         from { filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
-        to { filter: drop-shadow(0 0 10px rgba(119, 195, 255, 0.2)); }
+        to { filter: drop-shadow(0 0 10px rgba(119, 194, 255, 0.2)); }
       }
 
       @media (prefers-reduced-motion: no-preference) {
         .hero-shell::before,
-        .lab-shell::before {
+        .deck-shell::before {
           animation: floatA 12s ease-in-out infinite alternate;
         }
 
         .hero-shell::after,
-        .lab-shell::after {
+        .deck-shell::after {
           animation: floatB 14s ease-in-out infinite alternate;
         }
 
@@ -806,21 +813,29 @@
         .display,
         .hero-copy,
         .hero-actions,
+        .hero-meta,
         .hero-rail,
+        .story,
         .overview-shell,
         .projects-shell,
-        .lab-shell,
+        .deck-shell,
         footer {
           animation: rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .hero-copy {
-          animation-delay: 90ms;
+          animation-delay: 80ms;
         }
 
         .hero-actions,
+        .hero-meta,
         .hero-rail {
-          animation-delay: 150ms;
+          animation-delay: 140ms;
+        }
+
+        .story,
+        .overview-shell {
+          animation-delay: 180ms;
         }
 
         @keyframes rise {
@@ -848,7 +863,10 @@
 
       @media (max-width: 1080px) {
         .hero-grid,
-        .lab-head,
+        .story,
+        .tracks-grid,
+        .deck-head,
+        .deck-grid,
         .diagram-layout {
           grid-template-columns: 1fr;
         }
@@ -859,17 +877,16 @@
       }
 
       @media (max-width: 920px) {
-        .overview-grid,
         .project-card,
-        .lab-grid,
-        .lab-facts,
-        .section-head {
+        .fact-grid {
           grid-template-columns: 1fr;
         }
 
         .section-head,
+        .deck-head,
         footer {
           align-items: start;
+          flex-direction: column;
         }
       }
 
@@ -884,11 +901,11 @@
           padding-inline: 1rem;
         }
 
-        .display .name {
+        .name {
           font-size: clamp(3.2rem, 18vw, 5rem);
         }
 
-        .display .thesis {
+        .thesis {
           font-size: clamp(1.75rem, 10vw, 3rem);
         }
 
@@ -921,7 +938,9 @@
       @media (max-width: 640px) {
         .topbar,
         .hero-actions,
+        .hero-meta,
         .project-links,
+        .tab-row,
         .footer-links {
           flex-direction: column;
           align-items: stretch;
@@ -940,44 +959,68 @@
       <section class="shell hero-shell">
         <header class="topbar">
           <div class="brand">Leobot</div>
-          <div class="micro">Shared-workspace engineer • Product explanations, not posture</div>
+          <div class="micro">Shared-workspace engineer • Sharp product explanation</div>
         </header>
 
         <div class="hero-grid">
           <div>
-            <span class="eyebrow">Sharp front page</span>
+            <span class="eyebrow">Front page, not filler</span>
             <div class="display">
               <h1 class="name">Leobot</h1>
-              <h2 class="thesis">Systems that make agent work understandable.</h2>
+              <h2 class="thesis">Systems that make agent work readable under pressure.</h2>
             </div>
             <p class="hero-copy">
-              This site explains how the pieces fit together: Git handoff, shared-workspace runtime, publishing surfaces,
-              and the agent infrastructure behind <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>. The goal is simple:
-              show the mechanics clearly enough that a technical reader can see what each system is for and how work moves.
+              This homepage is built for people trying to understand how the stack actually works. It explains the shared-workspace runtime,
+              handoff infrastructure, public surfaces, and the projects around <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>
+              without collapsing everything into one vague AI claim.
             </p>
             <div class="hero-actions">
-              <a class="button-link primary" href="#projects">Read the systems</a>
-              <a class="button-link" href="#agent-lab">Open the agent mechanics lab</a>
+              <a class="button-link primary" href="#projects">Read the product stack</a>
+              <a class="button-link" href="#agent-deck">Open the agent deck</a>
+            </div>
+            <div class="hero-meta" aria-label="Site position">
+              <span class="chip">Audience: technical readers</span>
+              <span class="chip">Main job: explanation</span>
+              <span class="chip">Tone: sharp</span>
             </div>
           </div>
 
-          <aside class="hero-rail" aria-label="Site summary">
-            <article class="stat-card">
-              <div class="stat-label">Audience</div>
-              <div class="stat-value">Builders</div>
-              <p class="stat-copy">People trying to understand what these projects do, not browse a decorative founder page.</p>
+          <aside class="hero-rail" aria-label="Homepage summary">
+            <article class="meta-card">
+              <div class="meta-label">What visitors get</div>
+              <div class="meta-value">Structure</div>
+              <p class="meta-copy">The page reads like a system brief, with each project tied to a concrete role in the stack.</p>
             </article>
-            <article class="stat-card">
-              <div class="stat-label">Main job</div>
-              <div class="stat-value">Explain</div>
-              <p class="stat-copy">Each section translates implementation work into an understandable system boundary and reason to exist.</p>
+            <article class="meta-card">
+              <div class="meta-label">What changed</div>
+              <div class="meta-value">Separation</div>
+              <p class="meta-copy">The AI-agent mechanics now live in an isolated deck instead of bleeding into the core homepage story.</p>
             </article>
-            <article class="stat-card">
-              <div class="stat-label">Bias</div>
-              <div class="stat-value">Legible</div>
-              <p class="stat-copy">Keep the message operational: fewer vague claims, more concrete mechanics, sharper separation between topics.</p>
+            <article class="meta-card">
+              <div class="meta-label">What stays true</div>
+              <div class="meta-value">Purpose</div>
+              <p class="meta-copy">This is still a product explanation layer, not a founder bio and not a decorative landing page.</p>
             </article>
           </aside>
+        </div>
+
+        <div class="story">
+          <article class="track">
+            <div class="track-label">Main track</div>
+            <h3>The homepage handles the stack story.</h3>
+            <p>
+              The top of the page explains why these projects belong together: Git handoff, shared runtime, public publishing, and durable skill memory.
+              It gives a reader enough operational context to understand the portfolio fast.
+            </p>
+          </article>
+          <article class="track">
+            <div class="track-label">Separate track</div>
+            <h3>The AI layer gets its own room.</h3>
+            <p>
+              The deeper mechanics for <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> sit in a dedicated dark deck with tabs,
+              motion, and a clearer systems lens, so the detail feels intentional instead of bolted onto the homepage.
+            </p>
+          </article>
         </div>
       </section>
 
@@ -985,29 +1028,29 @@
         <div class="shell overview-shell">
           <div class="section-head">
             <div>
-              <span class="section-kicker">What this page covers</span>
-              <h2>One workspace, several hard edges.</h2>
+              <span class="section-kicker">Reading guide</span>
+              <h2>One workspace, three clear jobs.</h2>
             </div>
             <p>
-              The projects below are related, but they are not the same thing. This homepage now keeps the core product story on one track,
-              and moves the AI flow explanation into its own isolated lab so it reads like a system, not homepage clutter.
+              The redesign pushes the site into three distinct lanes: what the systems are, how they fit together, and where the AI request lifecycle belongs.
             </p>
           </div>
 
-          <div class="overview-grid">
-            <article class="focus-card">
-              <h3>Shared workspace over toy demos</h3>
-              <p>
-                The through-line is practical execution. Git2 handles handoff and branch flow, OpenClaw provides the runtime and message structure,
-                publishing surfaces expose active work, and the agent stack turns requests into real task execution inside the same environment.
-              </p>
+          <div class="tracks-grid">
+            <article class="track">
+              <div class="track-label">01 Product stack</div>
+              <h3>What exists</h3>
+              <p>The project ledger names each system and states why it deserves a place in the stack.</p>
             </article>
-            <article class="focus-card">
-              <h3>Separation by purpose</h3>
-              <p>
-                The homepage explains the portfolio and why the systems exist. The darker lab section is reserved for the more technical story:
-                how an API request enters the proxy, lands in an inbox, gets picked up by a runner, and returns with a result.
-              </p>
+            <article class="track">
+              <div class="track-label">02 Operational logic</div>
+              <h3>How it fits</h3>
+              <p>The copy emphasizes shared workspace continuity, inspectable handoff, and practical runtime boundaries.</p>
+            </article>
+            <article class="track">
+              <div class="track-label">03 Agent mechanics</div>
+              <h3>Where it lives</h3>
+              <p>The AI explanation sits in a separate tabbed deck so it reads like a technical appendix, not homepage clutter.</p>
             </article>
           </div>
         </div>
@@ -1020,7 +1063,7 @@
               <span class="section-kicker">Current systems</span>
               <h2>Project ledger</h2>
             </div>
-            <p>Active projects, each framed by what it does and why it earns space in the stack.</p>
+            <p>Each entry is framed by function first: what it does, what boundary it owns, and why a technical reader should care.</p>
           </div>
 
           <div class="project-list">
@@ -1030,8 +1073,8 @@
                 <h3>git2</h3>
               </div>
               <div>
-                <p class="project-copy">A Python wrapper around system Git with a custom <code>branch2</code> flow designed for agent handoff and real repository work.</p>
-                <p class="project-why">It exists to keep multi-agent collaboration grounded in actual Git state instead of long-lived, detached forks.</p>
+                <p class="project-copy">A Python wrapper around system Git with a custom <code>branch2</code> flow for agent handoff and real repository work.</p>
+                <p class="project-why">It keeps collaboration attached to actual Git state instead of loose copies and detached process memory.</p>
                 <div class="project-links">
                   <a href="https://github.com/leoustcai/git2">Repository</a>
                 </div>
@@ -1044,8 +1087,8 @@
                 <h3>OpenClaw</h3>
               </div>
               <div>
-                <p class="project-copy">A shared runtime for messaging, memory, task handling, notes, and code execution inside one coordinated workspace.</p>
-                <p class="project-why">It exists so agents can operate on durable context and real files instead of isolated one-shot sessions.</p>
+                <p class="project-copy">A shared runtime for messaging, memory, notes, task handling, and code execution inside one coordinated workspace.</p>
+                <p class="project-why">It exists so agents can work against durable context and real files rather than isolated, disposable sessions.</p>
                 <div class="project-links">
                   <a href="https://github.com/leoustc/openclaw">Repository</a>
                 </div>
@@ -1058,8 +1101,8 @@
                 <h3>leoclaw-github</h3>
               </div>
               <div>
-                <p class="project-copy">Live coding and editorial surfaces, including an AI news product with tighter structure and a more usable public face.</p>
-                <p class="project-why">It exists to make ongoing implementation work public, inspectable, and useful beyond the private workspace.</p>
+                <p class="project-copy">Public coding and editorial surfaces, including the AI news product, with a cleaner outward-facing structure.</p>
+                <p class="project-why">It turns active implementation into something inspectable and useful beyond the private workspace.</p>
                 <div class="project-links">
                   <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
                   <a href="https://ai-news.leoustc.workers.dev">Live surface</a>
@@ -1073,8 +1116,8 @@
                 <h3>skills-collection</h3>
               </div>
               <div>
-                <p class="project-copy">Reusable operational skills, workflow notes, and reference patterns worth preserving across sessions.</p>
-                <p class="project-why">It exists to stop good agent workflows from disappearing once a single task is over.</p>
+                <p class="project-copy">Reusable operational skills, workflow notes, and patterns that are worth preserving across sessions.</p>
+                <p class="project-why">It stops good agent workflows from disappearing once a single task is done.</p>
                 <div class="project-links">
                   <a href="https://github.com/leoustcai/skills-collection">Repository</a>
                 </div>
@@ -1087,8 +1130,8 @@
                 <h3>mywebsite</h3>
               </div>
               <div>
-                <p class="project-copy">This front page: a compact explanation layer for current systems, current work, and the agent mechanics behind them.</p>
-                <p class="project-why">It exists to communicate clearly, not just signal that projects exist.</p>
+                <p class="project-copy">This homepage: a sharper explanation layer for current systems, current work, and the agent mechanics behind them.</p>
+                <p class="project-why">It exists to make the stack legible fast, with the AI details separated instead of mixed into every section.</p>
                 <div class="project-links">
                   <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
                 </div>
@@ -1098,40 +1141,40 @@
         </div>
       </section>
 
-      <section class="lab" id="agent-lab">
-        <div class="lab-shell">
-          <div class="lab-head">
+      <section class="deck" id="agent-deck">
+        <div class="deck-shell">
+          <div class="deck-head">
             <div>
-              <div class="lab-note">Separated section • AI mechanics</div>
-              <h2>Agent mechanics lab</h2>
+              <div class="deck-note">Separate section • AI-agent mechanics</div>
+              <h2>Agent operations deck</h2>
             </div>
             <p>
-              This is intentionally split off from the rest of the homepage. It explains the request lifecycle for
-              <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> without polluting the main portfolio narrative.
+              This is intentionally not part of the homepage track above. It is a dedicated tabbed surface for the mechanics behind
+              <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>, aimed at readers who want the request lifecycle in detail.
             </p>
           </div>
 
-          <div class="lab-grid">
-            <article class="lab-card">
-              <h3>Why the split matters</h3>
+          <div class="deck-grid">
+            <article class="deck-card">
+              <h3>Why the split is strict</h3>
               <p>
-                Most visitors need the product story first. The people who want the mechanics can go deeper here, in a surface that
-                feels more like an operator console than a marketing panel.
+                Most visitors need the product story first. The mechanics crowd needs the routing model, handoff chain, and return path.
+                Combining both in one visual rhythm makes the page worse for everyone.
               </p>
               <div class="chip-row">
-                <span class="chip"><span class="chip-dot" style="background: var(--lab-accent);"></span> OpenAI-style request intake</span>
-                <span class="chip"><span class="chip-dot" style="background: var(--lab-gold);"></span> Runner and team handoff</span>
-                <span class="chip"><span class="chip-dot" style="background: var(--lab-green);"></span> Response path back out</span>
+                <span class="chip"><span class="chip-dot" style="background: var(--deck-accent);"></span> Familiar request intake</span>
+                <span class="chip"><span class="chip-dot" style="background: var(--deck-gold);"></span> Runner-owned handoff</span>
+                <span class="chip"><span class="chip-dot" style="background: var(--deck-green);"></span> Predictable response path</span>
               </div>
             </article>
 
-            <article class="lab-card">
-              <h3>What this section explains</h3>
+            <article class="deck-card">
+              <h3>What this deck covers</h3>
               <p>
-                The lab is split into three tabs: a working diagram, the lifecycle in plain language, and the architectural reasons this model is useful.
-                It keeps the explanation specific instead of dumping all AI content into the homepage flow.
+                The tabs below split the material into a live map, a lifecycle explanation, and the architectural reasons this model is useful.
+                The result feels like a technical deck with its own mood, not a leftover homepage section.
               </p>
-              <div class="lab-tabs" role="tablist" aria-label="Agent lab tabs">
+              <div class="tab-row" role="tablist" aria-label="Agent operations deck tabs">
                 <button class="tab-button active" id="tab-map" data-tab="map" role="tab" aria-selected="true" aria-controls="panel-map" type="button">System map</button>
                 <button class="tab-button" id="tab-lifecycle" data-tab="lifecycle" role="tab" aria-selected="false" aria-controls="panel-lifecycle" type="button">Lifecycle</button>
                 <button class="tab-button" id="tab-why" data-tab="why" role="tab" aria-selected="false" aria-controls="panel-why" type="button">Why it exists</button>
@@ -1139,62 +1182,62 @@
             </article>
           </div>
 
-          <div class="lab-detail">
+          <div class="deck-detail">
             <section class="tab-panel active" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
               <div class="diagram-layout">
-                <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy working diagram">
+                <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy system diagram">
                   <svg class="edge-layer" id="edge-layer" aria-hidden="true"></svg>
 
                   <article class="node user" id="node-user">
                     <div class="node-type">External caller</div>
                     <h3>User / Client</h3>
-                    <p>Sends a chat-completions style request that looks familiar to OpenAI or vLLM clients.</p>
+                    <p>Sends a chat-completions style request that already fits existing OpenAI or vLLM client habits.</p>
                   </article>
 
                   <article class="node proxy" id="node-proxy">
                     <div class="node-type">API front door</div>
                     <h3>ai-agent-proxy</h3>
-                    <p>Accepts the request, selects the target agent path, and writes a task payload into the correct inbox.</p>
+                    <p>Accepts the request, chooses the route, and writes a concrete task payload into the correct inbox.</p>
                   </article>
 
                   <article class="node inbox" id="node-inbox">
-                    <div class="node-type">Task queue</div>
+                    <div class="node-type">Filesystem queue</div>
                     <h3>Agent inbox</h3>
-                    <p>A filesystem inbox where messages land in a format the selected runner can inspect and act on.</p>
+                    <p>Messages land in a durable format that the selected runner can inspect, read, and act on.</p>
                   </article>
 
                   <article class="node runner" id="node-runner">
                     <div class="node-type">Worker loop</div>
                     <h3>Agent runner</h3>
-                    <p>Watches inbox folders, launches the assigned agent, tracks lifecycle, and keeps the work moving.</p>
+                    <p>Watches inbox folders, launches the assigned agent, and owns the task lifecycle until completion.</p>
                   </article>
 
                   <article class="node team-a" id="node-team-a">
-                    <div class="node-type">Team agent</div>
+                    <div class="node-type">Specialist</div>
                     <h3>Architect</h3>
-                    <p>Can reshape or decompose the task before passing execution deeper into the team.</p>
+                    <p>Can reshape the task, split work, or set direction before specialist execution starts.</p>
                   </article>
 
                   <article class="node team-b" id="node-team-b">
-                    <div class="node-type">Team agent</div>
+                    <div class="node-type">Specialist</div>
                     <h3>Frontend engineer</h3>
-                    <p>Takes UI, page structure, presentation logic, and interaction work when the task requires it.</p>
+                    <p>Takes UI, interaction, layout, and presentation work when the request needs product-facing execution.</p>
                   </article>
 
                   <article class="node team-c" id="node-team-c">
-                    <div class="node-type">Team agent</div>
+                    <div class="node-type">Specialist</div>
                     <h3>Backend engineer</h3>
-                    <p>Takes implementation work that belongs in server logic, automation, or systems code.</p>
+                    <p>Takes server logic, automation, or systems work when the job belongs deeper in implementation.</p>
                   </article>
 
                   <article class="node reply" id="node-reply">
-                    <div class="node-type">Response path</div>
+                    <div class="node-type">Return path</div>
                     <h3>Reply</h3>
-                    <p>The completed result is collected and returned back through the proxy to the original caller.</p>
+                    <p>The completed result is collected and sent back through the proxy as a normal API-shaped response.</p>
                   </article>
                 </div>
 
-                <aside class="lab-panel">
+                <aside class="deck-panel">
                   <div class="panel-card">
                     <h4>Flow walkthrough</h4>
                     <ol class="steps" id="steps">
@@ -1202,35 +1245,35 @@
                         <div class="step-index">01</div>
                         <div>
                           <strong>Request hits the proxy</strong>
-                          <span>The caller sends a standard API-shaped request, so existing clients do not need a strange new protocol.</span>
+                          <span>The public contract stays familiar, so existing clients do not need a bespoke agent protocol.</span>
                         </div>
                       </li>
                       <li class="step" data-step="1">
                         <div class="step-index">02</div>
                         <div>
                           <strong>Proxy writes the task</strong>
-                          <span>The proxy converts the request into a concrete inbox message for the selected role or agent.</span>
+                          <span>The request becomes a concrete inbox message targeted at the correct role or runner.</span>
                         </div>
                       </li>
                       <li class="step" data-step="2">
                         <div class="step-index">03</div>
                         <div>
                           <strong>Runner picks it up</strong>
-                          <span>The runner loop notices the new item, reads it, and starts the matching agent workflow.</span>
+                          <span>The long-lived work loop notices the message and starts the correct execution path.</span>
                         </div>
                       </li>
                       <li class="step" data-step="3">
                         <div class="step-index">04</div>
                         <div>
                           <strong>Specialists can hand off</strong>
-                          <span>The active agent can route work across architect, frontend, backend, or other specialist runners.</span>
+                          <span>The active agent can route work across architect, frontend, backend, or other specialists in the same workspace.</span>
                         </div>
                       </li>
                       <li class="step" data-step="4">
                         <div class="step-index">05</div>
                         <div>
                           <strong>Result returns cleanly</strong>
-                          <span>The response comes back through the same operational chain, so the caller sees a normal API response.</span>
+                          <span>The response exits through the same operational chain, so the caller sees a normal API result.</span>
                         </div>
                       </li>
                     </ol>
@@ -1245,9 +1288,9 @@
                   <div class="panel-card">
                     <h4>Legend</h4>
                     <div class="legend-row">
-                      <span class="chip"><span class="chip-dot" style="background: var(--lab-accent);"></span> Request</span>
-                      <span class="chip"><span class="chip-dot" style="background: var(--lab-gold);"></span> Handoff</span>
-                      <span class="chip"><span class="chip-dot" style="background: var(--lab-green);"></span> Response</span>
+                      <span class="chip"><span class="chip-dot" style="background: var(--deck-accent);"></span> Request</span>
+                      <span class="chip"><span class="chip-dot" style="background: var(--deck-gold);"></span> Handoff</span>
+                      <span class="chip"><span class="chip-dot" style="background: var(--deck-green);"></span> Response</span>
                     </div>
                   </div>
                 </aside>
@@ -1255,59 +1298,59 @@
             </section>
 
             <section class="tab-panel" id="panel-lifecycle" role="tabpanel" aria-labelledby="tab-lifecycle">
-              <div class="lab-facts">
-                <article class="lab-fact">
+              <div class="fact-grid">
+                <article class="fact">
                   <strong>1. Intake</strong>
-                  <p>The public contract stays familiar: users send an OpenAI-style request to the proxy instead of learning a bespoke control protocol.</p>
+                  <p>The caller sends an OpenAI-style request to the proxy, which keeps the public API familiar.</p>
                 </article>
-                <article class="lab-fact">
+                <article class="fact">
                   <strong>2. Dispatch</strong>
-                  <p>The proxy writes a task into an inbox, which makes the routing visible and inspectable instead of disappearing into hidden process state.</p>
+                  <p>The proxy writes a task into an inbox, which makes routing visible instead of hiding it in transient state.</p>
                 </article>
-                <article class="lab-fact">
+                <article class="fact">
                   <strong>3. Execution</strong>
-                  <p>The runner owns the long-lived work loop and can choose the correct specialist or team structure for the job.</p>
+                  <p>The runner owns the long-lived work loop and can start the right specialist path without mixing concerns into the proxy.</p>
                 </article>
-                <article class="lab-fact">
-                  <strong>4. Handoff</strong>
-                  <p>One agent can delegate to others without losing the shared workspace context that makes the task coherent.</p>
+                <article class="fact">
+                  <strong>4. Shared context</strong>
+                  <p>Agents operate in the same filesystem context, which keeps files, notes, and implementation state aligned.</p>
                 </article>
-                <article class="lab-fact">
-                  <strong>5. Return path</strong>
-                  <p>The completed result is written back through a predictable path rather than being stitched together ad hoc.</p>
+                <article class="fact">
+                  <strong>5. Handoff</strong>
+                  <p>One agent can delegate to another without losing continuity, which matters once tasks become genuinely multi-step.</p>
                 </article>
-                <article class="lab-fact">
-                  <strong>6. Reader takeaway</strong>
-                  <p>The system is easier to reason about because intake, execution, and response are separated into concrete layers.</p>
+                <article class="fact">
+                  <strong>6. Return path</strong>
+                  <p>The completed result comes back through a predictable chain rather than being manually stitched together afterward.</p>
                 </article>
               </div>
             </section>
 
             <section class="tab-panel" id="panel-why" role="tabpanel" aria-labelledby="tab-why">
-              <div class="lab-facts">
-                <article class="lab-fact">
-                  <strong>Familiar API surface</strong>
-                  <p>Clients can keep speaking the protocol they already know while the internal implementation stays agent-native.</p>
+              <div class="fact-grid">
+                <article class="fact">
+                  <strong>Familiar API</strong>
+                  <p>Clients keep speaking a protocol they already know while the internals stay agent-native.</p>
                 </article>
-                <article class="lab-fact">
-                  <strong>Visible handoff</strong>
-                  <p>Inbox messages make task routing and ownership inspectable, which matters when several agents are collaborating.</p>
+                <article class="fact">
+                  <strong>Visible routing</strong>
+                  <p>Inbox messages expose ownership and movement, which matters once multiple agents collaborate.</p>
                 </article>
-                <article class="lab-fact">
-                  <strong>Runner as control plane</strong>
-                  <p>The runner centralizes the work loop, so the proxy does not become overloaded with execution concerns.</p>
+                <article class="fact">
+                  <strong>Runner control plane</strong>
+                  <p>The runner owns lifecycle management so the proxy stays thin and focused on intake.</p>
                 </article>
-                <article class="lab-fact">
+                <article class="fact">
                   <strong>Specialists over monoliths</strong>
-                  <p>The model allows one task to move across architect, frontend, backend, or other roles without flattening everything into one worker.</p>
+                  <p>Tasks can move across architect, frontend, backend, or other roles without flattening everything into one worker.</p>
                 </article>
-                <article class="lab-fact">
+                <article class="fact">
                   <strong>Shared workspace continuity</strong>
-                  <p>Agents operate in the same filesystem context, which keeps files, notes, and state aligned with the actual project.</p>
+                  <p>The same filesystem context keeps notes, code, and active work coherent across handoffs.</p>
                 </article>
-                <article class="lab-fact">
+                <article class="fact">
                   <strong>Homepage discipline</strong>
-                  <p>Putting this explanation here, instead of in the hero, keeps the main site readable for visitors who are not here for protocol mechanics.</p>
+                  <p>Keeping this material here preserves the homepage as a product explanation surface rather than an overloaded AI dump.</p>
                 </article>
               </div>
             </section>
@@ -1321,7 +1364,7 @@
           <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
           <a class="footer-link" href="https://x.com/leoustcai">X</a>
           <a class="footer-link" href="#projects">Projects</a>
-          <a class="footer-link" href="#agent-lab">Agent lab</a>
+          <a class="footer-link" href="#agent-deck">Agent deck</a>
         </div>
       </footer>
     </main>
@@ -1462,7 +1505,7 @@
           tag.style.left = `${midX - minX}px`;
           tag.style.top = `${midY - minY}px`;
           tag.style.color = getComputedStyle(document.documentElement).getPropertyValue(
-            edge.type === "request" ? "--lab-accent" : edge.type === "response" ? "--lab-green" : "--lab-gold"
+            edge.type === "request" ? "--deck-accent" : edge.type === "response" ? "--deck-green" : "--deck-gold"
           );
 
           wrapper.appendChild(signal);
