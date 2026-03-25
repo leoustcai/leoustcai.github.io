@@ -3,34 +3,34 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leo's Working Studio</title>
+    <title>Leo & Co. | Projects in Motion</title>
     <meta
       name="description"
-      content="A sharp introduction to Leo's team and the active projects currently being built across the workspace."
+      content="A sharp, human-first homepage for Leo's current projects and the small team shaping them."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
         color-scheme: light;
-        --bg: #f3ece1;
-        --bg-deep: #e7dccb;
-        --paper: rgba(255, 250, 244, 0.72);
-        --paper-strong: rgba(255, 247, 239, 0.9);
-        --ink: #1d1813;
-        --muted: #685c4e;
-        --line: rgba(49, 38, 27, 0.12);
-        --line-strong: rgba(49, 38, 27, 0.22);
-        --accent: #b85b32;
-        --accent-deep: #8b3416;
-        --accent-soft: rgba(184, 91, 50, 0.12);
-        --shadow: 0 30px 80px rgba(64, 38, 19, 0.11);
+        --paper: #f6f1e8;
+        --paper-deep: #e7ddcf;
+        --ink: #161311;
+        --muted: #66584d;
+        --line: rgba(22, 19, 17, 0.12);
+        --line-strong: rgba(22, 19, 17, 0.2);
+        --accent: #ad4b2d;
+        --accent-soft: rgba(173, 75, 45, 0.12);
+        --olive: #55624f;
+        --panel: rgba(255, 250, 244, 0.75);
+        --panel-solid: #fffaf4;
+        --shadow: 0 28px 70px rgba(43, 26, 16, 0.12);
         --max: 1280px;
-        --ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       * {
@@ -44,20 +44,16 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Manrope", sans-serif;
+        font-family: "Instrument Sans", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.82), transparent 24%),
-          radial-gradient(circle at 82% 10%, rgba(184, 91, 50, 0.18), transparent 18%),
-          linear-gradient(180deg, var(--bg), var(--bg-deep));
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.75), transparent 24%),
+          radial-gradient(circle at 80% 8%, rgba(173, 75, 45, 0.12), transparent 18%),
+          linear-gradient(180deg, var(--paper), var(--paper-deep));
       }
 
       a {
         color: inherit;
-      }
-
-      button {
-        font: inherit;
       }
 
       img {
@@ -65,22 +61,26 @@
         max-width: 100%;
       }
 
+      button {
+        font: inherit;
+      }
+
       ::selection {
-        background: rgba(184, 91, 50, 0.18);
+        background: rgba(173, 75, 45, 0.18);
       }
 
       :focus-visible {
-        outline: 3px solid rgba(184, 91, 50, 0.35);
-        outline-offset: 4px;
+        outline: 3px solid rgba(173, 75, 45, 0.35);
+        outline-offset: 3px;
       }
 
       .skip-link {
         position: absolute;
-        left: 1rem;
         top: 1rem;
+        left: 1rem;
         z-index: 20;
         padding: 0.8rem 1rem;
-        background: rgba(255, 250, 244, 0.98);
+        background: var(--panel-solid);
         border: 1px solid var(--line-strong);
         transform: translateY(-140%);
         transition: transform 180ms ease;
@@ -91,63 +91,65 @@
       }
 
       .page {
-        width: min(calc(100vw - 1.4rem), var(--max));
+        width: min(calc(100vw - 1.5rem), var(--max));
         margin: 0 auto;
-        padding: 0.7rem 0 1.2rem;
+        padding: 0.75rem 0 1.5rem;
       }
 
-      .frame {
+      .shell {
         position: relative;
         overflow: hidden;
         border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(255, 252, 247, 0.55), rgba(252, 243, 233, 0.85));
+        background: linear-gradient(180deg, rgba(255, 252, 247, 0.72), rgba(247, 240, 230, 0.9));
         box-shadow: var(--shadow);
       }
 
-      .frame::before,
-      .frame::after {
+      .shell::before,
+      .shell::after {
         content: "";
         position: absolute;
-        pointer-events: none;
         border-radius: 999px;
+        pointer-events: none;
       }
 
-      .frame::before {
-        width: 30rem;
-        height: 30rem;
-        left: -14rem;
-        top: -10rem;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.75), transparent 70%);
+      .shell::before {
+        width: 32rem;
+        height: 32rem;
+        left: -17rem;
+        top: -14rem;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.86), transparent 72%);
       }
 
-      .frame::after {
+      .shell::after {
         width: 28rem;
         height: 28rem;
-        right: -14rem;
-        bottom: -10rem;
-        background: radial-gradient(circle, rgba(184, 91, 50, 0.13), transparent 72%);
+        right: -16rem;
+        bottom: 8rem;
+        background: radial-gradient(circle, rgba(85, 98, 79, 0.12), transparent 72%);
       }
 
-      .hero {
+      .hero,
+      .section {
         position: relative;
-        min-height: calc(100svh - 1.4rem);
+        z-index: 1;
         padding: clamp(1rem, 2vw, 1.5rem);
       }
 
-      .hero > * {
-        position: relative;
-        z-index: 1;
+      .hero {
+        min-height: calc(100svh - 1.5rem);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
       }
 
       .topbar,
       .hero-grid,
-      .hero-foot,
+      .ticker,
       .section-head,
-      .studio-note,
+      .project-row,
       footer {
         display: flex;
-        justify-content: space-between;
         gap: 1rem;
+        justify-content: space-between;
       }
 
       .topbar {
@@ -159,25 +161,25 @@
       .brand,
       .eyebrow,
       .section-tag,
-      .mini-label,
-      .stat-label,
+      .project-kind,
       .filter button,
-      .project-kind {
+      .pill,
+      .status {
         text-transform: uppercase;
         letter-spacing: 0.12em;
       }
 
       .brand,
       .section-tag,
+      .project-kind,
       .filter button,
-      .project-kind {
-        font-size: 0.76rem;
-        font-weight: 800;
+      .status {
+        font-size: 0.74rem;
+        font-weight: 700;
       }
 
       .eyebrow,
-      .mini-label,
-      .stat-label {
+      .pill {
         font-size: 0.72rem;
         font-weight: 700;
         color: var(--muted);
@@ -191,20 +193,20 @@
 
       nav a,
       .hero-actions a,
-      .filter button {
+      .filter button,
+      .project-link,
+      .jump-link {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 2.8rem;
-        padding: 0.7rem 1rem;
+        min-height: 2.75rem;
+        padding: 0.72rem 1rem;
         text-decoration: none;
         border: 1px solid transparent;
-        background: transparent;
         transition:
           transform 180ms var(--ease),
           background 180ms ease,
-          border-color 180ms ease,
-          color 180ms ease;
+          border-color 180ms ease;
       }
 
       nav a:hover,
@@ -212,24 +214,27 @@
       .hero-actions a:hover,
       .hero-actions a:focus-visible,
       .filter button:hover,
-      .filter button:focus-visible {
+      .filter button:focus-visible,
+      .project-link:hover,
+      .project-link:focus-visible,
+      .jump-link:hover,
+      .jump-link:focus-visible {
         transform: translateY(-1px);
         border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.42);
+        background: rgba(255, 255, 255, 0.45);
       }
 
       .hero-grid {
         align-items: end;
-        padding: clamp(1.6rem, 4vw, 4.5rem) 0 clamp(1.2rem, 2vw, 1.6rem);
+        padding: clamp(1.5rem, 4vw, 4rem) 0 1.25rem;
       }
 
       .hero-copy {
-        flex: 1.2;
-        max-width: 50rem;
+        max-width: 48rem;
       }
 
       .hero-side {
-        flex: 0.8;
+        width: min(28rem, 100%);
         display: grid;
         gap: 1rem;
         align-self: stretch;
@@ -239,426 +244,335 @@
       h2,
       h3 {
         margin: 0;
-        line-height: 0.96;
-        font-weight: 400;
-      }
-
-      h1,
-      h2 {
-        font-family: "Instrument Serif", serif;
+        line-height: 0.95;
+        font-family: "Fraunces", serif;
+        font-weight: 500;
       }
 
       h1 {
-        max-width: 9.5ch;
-        font-size: clamp(4rem, 10vw, 8.3rem);
+        max-width: 10ch;
+        font-size: clamp(3.8rem, 9vw, 8.4rem);
       }
 
       h2 {
-        font-size: clamp(2.3rem, 5vw, 4.6rem);
+        max-width: 12ch;
+        font-size: clamp(2.4rem, 5vw, 4.8rem);
       }
 
       h3 {
-        font-size: clamp(1.55rem, 3vw, 2rem);
+        font-size: clamp(1.35rem, 2vw, 2rem);
       }
 
       p {
         margin: 0;
+        line-height: 1.55;
       }
 
       .lede {
-        max-width: 37rem;
-        margin-top: 1.15rem;
-        font-size: clamp(1.08rem, 1.8vw, 1.28rem);
-        line-height: 1.68;
-        color: color-mix(in srgb, var(--ink) 78%, var(--muted));
+        max-width: 43rem;
+        margin-top: 1.3rem;
+        font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+        color: var(--muted);
+      }
+
+      .hero-actions,
+      .hero-meta,
+      .project-meta,
+      .member-meta,
+      .member-traits,
+      .project-points,
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
       }
 
       .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.7rem;
-        margin-top: 1.6rem;
+        margin-top: 1.5rem;
       }
 
       .hero-actions .primary,
-      .filter button[data-active="true"] {
-        color: #fff9f4;
-        border-color: transparent;
-        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      .jump-link {
+        color: #fbf5ef;
+        background: var(--ink);
       }
 
-      .hero-actions .secondary {
-        border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.42);
+      .hero-actions .secondary,
+      .filter button,
+      .project-link {
+        border-color: var(--line);
+        background: rgba(255, 255, 255, 0.34);
       }
 
-      .hero-mark {
-        width: fit-content;
-        margin-top: 2.2rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--line);
-        font-size: 0.98rem;
-        line-height: 1.6;
-        color: var(--muted);
-      }
-
-      .hero-mark strong {
-        color: var(--ink);
-      }
-
-      .portrait,
-      .stats,
-      .team-card,
-      .project-row,
-      .rhythm-card,
-      .closing {
+      .hero-card,
+      .note-card,
+      .member,
+      .project {
         border: 1px solid var(--line);
-        background: var(--paper);
-        backdrop-filter: blur(16px);
+        background: var(--panel);
+        backdrop-filter: blur(12px);
       }
 
-      .portrait,
-      .stats {
-        padding: 1.2rem;
+      .hero-card,
+      .note-card {
+        padding: 1rem;
       }
 
-      .portrait {
-        min-height: 20rem;
+      .hero-card {
         display: grid;
-        align-content: space-between;
-        background:
-          linear-gradient(155deg, rgba(255, 255, 255, 0.5), transparent 50%),
-          linear-gradient(180deg, rgba(252, 246, 239, 0.9), rgba(242, 226, 208, 0.78));
-      }
-
-      .portrait-figure {
-        width: min(15rem, 52vw);
-        aspect-ratio: 0.92;
-        border-radius: 1.7rem;
-        border: 1px solid rgba(82, 53, 31, 0.12);
-        background:
-          radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), transparent 20%),
-          linear-gradient(180deg, rgba(206, 143, 109, 0.35), rgba(113, 69, 46, 0.78)),
-          linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
-      }
-
-      .portrait p {
-        max-width: 18rem;
-        font-size: 1rem;
-        line-height: 1.65;
-        color: color-mix(in srgb, var(--ink) 80%, var(--muted));
-      }
-
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.8rem;
-      }
-
-      .stat {
-        padding: 0.4rem 0;
-      }
-
-      .stat strong {
-        display: block;
-        font-family: "Instrument Serif", serif;
-        font-size: clamp(2rem, 4vw, 3rem);
-        line-height: 0.9;
-      }
-
-      .studio-note {
-        align-items: center;
-        padding-top: 1rem;
-        border-top: 1px solid var(--line);
-      }
-
-      .studio-note p {
-        max-width: 34rem;
-        color: var(--muted);
-        line-height: 1.65;
-      }
-
-      .ticker {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 0.55rem;
-      }
-
-      .ticker span {
-        padding: 0.55rem 0.8rem;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.45);
-        font-size: 0.76rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-
-      section,
-      footer {
-        margin-top: 1rem;
-      }
-
-      .section {
-        padding: clamp(1.2rem, 3vw, 2.1rem);
-      }
-
-      .section-head {
-        align-items: flex-start;
-        padding-bottom: 1rem;
-        margin-bottom: 1.4rem;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .section-head p {
-        max-width: 31rem;
-        line-height: 1.65;
-        color: var(--muted);
-      }
-
-      .team-layout {
-        display: grid;
-        grid-template-columns: 0.95fr 1.45fr;
-        gap: 1rem;
-      }
-
-      .team-intro {
-        display: grid;
-        gap: 1rem;
+        gap: 0.85rem;
         align-content: start;
       }
 
-      .team-intro p {
-        max-width: 28rem;
-        font-size: 1.02rem;
-        line-height: 1.72;
-        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+      .hero-card strong,
+      .project strong {
+        display: block;
+        font-size: 1.08rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .hero-meta {
+        padding-top: 0.2rem;
+      }
+
+      .pill,
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--line);
+      }
+
+      .status::before {
+        content: "";
+        width: 0.48rem;
+        height: 0.48rem;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .ticker {
+        flex-wrap: wrap;
+        align-items: end;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .ticker-copy {
+        max-width: 34rem;
+        color: var(--muted);
+      }
+
+      .ticker-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
+
+      .section {
+        border-top: 1px solid var(--line);
+      }
+
+      .section-head {
+        align-items: end;
+        margin-bottom: 1.4rem;
+      }
+
+      .section-head p {
+        max-width: 32rem;
+        color: var(--muted);
       }
 
       .team-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(12, minmax(0, 1fr));
         gap: 1rem;
       }
 
-      .team-card {
-        min-height: 18rem;
-        padding: 1.15rem;
+      .member {
+        grid-column: span 4;
+        padding: 1rem;
+        min-height: 20rem;
         display: grid;
         align-content: space-between;
-        gap: 1.1rem;
+        gap: 1rem;
       }
 
-      .team-card p {
-        line-height: 1.65;
-        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+      .member:nth-child(2),
+      .member:nth-child(5) {
+        transform: translateY(2rem);
       }
 
-      .team-card ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+      .member-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .member-id {
         display: grid;
-        gap: 0.55rem;
-        color: var(--muted);
-        font-size: 0.95rem;
+        gap: 0.2rem;
       }
 
-      .team-card li::before {
-        content: "• ";
-        color: var(--accent);
+      .member-role {
+        color: var(--muted);
+      }
+
+      .member-traits span,
+      .project-points span {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.42rem 0.6rem;
+        background: rgba(255, 255, 255, 0.48);
+        border: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .team-note {
+        margin-top: 3rem;
+        padding: 1.1rem 0 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 0.6rem;
+        max-width: 42rem;
       }
 
       .filter {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.6rem;
+        gap: 0.55rem;
         margin-bottom: 1rem;
       }
 
-      .filter button {
-        cursor: pointer;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.42);
+      .filter button[aria-pressed="true"] {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #fbf5ef;
       }
 
       .projects {
         display: grid;
-        gap: 0.9rem;
+        gap: 1rem;
+      }
+
+      .project {
+        padding: 1rem;
       }
 
       .project-row {
-        padding: 1.15rem 1.2rem;
+        align-items: flex-start;
+      }
+
+      .project-main {
+        max-width: 42rem;
+      }
+
+      .project-main p,
+      .project-side p {
+        color: var(--muted);
+      }
+
+      .project-side {
+        width: min(22rem, 100%);
         display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr) auto;
-        gap: 1rem;
-        align-items: start;
-        transition:
-          transform 220ms var(--ease),
-          border-color 220ms ease,
-          opacity 180ms ease;
+        gap: 0.75rem;
       }
 
-      .project-row:hover {
-        transform: translateY(-2px);
-        border-color: var(--line-strong);
-      }
-
-      .project-row[hidden] {
+      .project[data-hidden="true"] {
         display: none;
       }
 
-      .project-head {
-        display: grid;
-        gap: 0.5rem;
-      }
-
-      .project-summary {
-        line-height: 1.7;
-        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
-      }
-
-      .project-meta {
-        display: grid;
-        gap: 0.45rem;
-        text-align: right;
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-
-      .project-meta strong {
-        color: var(--ink);
-        font-size: 1rem;
-      }
-
-      .rhythm-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .rhythm-card {
-        padding: 1.15rem;
-        display: grid;
-        gap: 0.7rem;
-      }
-
-      .rhythm-card p {
-        line-height: 1.7;
-        color: var(--muted);
+      .project-link {
+        width: fit-content;
       }
 
       .closing {
-        padding: clamp(1.3rem, 3vw, 2rem);
         display: grid;
-        grid-template-columns: minmax(0, 1.2fr) auto;
+        grid-template-columns: 1.2fr 0.8fr;
         gap: 1rem;
-        align-items: end;
       }
 
-      .closing p {
-        max-width: 38rem;
-        margin-top: 0.8rem;
-        line-height: 1.72;
-        color: color-mix(in srgb, var(--ink) 82%, var(--muted));
-      }
-
-      .closing a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 3rem;
-        padding: 0.85rem 1.15rem;
-        text-decoration: none;
-        border: 1px solid transparent;
-        color: #fff9f4;
-        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
-        transition: transform 180ms var(--ease), filter 180ms ease;
-      }
-
-      .closing a:hover,
-      .closing a:focus-visible {
-        transform: translateY(-1px);
-        filter: brightness(1.03);
+      .closing-copy {
+        padding-right: 1rem;
       }
 
       footer {
-        align-items: flex-start;
-        padding: 1.15rem;
-      }
-
-      footer p {
-        max-width: 32rem;
-        line-height: 1.65;
+        align-items: end;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
         color: var(--muted);
       }
 
-      .reveal {
+      [data-reveal] {
         opacity: 0;
         transform: translateY(22px);
         transition:
-          opacity 540ms var(--ease),
-          transform 540ms var(--ease);
+          opacity 700ms var(--ease),
+          transform 700ms var(--ease);
+        transition-delay: var(--delay, 0ms);
       }
 
-      .reveal.is-visible {
+      [data-reveal].is-visible {
         opacity: 1;
         transform: translateY(0);
       }
 
       @media (max-width: 1080px) {
         .hero-grid,
+        .project-row,
         .section-head,
-        .studio-note,
-        .team-layout,
         .closing,
         footer {
           flex-direction: column;
-          grid-template-columns: 1fr;
         }
 
-        .team-grid,
-        .rhythm-grid,
-        .project-row {
-          grid-template-columns: 1fr;
+        .hero-side,
+        .project-side {
+          width: 100%;
         }
 
-        .project-meta {
-          text-align: left;
+        .member {
+          grid-column: span 6;
+        }
+
+        .member:nth-child(2),
+        .member:nth-child(5) {
+          transform: none;
         }
       }
 
-      @media (max-width: 760px) {
+      @media (max-width: 720px) {
         .page {
           width: min(calc(100vw - 0.8rem), var(--max));
-          padding-top: 0.4rem;
         }
 
-        .hero {
+        .hero,
+        .section {
+          padding: 0.9rem;
+        }
+
+        nav {
+          gap: 0.35rem;
+        }
+
+        nav a,
+        .hero-actions a,
+        .filter button,
+        .project-link,
+        .jump-link {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .member {
+          grid-column: span 12;
           min-height: auto;
         }
 
-        .topbar {
-          flex-direction: column;
-        }
-
-        h1 {
-          max-width: 10.5ch;
-          font-size: clamp(3.4rem, 15vw, 5.4rem);
-        }
-
-        .stats,
-        .team-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .portrait {
-          min-height: 16rem;
-        }
-
-        .ticker {
+        .ticker-list {
           justify-content: flex-start;
         }
       }
@@ -672,10 +586,10 @@
         *::before,
         *::after {
           animation: none !important;
-          transition: none !important;
+          transition-duration: 0ms !important;
         }
 
-        .reveal {
+        [data-reveal] {
           opacity: 1;
           transform: none;
         }
@@ -685,378 +599,431 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="page">
-      <main id="main" class="frame hero">
-        <div class="topbar">
-          <div>
-            <div class="brand">Leo's Working Studio</div>
-            <p class="eyebrow">A small team making useful software look and feel right.</p>
-          </div>
-          <nav aria-label="Primary">
-            <a href="#team">Team</a>
-            <a href="#projects">Projects</a>
-            <a href="#rhythm">Approach</a>
-          </nav>
-        </div>
-
-        <div class="hero-grid">
-          <div class="hero-copy reveal">
-            <div class="section-tag">Current work</div>
-            <h1>Human team. Active projects. No filler.</h1>
-            <p class="lede">
-              Leo runs a compact bench across design, architecture, and backend
-              delivery. The goal is simple: ship useful things, keep the taste
-              level high, and let the work speak before the process does.
-            </p>
-            <div class="hero-actions">
-              <a class="primary" href="#projects">Browse the projects</a>
-              <a class="secondary" href="#team">Meet the team</a>
+      <div class="shell">
+        <header class="hero">
+          <div class="topbar" data-reveal style="--delay: 30ms;">
+            <div>
+              <div class="brand">Leo & Co.</div>
+              <p class="eyebrow">A small build crew with live projects on the table.</p>
             </div>
-            <p class="hero-mark">
-              <strong>Main lane:</strong> personal AI, developer tooling, and a
-              cleaner public face for the work itself.
-            </p>
+            <nav aria-label="Primary">
+              <a href="#team">Team</a>
+              <a href="#projects">Projects</a>
+              <a href="#method">How We Work</a>
+            </nav>
           </div>
 
-          <div class="hero-side">
-            <article class="portrait reveal">
-              <div>
-                <div class="mini-label">Studio portrait</div>
-                <h3>Led by Leo, built with a sharp four-person bench.</h3>
-              </div>
-              <div class="portrait-figure" aria-hidden="true"></div>
-              <p>
-                The team is intentionally small. Fewer hands, clearer opinions,
-                faster calls, and a stronger sense of what deserves to ship.
+          <div class="hero-grid">
+            <div class="hero-copy" data-reveal style="--delay: 120ms;">
+              <p class="eyebrow">Independent product workshop</p>
+              <h1>Shipping the work, not the theater.</h1>
+              <p class="lede">
+                Leo runs a compact team built to move from idea to working software without the usual
+                fog. The site below is the current lineup: the people, the tone, and the projects
+                getting real attention right now.
               </p>
-            </article>
+              <div class="hero-actions">
+                <a class="primary" href="#projects">See the work</a>
+                <a class="secondary" href="#team">Meet the team</a>
+              </div>
+            </div>
 
-            <aside class="stats reveal" aria-label="Studio snapshot">
-              <div class="stat">
-                <div class="stat-label">Projects</div>
-                <strong>6</strong>
+            <aside class="hero-side">
+              <div class="hero-card" data-reveal style="--delay: 210ms;">
+                <div class="status">Actively building</div>
+                <div>
+                  <strong>Six projects, one shared standard.</strong>
+                  <p>
+                    Tools should be useful on day one, clear enough to demo in a minute, and solid
+                    enough to keep using after the first impression wears off.
+                  </p>
+                </div>
+                <div class="hero-meta">
+                  <span class="pill">Product direction</span>
+                  <span class="pill">Design polish</span>
+                  <span class="pill">Working code</span>
+                </div>
               </div>
-              <div class="stat">
-                <div class="stat-label">Core team</div>
-                <strong>4</strong>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Working rule</div>
-                <strong>1</strong>
+
+              <div class="note-card" data-reveal style="--delay: 280ms;">
+                <p class="eyebrow">Current focus</p>
+                <strong>Make every repo legible.</strong>
+                <p>
+                  Each project exists for a reason. This homepage turns that reason into something
+                  people can scan quickly, understand, and remember.
+                </p>
               </div>
             </aside>
           </div>
-        </div>
 
-        <div class="studio-note reveal">
-          <p>
-            Every project on this page comes from the real workspace. Some are
-            flagship product bets, some are tools that make the rest move
-            faster, and some exist because the internet version of the work
-            should be as considered as the software behind it.
-          </p>
-          <div class="ticker" aria-label="Focus areas">
-            <span>Personal AI</span>
-            <span>CLI tools</span>
-            <span>Workflow design</span>
-            <span>Shipping websites</span>
+          <div class="ticker" data-reveal style="--delay: 340ms;">
+            <div class="ticker-copy">
+              <p class="eyebrow">On the table now</p>
+              <p>Git workflow tooling, a personal assistant platform, a live skill library, and the site that ties it together.</p>
+            </div>
+            <div class="ticker-list" aria-label="Project names">
+              <span class="pill">git2</span>
+              <span class="pill">git2-upstream-sync</span>
+              <span class="pill">openclaw</span>
+              <span class="pill">skills-collection</span>
+              <span class="pill">leoclaw-github</span>
+              <span class="pill">mywebsite</span>
+            </div>
           </div>
-        </div>
-      </main>
+        </header>
 
-      <section id="team" class="frame section">
-        <div class="section-head reveal">
-          <div>
-            <div class="section-tag">Team</div>
-            <h2>The people shaping the work.</h2>
-          </div>
-          <p>
-            This is not a bloated org chart. It is a working group with clear
-            ownership: direction, frontend craft, backend delivery, and
-            structural judgment.
-          </p>
-        </div>
-
-        <div class="team-layout">
-          <div class="team-intro reveal">
-            <h3>A small crew with distinct jobs and strong opinions.</h3>
-            <p>
-              Leo sets the bar and calls direction. The rest of the team keeps
-              that direction honest by turning it into interfaces, workflows,
-              and implementation that can survive real use.
-            </p>
-            <p>
-              The point is not to look busy. The point is to keep the body of
-              work coherent, practical, and worth showing in public.
-            </p>
-          </div>
-
-          <div class="team-grid">
-            <article class="team-card reveal">
+        <main id="main">
+          <section class="section" id="team">
+            <div class="section-head" data-reveal>
               <div>
-                <div class="mini-label">Direction</div>
-                <h3>Leo</h3>
+                <div class="section-tag">Team</div>
+                <h2>The crew behind the repos.</h2>
               </div>
               <p>
-                Chooses the angle, tightens the brief, and pushes every project
-                toward something sharper than the first obvious answer.
+                The goal is not to look bigger than we are. It is to be sharp about who owns what,
+                how decisions get made, and why the work feels coherent from repo to repo.
               </p>
-              <ul>
-                <li>Sets taste and final direction</li>
-                <li>Keeps the work practical</li>
-                <li>Prefers clean, direct output</li>
-              </ul>
-            </article>
+            </div>
 
-            <article class="team-card reveal">
+            <div class="team-grid">
+              <article class="member" data-reveal style="--delay: 40ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>Leo</h3>
+                    <p class="member-role">Product lead</p>
+                  </div>
+                  <span class="project-kind">Direction</span>
+                </div>
+                <p>
+                  Chooses the bets worth making, keeps the bar high, and cuts anything that sounds
+                  clever but does not improve the product.
+                </p>
+                <div class="member-traits">
+                  <span>taste first</span>
+                  <span>fast decisions</span>
+                  <span>clear priorities</span>
+                </div>
+              </article>
+
+              <article class="member" data-reveal style="--delay: 100ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>Mara</h3>
+                    <p class="member-role">Interface designer</p>
+                  </div>
+                  <span class="project-kind">Frontend</span>
+                </div>
+                <p>
+                  Turns rough ideas into pages people can actually read, trust, and navigate on the
+                  first pass, across desktop and mobile.
+                </p>
+                <div class="member-traits">
+                  <span>visual hierarchy</span>
+                  <span>editorial layout</span>
+                  <span>motion restraint</span>
+                </div>
+              </article>
+
+              <article class="member" data-reveal style="--delay: 160ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>Rin</h3>
+                    <p class="member-role">Product engineer</p>
+                  </div>
+                  <span class="project-kind">Build</span>
+                </div>
+                <p>
+                  Owns the practical middle: getting features working, simplifying messy paths, and
+                  making sure the nice ideas survive contact with real code.
+                </p>
+                <div class="member-traits">
+                  <span>usable defaults</span>
+                  <span>clean handoff</span>
+                  <span>tight loops</span>
+                </div>
+              </article>
+
+              <article class="member" data-reveal style="--delay: 220ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>Sol</h3>
+                    <p class="member-role">Systems engineer</p>
+                  </div>
+                  <span class="project-kind">Infra</span>
+                </div>
+                <p>
+                  Keeps the underlying machinery dependable: packaging, sync paths, developer setup,
+                  and the sort of details nobody notices until they break.
+                </p>
+                <div class="member-traits">
+                  <span>stability</span>
+                  <span>tooling rigor</span>
+                  <span>release paths</span>
+                </div>
+              </article>
+
+              <article class="member" data-reveal style="--delay: 280ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>Ivy</h3>
+                    <p class="member-role">Research and docs</p>
+                  </div>
+                  <span class="project-kind">Narrative</span>
+                </div>
+                <p>
+                  Finds the right framing, writes the explanation people needed earlier, and keeps
+                  dense technical work understandable without flattening it into marketing mush.
+                </p>
+                <div class="member-traits">
+                  <span>sharp copy</span>
+                  <span>repo context</span>
+                  <span>product story</span>
+                </div>
+              </article>
+
+              <article class="member" data-reveal style="--delay: 340ms;">
+                <div class="member-head">
+                  <div class="member-id">
+                    <h3>June</h3>
+                    <p class="member-role">QA and finish</p>
+                  </div>
+                  <span class="project-kind">Polish</span>
+                </div>
+                <p>
+                  Checks the seams: copy drift, broken states, rough edges on mobile, and all the
+                  little misses that separate a demo from something ready to live.
+                </p>
+                <div class="member-traits">
+                  <span>edge cases</span>
+                  <span>readability</span>
+                  <span>final pass</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="team-note" data-reveal>
+              <p class="section-tag">How this feels in practice</p>
+              <p>
+                Small team, visible ownership, quick iteration. Every project here has a reason to
+                exist and a person shaping how it reads, behaves, and survives beyond the launch day.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="projects">
+            <div class="section-head" data-reveal>
               <div>
-                <div class="mini-label">Frontend</div>
-                <h3>Visual build lead</h3>
+                <div class="section-tag">Projects</div>
+                <h2>The active slate.</h2>
               </div>
               <p>
-                Owns the public face of the work: hierarchy, typography,
-                interaction, and the difference between a page that functions
-                and a page that feels intentional.
+                These are not moodboard concepts. They are the actual repositories in the workspace,
+                grouped by what they are trying to improve right now.
               </p>
-              <ul>
-                <li>Builds the web presence</li>
-                <li>Protects clarity on mobile</li>
-                <li>Cuts generic layouts quickly</li>
-              </ul>
-            </article>
+            </div>
 
-            <article class="team-card reveal">
-              <div>
-                <div class="mini-label">Backend</div>
-                <h3>Delivery bench</h3>
+            <div class="filter" aria-label="Project filters" data-reveal>
+              <button type="button" aria-pressed="true" data-filter="all">All work</button>
+              <button type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
+              <button type="button" aria-pressed="false" data-filter="platform">Platform</button>
+              <button type="button" aria-pressed="false" data-filter="web">Web</button>
+              <button type="button" aria-pressed="false" data-filter="library">Library</button>
+            </div>
+
+            <div class="projects">
+              <article class="project" data-category="tooling" data-reveal style="--delay: 40ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Tooling</div>
+                    <h3>git2</h3>
+                    <p>
+                      A lighter wrapper around the system Git binary that keeps one custom workflow:
+                      `branch2`. The point is simple value with much lower maintenance cost.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It trims the ambition down to the useful core and keeps daily Git usage familiar.</p>
+                    <div class="project-points">
+                      <span>Python CLI</span>
+                      <span>branch mirroring</span>
+                      <span>dev-friendly packaging</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="project" data-category="tooling" data-reveal style="--delay: 90ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Tooling</div>
+                    <h3>git2-upstream-sync</h3>
+                    <p>
+                      The upstream-facing fork that stays close to Git while exploring a shared-filesystem
+                      workflow for multi-agent development.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It protects compatibility while creating room for faster collaboration patterns.</p>
+                    <div class="project-points">
+                      <span>upstream sync</span>
+                      <span>build automation</span>
+                      <span>Git-compatible fork</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="project" data-category="platform" data-reveal style="--delay: 140ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Platform</div>
+                    <h3>openclaw</h3>
+                    <p>
+                      A personal assistant platform that runs on your own devices and meets people on
+                      the channels they already use, from chat apps to voice and live canvas surfaces.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It turns “assistant” from a demo concept into an everyday product with real presence.</p>
+                    <div class="project-points">
+                      <span>multi-channel</span>
+                      <span>self-hosted feel</span>
+                      <span>always-on assistant</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="project" data-category="library" data-reveal style="--delay: 190ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Library</div>
+                    <h3>skills-collection</h3>
+                    <p>
+                      A living library of reusable skills and operating notes, built to keep the best
+                      workflows portable instead of trapped in one project.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It captures repeatable work so the team gets better without starting from zero each time.</p>
+                    <div class="project-points">
+                      <span>reusable skills</span>
+                      <span>workflow notes</span>
+                      <span>shared patterns</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="project" data-category="web" data-reveal style="--delay: 240ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Web</div>
+                    <h3>mywebsite</h3>
+                    <p>
+                      The front door. A simple static page that should introduce the work cleanly,
+                      sound human, and make the team feel like people with a point of view.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It is the first proof that the work has shape, taste, and enough clarity to stand on its own.</p>
+                    <div class="project-points">
+                      <span>GitHub Pages</span>
+                      <span>editorial homepage</span>
+                      <span>project showcase</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="project" data-category="platform" data-reveal style="--delay: 290ms;">
+                <div class="project-row">
+                  <div class="project-main">
+                    <div class="project-kind">Platform</div>
+                    <h3>leoclaw-github</h3>
+                    <p>
+                      A compact demo repo for the broader Claw work. Small in surface area, useful as
+                      a proving ground for presentation and repo-level communication.
+                    </p>
+                  </div>
+                  <div class="project-side">
+                    <strong>Why it matters</strong>
+                    <p>It gives experiments a cleaner place to land before they graduate into something larger.</p>
+                    <div class="project-points">
+                      <span>demo surface</span>
+                      <span>repo messaging</span>
+                      <span>lightweight proving ground</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section" id="method">
+            <div class="closing">
+              <div class="closing-copy" data-reveal>
+                <div class="section-tag">How We Work</div>
+                <h2>Lean team, visible output.</h2>
+                <p class="lede">
+                  We keep the loop short: define the problem, make the first working version, tighten
+                  the language, tighten the interface, then keep only what earns its place. Less posing,
+                  more proof.
+                </p>
               </div>
-              <p>
-                Covers behavior, tooling, scripts, and the less visible work
-                that makes the flashy parts trustworthy instead of fragile.
-              </p>
-              <ul>
-                <li>Builds reliable command surfaces</li>
-                <li>Keeps behavior explicit</li>
-                <li>Handles rough edges before they spread</li>
-              </ul>
-            </article>
 
-            <article class="team-card reveal">
-              <div>
-                <div class="mini-label">Architecture</div>
-                <h3>Structure lead</h3>
+              <div class="note-card" data-reveal style="--delay: 120ms;">
+                <p class="eyebrow">Three rules</p>
+                <div class="project-points">
+                  <span>Start with the useful version</span>
+                  <span>Make ownership obvious</span>
+                  <span>Polish what people actually touch</span>
+                </div>
+                <a class="jump-link" href="#projects">Return to the showcase</a>
               </div>
-              <p>
-                Turns fuzzy asks into solid boundaries, concrete decisions, and
-                plans another engineer can actually execute without guessing.
-              </p>
-              <ul>
-                <li>Clarifies scope and interfaces</li>
-                <li>Protects project shape over time</li>
-                <li>Chooses clean boundaries early</li>
-              </ul>
-            </article>
+            </div>
+          </section>
+        </main>
+
+        <footer class="section">
+          <div data-reveal>
+            <div class="brand">Leo & Co.</div>
+            <p>Current work, current team, current priorities.</p>
           </div>
-        </div>
-      </section>
-
-      <section id="projects" class="frame section">
-        <div class="section-head reveal">
-          <div>
-            <div class="section-tag">Projects</div>
-            <h2>The showcase is the work itself.</h2>
+          <div class="footer-links" data-reveal style="--delay: 80ms;">
+            <a href="#team">Team</a>
+            <a href="#projects">Projects</a>
+            <a href="#method">Method</a>
           </div>
-          <p>
-            These entries come straight from the live projects folder. The mix
-            is deliberate: one flagship product, a few strong utilities, and a
-            handful of supporting builds that keep the whole studio moving.
-          </p>
-        </div>
-
-        <div class="filter reveal" aria-label="Project filters">
-          <button type="button" data-filter="all" data-active="true">All</button>
-          <button type="button" data-filter="product" data-active="false">Product</button>
-          <button type="button" data-filter="tooling" data-active="false">Tooling</button>
-          <button type="button" data-filter="presence" data-active="false">Presence</button>
-        </div>
-
-        <div class="projects">
-          <article class="project-row reveal" data-kind="product">
-            <div class="project-head">
-              <div class="project-kind">Flagship product</div>
-              <h3>OpenClaw</h3>
-            </div>
-            <p class="project-summary">
-              A personal AI assistant that lives on Leo's own devices and shows
-              up through the channels he already uses. It is the biggest bet in
-              the folder and the clearest statement of the studio's ambition.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Make personal AI feel local, practical, and always within reach.</span>
-            </div>
-          </article>
-
-          <article class="project-row reveal" data-kind="tooling">
-            <div class="project-head">
-              <div class="project-kind">Developer tool</div>
-              <h3>git2</h3>
-            </div>
-            <p class="project-summary">
-              A lightweight Python wrapper around the system Git binary with one
-              custom branch handoff workflow. It keeps the command surface
-              familiar while cutting maintenance cost hard.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Keep daily Git work fast without carrying a heavy fork.</span>
-            </div>
-          </article>
-
-          <article class="project-row reveal" data-kind="tooling">
-            <div class="project-head">
-              <div class="project-kind">Workflow research</div>
-              <h3>git2-upstream-sync</h3>
-            </div>
-            <p class="project-summary">
-              A deeper fork that tracks upstream Git while exploring a shared
-              filesystem model for collaborative agent work. It is part
-              experiment, part infrastructure study.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Test the edges of a multi-worker Git workflow without throwing compatibility away.</span>
-            </div>
-          </article>
-
-          <article class="project-row reveal" data-kind="presence">
-            <div class="project-head">
-              <div class="project-kind">Public presence</div>
-              <h3>mywebsite</h3>
-            </div>
-            <p class="project-summary">
-              The studio front page. A clean place to explain who is building,
-              what is shipping, and why the body of work makes sense when seen
-              together rather than one repo at a time.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Give the work a sharper public frame than a raw directory listing ever could.</span>
-            </div>
-          </article>
-
-          <article class="project-row reveal" data-kind="presence">
-            <div class="project-head">
-              <div class="project-kind">Work demo</div>
-              <h3>leoclaw-github</h3>
-            </div>
-            <p class="project-summary">
-              A smaller outward-facing demo space. It functions like a proving
-              ground for showing work clearly and keeping the public footprint
-              aligned with the actual projects in motion.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Practice the public presentation layer instead of leaving it as an afterthought.</span>
-            </div>
-          </article>
-
-          <article class="project-row reveal" data-kind="tooling">
-            <div class="project-head">
-              <div class="project-kind">Skill library</div>
-              <h3>skills-collection</h3>
-            </div>
-            <p class="project-summary">
-              A working shelf of reusable skills and operating notes gathered
-              from real project work. It captures what has proven useful enough
-              to keep using instead of reinventing every time.
-            </p>
-            <div class="project-meta">
-              <strong>Why it exists</strong>
-              <span>Turn good repeated practice into something the team can reuse with less friction.</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="rhythm" class="frame section">
-        <div class="section-head reveal">
-          <div>
-            <div class="section-tag">Approach</div>
-            <h2>How the team keeps the work sharp.</h2>
-          </div>
-          <p>
-            The best projects here do not come from more layers. They come from
-            fast decisions, clear ownership, and a refusal to ship vague work.
-          </p>
-        </div>
-
-        <div class="rhythm-grid">
-          <article class="rhythm-card reveal">
-            <div class="mini-label">One</div>
-            <h3>Direction first.</h3>
-            <p>
-              Start by deciding what the project should be, not by collecting
-              parts. A strong page or tool is easier to build than rescue.
-            </p>
-          </article>
-
-          <article class="rhythm-card reveal">
-            <div class="mini-label">Two</div>
-            <h3>Small ownership.</h3>
-            <p>
-              Each area has a clear lead. That keeps the work readable, cuts
-              drift, and makes tradeoffs easier to call when time matters.
-            </p>
-          </article>
-
-          <article class="rhythm-card reveal">
-            <div class="mini-label">Three</div>
-            <h3>Public proof.</h3>
-            <p>
-              The standard is not whether a project sounds smart in a note. It
-              is whether someone can open it, use it, and understand why it is
-              there.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="frame section">
-        <div class="closing reveal">
-          <div>
-            <div class="section-tag">Studio note</div>
-            <h2>A compact team with a visible body of work.</h2>
-            <p>
-              That is the whole point of this site. It should feel like meeting
-              the team and walking the shelf of current work at the same time:
-              clear faces, clear projects, and no need for backstage language.
-            </p>
-          </div>
-          <a href="#main">Back to top</a>
-        </div>
-      </section>
-
-      <footer class="frame">
-        <div>
-          <div class="brand">Leo's Working Studio</div>
-          <p>
-            A sharper public read on the projects folder and the team behind it.
-          </p>
-        </div>
-        <p>
-          Built as a responsive static homepage with lightweight filtering,
-          restrained motion, and copy rewritten around real projects rather than
-          internal mechanics.
-        </p>
-      </footer>
+        </footer>
+      </div>
     </div>
 
     <script>
-      const revealItems = document.querySelectorAll(".reveal");
-      const filterButtons = document.querySelectorAll(".filter button");
-      const projectRows = document.querySelectorAll(".project-row");
+      const filterButtons = document.querySelectorAll("[data-filter]");
+      const projects = document.querySelectorAll(".project");
 
-      if ("IntersectionObserver" in window) {
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const selected = button.dataset.filter;
+
+          filterButtons.forEach((item) => {
+            item.setAttribute("aria-pressed", String(item === button));
+          });
+
+          projects.forEach((project) => {
+            const matches = selected === "all" || project.dataset.category === selected;
+            project.dataset.hidden = String(!matches);
+          });
+        });
+      });
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -1067,30 +1034,19 @@
             });
           },
           {
-            threshold: 0.18,
-            rootMargin: "0px 0px -30px 0px"
+            threshold: 0.16,
+            rootMargin: "0px 0px -40px 0px"
           }
         );
 
-        revealItems.forEach((item) => observer.observe(item));
-      } else {
-        revealItems.forEach((item) => item.classList.add("is-visible"));
-      }
-
-      filterButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const target = button.dataset.filter;
-
-          filterButtons.forEach((item) => {
-            item.dataset.active = String(item === button);
-          });
-
-          projectRows.forEach((row) => {
-            const matches = target === "all" || row.dataset.kind === target;
-            row.hidden = !matches;
-          });
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          observer.observe(element);
         });
-      });
+      } else {
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+      }
     </script>
   </body>
 </html>
