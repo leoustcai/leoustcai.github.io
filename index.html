@@ -6,37 +6,39 @@
     <title>Leobot</title>
     <meta
       name="description"
-      content="Leobot explains the mechanics behind ai-agent-proxy, agent-runner, and the surrounding shared-workspace systems with a sharper, production-grade homepage."
+      content="Leobot explains the mechanics behind ai-agent-proxy, agent-runner, and the surrounding shared-workspace systems through a sharper, production-grade homepage."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
         color-scheme: light;
-        --page: oklch(0.963 0.014 78);
-        --page-deep: oklch(0.915 0.025 73);
-        --paper: rgba(255, 249, 240, 0.82);
-        --paper-strong: rgba(255, 252, 247, 0.9);
-        --paper-line: rgba(54, 36, 23, 0.12);
-        --ink: oklch(0.23 0.023 40);
-        --muted: oklch(0.45 0.018 44);
-        --accent: oklch(0.61 0.175 34);
-        --accent-soft: rgba(186, 84, 43, 0.11);
-        --shadow: 0 30px 80px rgba(80, 52, 22, 0.12);
-        --deck-bg: oklch(0.19 0.028 252);
-        --deck-panel: rgba(16, 25, 42, 0.76);
-        --deck-panel-strong: rgba(12, 18, 32, 0.92);
-        --deck-line: rgba(189, 213, 244, 0.16);
-        --deck-ink: oklch(0.95 0.014 250);
-        --deck-muted: oklch(0.78 0.02 245);
-        --deck-accent: oklch(0.76 0.14 196);
-        --deck-gold: oklch(0.8 0.12 85);
-        --deck-green: oklch(0.8 0.14 152);
-        --max: 1260px;
+        --page: oklch(0.97 0.01 70);
+        --page-band: oklch(0.93 0.025 58);
+        --page-line: rgba(68, 47, 35, 0.12);
+        --paper: rgba(255, 251, 245, 0.88);
+        --paper-strong: rgba(255, 250, 244, 0.96);
+        --ink: oklch(0.24 0.025 35);
+        --muted: oklch(0.5 0.017 40);
+        --accent: oklch(0.62 0.176 31);
+        --accent-strong: oklch(0.54 0.185 29);
+        --accent-soft: rgba(192, 79, 37, 0.12);
+        --shadow: 0 24px 80px rgba(92, 61, 35, 0.14);
+        --annex-bg: oklch(0.19 0.025 258);
+        --annex-panel: rgba(18, 24, 42, 0.88);
+        --annex-panel-strong: rgba(11, 15, 29, 0.96);
+        --annex-line: rgba(190, 204, 234, 0.16);
+        --annex-ink: oklch(0.95 0.014 252);
+        --annex-muted: oklch(0.78 0.018 248);
+        --annex-accent: oklch(0.78 0.12 196);
+        --annex-gold: oklch(0.82 0.12 87);
+        --annex-green: oklch(0.82 0.12 151);
+        --max: 1320px;
+        --radius: 1.6rem;
       }
 
       * {
@@ -50,100 +52,147 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Instrument Sans", sans-serif;
+        font-family: "Manrope", sans-serif;
+        line-height: 1.5;
         color: var(--ink);
         background:
-          radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.95), transparent 20%),
-          radial-gradient(circle at 82% 11%, rgba(205, 115, 70, 0.16), transparent 18%),
-          linear-gradient(180deg, var(--page), var(--page-deep));
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.96), transparent 28%),
+          linear-gradient(180deg, var(--page), var(--page-band));
       }
 
       a {
         color: inherit;
       }
 
+      a,
       button {
         font: inherit;
       }
 
+      :focus-visible {
+        outline: 3px solid rgba(192, 79, 37, 0.4);
+        outline-offset: 3px;
+      }
+
       ::selection {
-        background: rgba(186, 84, 43, 0.18);
+        background: rgba(192, 79, 37, 0.18);
+      }
+
+      .skip-link {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 20;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--page-line);
+        background: rgba(255, 251, 245, 0.98);
+        color: var(--ink);
+        text-decoration: none;
+        transform: translateY(-140%);
+        transition: transform 180ms ease;
+      }
+
+      .skip-link:focus-visible {
+        transform: translateY(0);
       }
 
       .page {
-        width: min(var(--max), calc(100vw - 2rem));
+        width: min(var(--max), calc(100vw - 1.5rem));
         margin: 0 auto;
-        padding: 1rem 0 3rem;
+        padding: 0.75rem 0 2rem;
       }
 
-      .shell,
-      .deck-shell {
+      .hero,
+      .overview,
+      .ledger,
+      .operating-model,
+      .annex,
+      footer {
         position: relative;
         overflow: clip;
-      }
-
-      .shell {
-        border: 1px solid rgba(54, 36, 23, 0.08);
-        background:
-          linear-gradient(150deg, rgba(255, 253, 248, 0.94), rgba(248, 237, 223, 0.84)),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 28%);
+        border: 1px solid var(--page-line);
         box-shadow: var(--shadow);
       }
 
-      .hero-shell {
-        min-height: calc(100svh - 2rem);
-        padding: 1.2rem clamp(1rem, 3vw, 2rem) 1.5rem;
+      .hero,
+      .overview,
+      .ledger,
+      .operating-model,
+      footer {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 32%),
+          linear-gradient(160deg, rgba(255, 252, 248, 0.95), rgba(247, 237, 227, 0.84));
       }
 
-      .hero-shell::before,
-      .hero-shell::after,
-      .deck-shell::before,
-      .deck-shell::after {
+      .hero::before,
+      .hero::after,
+      .annex::before,
+      .annex::after {
         content: "";
         position: absolute;
         border-radius: 999px;
         pointer-events: none;
       }
 
-      .hero-shell::before {
+      .hero::before {
+        top: -6rem;
+        right: -2rem;
+        width: 20rem;
+        height: 20rem;
+        background: radial-gradient(circle, rgba(192, 79, 37, 0.2), transparent 70%);
+      }
+
+      .hero::after {
+        left: -8rem;
+        bottom: -8rem;
+        width: 24rem;
+        height: 24rem;
+        background: radial-gradient(circle, rgba(129, 92, 60, 0.14), transparent 72%);
+      }
+
+      .annex::before {
         top: -5rem;
         right: -4rem;
-        width: 22rem;
-        height: 22rem;
-        background: radial-gradient(circle, rgba(186, 84, 43, 0.18), transparent 72%);
-      }
-
-      .hero-shell::after {
-        left: -8rem;
-        bottom: -9rem;
-        width: 28rem;
-        height: 28rem;
-        background: radial-gradient(circle, rgba(130, 96, 59, 0.14), transparent 72%);
-      }
-
-      .deck-shell::before {
-        top: -6rem;
-        right: -5rem;
         width: 18rem;
         height: 18rem;
-        background: radial-gradient(circle, rgba(118, 189, 255, 0.18), transparent 70%);
+        background: radial-gradient(circle, rgba(124, 194, 255, 0.18), transparent 70%);
       }
 
-      .deck-shell::after {
-        left: -7rem;
-        bottom: -8rem;
+      .annex::after {
+        left: -6rem;
+        bottom: -6rem;
         width: 22rem;
         height: 22rem;
-        background: radial-gradient(circle, rgba(111, 226, 172, 0.13), transparent 74%);
+        background: radial-gradient(circle, rgba(124, 225, 181, 0.15), transparent 74%);
+      }
+
+      .hero {
+        min-height: calc(100svh - 1.5rem);
+        padding: 1.2rem clamp(1rem, 3vw, 2.1rem) 1.6rem;
+      }
+
+      .overview,
+      .ledger,
+      .operating-model,
+      .annex,
+      footer {
+        margin-top: 1rem;
+      }
+
+      .overview,
+      .ledger,
+      .operating-model,
+      .annex {
+        padding: clamp(1.2rem, 3vw, 2rem);
       }
 
       .topbar,
       .hero-grid,
-      .story,
+      .hero-band,
+      .hero-proof,
       .section-head,
-      .deck-head,
-      .deck-grid,
-      .deck-detail,
+      .annex-head,
+      .annex-grid,
       footer {
         position: relative;
         z-index: 1;
@@ -151,56 +200,87 @@
 
       .topbar,
       .section-head,
-      .deck-head,
+      .annex-head,
       footer {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: 1rem;
       }
 
       .topbar {
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--paper-line);
+        border-bottom: 1px solid var(--page-line);
+      }
+
+      .topnav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.45rem;
+      }
+
+      .topnav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        padding: 0.55rem 0.8rem;
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+
+      .topnav a:hover,
+      .topnav a:focus-visible {
+        border-color: var(--page-line);
+        background: rgba(255, 255, 255, 0.46);
       }
 
       .brand,
       .micro,
       .eyebrow,
       .section-kicker,
-      .meta-label,
-      .track-label,
-      .project-kind,
+      .band-label,
+      .signal-label,
+      .ledger-kind,
       .tab-button,
-      .node-type,
-      .step-index,
-      .signal-tag,
-      .footer-link,
-      .deck-note {
+      .annex-note,
+      .mini-label {
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
-      .brand {
-        font-size: 0.82rem;
+      .brand,
+      .mini-label {
+        font-size: 0.78rem;
         font-weight: 800;
       }
 
       .micro,
-      .meta-copy,
-      .project-why,
-      .track p,
+      .hero-copy,
       .section-head p,
-      .deck-head p,
-      .panel-card p,
-      .panel-card li,
-      .fact p,
+      .band-copy,
+      .overview-card p,
+      .ledger-copy,
+      .ledger-why,
+      .signal-copy,
+      .annex-copy,
+      .annex-panel p,
+      .annex-panel li,
+      .checkpoint p,
       footer {
         color: var(--muted);
       }
 
-      .micro {
-        font-size: 0.74rem;
+      .micro,
+      .eyebrow,
+      .section-kicker,
+      .band-label,
+      .signal-label,
+      .ledger-kind,
+      .annex-note,
+      .tab-button {
+        font-size: 0.72rem;
+        font-weight: 800;
       }
 
       h1,
@@ -208,57 +288,77 @@
       h3,
       h4 {
         margin: 0;
-        font-family: "Syne", sans-serif;
         line-height: 0.95;
         letter-spacing: -0.045em;
       }
 
+      h1,
+      h2,
+      .signal-title,
+      .hero-mark {
+        font-family: "Instrument Serif", serif;
+        font-weight: 400;
+      }
+
       .hero-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.22fr) minmax(20rem, 0.78fr);
-        gap: clamp(1.5rem, 4vw, 3.6rem);
+        grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+        gap: clamp(1.5rem, 4vw, 3rem);
         align-items: end;
-        padding-top: clamp(2rem, 5vw, 3.6rem);
+        padding-top: clamp(2rem, 5vw, 3.8rem);
       }
 
       .eyebrow,
-      .section-kicker {
-        display: inline-block;
+      .section-kicker,
+      .annex-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
         margin-bottom: 1rem;
-        font-size: 0.72rem;
-        font-weight: 800;
         color: var(--accent);
       }
 
-      .display {
-        display: grid;
-        gap: 0.8rem;
+      .eyebrow::before,
+      .section-kicker::before,
+      .annex-note::before {
+        content: "";
+        width: 1.1rem;
+        height: 1px;
+        background: currentColor;
       }
 
-      .name {
-        font-size: clamp(4rem, 13vw, 8.8rem);
+      .hero-mark {
+        max-width: 10ch;
+        font-size: clamp(3.8rem, 12vw, 8.6rem);
       }
 
-      .thesis {
-        max-width: 11ch;
-        font-size: clamp(2rem, 5.7vw, 5rem);
+      .hero-thesis {
+        max-width: 10ch;
+        margin-top: 0.7rem;
+        font-size: clamp(2.1rem, 5.4vw, 5rem);
       }
 
       .hero-copy {
-        max-width: 41rem;
+        max-width: 42rem;
         margin: 1.35rem 0 0;
-        font-size: clamp(1.02rem, 1.45vw, 1.18rem);
-        line-height: 1.78;
+        font-size: clamp(1rem, 1.35vw, 1.14rem);
+        line-height: 1.8;
+      }
+
+      .hero-lead {
+        max-width: 44rem;
+        margin-top: 1rem;
+        font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+        font-weight: 700;
+        line-height: 1.55;
       }
 
       .hero-actions,
       .hero-meta,
-      .project-links,
+      .signal-list,
+      .ledger-links,
       .tab-row,
-      .chip-row,
-      .legend-row,
-      .controls,
-      .footer-links {
+      .annex-pills {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
@@ -269,295 +369,432 @@
       }
 
       .button-link,
-      .tab-button,
-      button {
+      .tab-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         min-height: 3rem;
-        padding: 0.72rem 1rem;
-        border: 1px solid var(--paper-line);
-        background: rgba(255, 255, 255, 0.55);
+        padding: 0.78rem 1rem;
+        border: 1px solid var(--page-line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.54);
         color: inherit;
         text-decoration: none;
-        font-size: 0.8rem;
-        font-weight: 800;
-        cursor: pointer;
         transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
       }
 
       .button-link:hover,
       .tab-button:hover,
-      button:hover,
-      .project-card:hover,
-      .step:hover {
+      .overview-card:hover,
+      .ledger-row:hover,
+      .annex-panel:hover {
         transform: translateY(-1px);
       }
 
       .button-link.primary {
-        border-color: rgba(186, 84, 43, 0.2);
-        background: rgba(186, 84, 43, 0.12);
-      }
-
-      .hero-rail {
-        display: grid;
-        gap: 0.9rem;
-      }
-
-      .meta-card,
-      .track,
-      .project-card,
-      .deck-card,
-      .deck-panel,
-      .panel-card,
-      .fact {
-        border: 1px solid var(--paper-line);
-        background: var(--paper);
-        backdrop-filter: blur(14px);
-      }
-
-      .meta-card {
-        padding: 1rem;
-      }
-
-      .meta-label {
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: var(--muted);
-      }
-
-      .meta-value {
-        margin-top: 0.35rem;
-        font-family: "Syne", sans-serif;
-        font-size: clamp(2rem, 4vw, 3.1rem);
-      }
-
-      .meta-copy {
-        margin: 0.55rem 0 0;
-        line-height: 1.65;
+        border-color: rgba(192, 79, 37, 0.26);
+        background: rgba(192, 79, 37, 0.12);
       }
 
       .hero-meta {
         margin-top: 1rem;
       }
 
-      .story {
-        margin-top: 1.4rem;
+      .meta-pill,
+      .annex-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.5rem;
+        padding: 0.45rem 0.75rem;
+        border: 1px solid var(--page-line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.52);
+        font-size: 0.82rem;
+      }
+
+      .hero-proof {
         display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-        gap: 1rem;
-      }
-
-      .track {
-        padding: 1.15rem;
-      }
-
-      .track-label {
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: var(--accent);
-      }
-
-      .track h3 {
-        margin-top: 0.5rem;
-        font-size: clamp(1.5rem, 3vw, 2.35rem);
-      }
-
-      .track p {
-        margin: 0.75rem 0 0;
-        line-height: 1.72;
-      }
-
-      .overview,
-      .projects,
-      .deck {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
         margin-top: 1.4rem;
       }
 
-      .overview-shell,
-      .projects-shell {
-        padding: clamp(1.35rem, 3vw, 2rem);
+      .hero-proof-card {
+        padding: 1rem;
+        border: 1px solid var(--page-line);
+        background: rgba(255, 255, 255, 0.5);
       }
 
-      .section-head {
+      .hero-proof-card strong {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2;
+      }
+
+      .hero-proof-card p {
+        margin: 0.45rem 0 0;
+        color: var(--muted);
+        line-height: 1.66;
+      }
+
+      .hero-signal {
+        padding: 1.1rem;
+        border: 1px solid rgba(68, 47, 35, 0.08);
+        background: linear-gradient(180deg, rgba(255, 251, 245, 0.82), rgba(245, 235, 223, 0.94));
+      }
+
+      .signal-grid {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .signal-title {
+        font-size: clamp(1.9rem, 3.2vw, 3rem);
+      }
+
+      .signal-copy {
+        margin: 0.65rem 0 0;
+        line-height: 1.7;
+      }
+
+      .signal-list {
+        margin-top: 1rem;
+      }
+
+      .signal-card {
+        padding: 0.9rem;
+        border: 1px solid var(--page-line);
+        background: rgba(255, 255, 255, 0.48);
+      }
+
+      .signal-card strong,
+      .overview-card h3,
+      .ledger-row h3,
+      .annex-panel h3,
+      .checkpoint h4 {
+        display: block;
+        font-size: 1.05rem;
+        line-height: 1.15;
+      }
+
+      .hero-band {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.25rem;
+      }
+
+      .band {
+        padding: 1rem;
+        border-top: 2px solid var(--accent);
+        background: var(--paper);
+      }
+
+      .band-copy {
+        margin: 0.55rem 0 0;
+        line-height: 1.68;
+      }
+
+      .section-head,
+      .annex-head {
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--paper-line);
+        border-bottom: 1px solid var(--page-line);
       }
 
       .section-head h2,
-      .deck-head h2 {
-        font-size: clamp(2.1rem, 6vw, 4.8rem);
+      .annex-head h2 {
+        font-size: clamp(2.2rem, 6vw, 5rem);
       }
 
       .section-head p,
-      .deck-head p {
+      .annex-head p {
         max-width: 35rem;
         margin: 0;
         line-height: 1.72;
       }
 
-      .tracks-grid {
+      .overview-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 1rem;
         padding-top: 1.25rem;
       }
 
-      .project-list {
+      .overview-callout {
         display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
         gap: 1rem;
         padding-top: 1.2rem;
       }
 
-      .project-card {
-        display: grid;
-        grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
-        gap: 1rem;
+      .callout-panel,
+      .callout-list {
         padding: 1.1rem;
-        transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+        border: 1px solid var(--page-line);
+        background: var(--paper);
       }
 
-      .project-card:hover {
-        border-color: rgba(186, 84, 43, 0.24);
-        background: var(--paper-strong);
-      }
-
-      .project-kind {
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: var(--accent);
-      }
-
-      .project-card h3 {
-        margin-top: 0.45rem;
-        font-size: clamp(1.55rem, 3vw, 2.45rem);
-      }
-
-      .project-copy,
-      .project-why {
-        margin: 0;
+      .callout-panel p,
+      .callout-list li {
+        color: var(--muted);
         line-height: 1.72;
       }
 
-      .project-why {
+      .callout-list ul {
+        margin: 0.75rem 0 0;
+        padding-left: 1.1rem;
+      }
+
+      .overview-card {
+        padding: 1.1rem;
+        border: 1px solid var(--page-line);
+        background: var(--paper);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .overview-card:hover,
+      .ledger-row:hover {
+        border-color: rgba(192, 79, 37, 0.24);
+        background: var(--paper-strong);
+      }
+
+      .overview-card p {
+        margin: 0.65rem 0 0;
+        line-height: 1.72;
+      }
+
+      .ledger-list {
+        display: grid;
+        gap: 0.85rem;
+        padding-top: 1.2rem;
+      }
+
+      .ledger-row {
+        display: grid;
+        grid-template-columns: minmax(0, 0.64fr) minmax(0, 1.36fr);
+        gap: 1rem;
+        padding: 1.1rem;
+        border: 1px solid var(--page-line);
+        background: var(--paper);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .ledger-note {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2rem;
+        padding: 0.2rem 0.6rem;
+        margin-top: 0.75rem;
+        border: 1px solid rgba(192, 79, 37, 0.18);
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .ledger-kind {
+        color: var(--accent);
+      }
+
+      .ledger-row h3 {
+        margin-top: 0.4rem;
+        font-size: clamp(1.55rem, 3vw, 2.5rem);
+      }
+
+      .ledger-copy,
+      .ledger-why {
+        margin: 0;
+        line-height: 1.74;
+      }
+
+      .ledger-why {
         margin-top: 0.55rem;
       }
 
-      .project-links {
-        margin-top: 0.8rem;
+      .ledger-links {
+        margin-top: 0.85rem;
       }
 
-      .project-links a,
+      .ledger-links a,
       .footer-link {
         font-size: 0.8rem;
         font-weight: 800;
         text-decoration: none;
       }
 
-      .deck-shell {
-        color: var(--deck-ink);
-        padding: clamp(1.35rem, 3vw, 2rem);
-        border: 1px solid rgba(163, 195, 228, 0.15);
-        background:
-          radial-gradient(circle at 14% 15%, rgba(117, 189, 255, 0.18), transparent 24%),
-          radial-gradient(circle at 88% 12%, rgba(140, 220, 197, 0.14), transparent 18%),
-          linear-gradient(180deg, rgba(14, 22, 38, 0.98), rgba(9, 14, 26, 0.99));
-        box-shadow: 0 35px 100px rgba(7, 12, 22, 0.35);
-      }
-
-      .deck-head {
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--deck-line);
-      }
-
-      .deck-note {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-        padding: 0.5rem 0.7rem;
-        border: 1px solid var(--deck-line);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--deck-accent);
-        font-size: 0.72rem;
-        font-weight: 800;
-      }
-
-      .deck-head p,
-      .deck-card p,
-      .fact p,
-      .panel-card p,
-      .panel-card li,
-      .step span,
-      .node p {
-        color: var(--deck-muted);
-      }
-
-      .deck-grid {
+      .operating-grid {
         display: grid;
-        grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
         gap: 1rem;
         padding-top: 1.2rem;
       }
 
-      .deck-card,
-      .deck-panel,
-      .panel-card,
-      .fact {
-        border-color: var(--deck-line);
-        background: var(--deck-panel);
+      .rail-panel,
+      .checkpoints {
+        border: 1px solid var(--page-line);
+        background: var(--paper);
       }
 
-      .deck-card,
-      .panel-card {
+      .rail-panel {
+        padding: 1.1rem;
+      }
+
+      .rail {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 0.9rem;
+      }
+
+      .rail-step {
+        display: grid;
+        grid-template-columns: 2.2rem minmax(0, 1fr);
+        gap: 0.8rem;
+        padding: 0.8rem;
+        border: 1px solid rgba(68, 47, 35, 0.08);
+        background: rgba(255, 255, 255, 0.42);
+      }
+
+      .step-index {
+        display: inline-grid;
+        place-items: center;
+        width: 2.2rem;
+        aspect-ratio: 1;
+        border: 1px solid var(--page-line);
+        color: var(--accent);
+        font-size: 0.7rem;
+        font-weight: 800;
+      }
+
+      .rail-step p,
+      .rail-step strong {
+        margin: 0;
+      }
+
+      .rail-step strong {
+        font-size: 1rem;
+        line-height: 1.2;
+      }
+
+      .rail-step p {
+        margin-top: 0.18rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .checkpoints {
+        padding: 1.1rem;
+      }
+
+      .checkpoint-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin-top: 0.9rem;
+      }
+
+      .checkpoint {
+        padding: 0.9rem;
+        border: 1px solid rgba(68, 47, 35, 0.08);
+        background: rgba(255, 255, 255, 0.45);
+      }
+
+      .checkpoint p {
+        margin: 0.55rem 0 0;
+        line-height: 1.65;
+      }
+
+      .annex {
+        margin-top: 1.6rem;
+        color: var(--annex-ink);
+        border-color: rgba(166, 191, 234, 0.16);
+        background:
+          radial-gradient(circle at 14% 14%, rgba(121, 191, 255, 0.18), transparent 24%),
+          radial-gradient(circle at 88% 10%, rgba(127, 225, 183, 0.14), transparent 18%),
+          linear-gradient(180deg, rgba(14, 20, 38, 0.98), rgba(8, 12, 24, 0.99));
+        box-shadow: 0 34px 100px rgba(5, 10, 20, 0.34);
+      }
+
+      .annex-head {
+        border-bottom-color: var(--annex-line);
+      }
+
+      .annex-note {
+        color: var(--annex-accent);
+      }
+
+      .annex-copy,
+      .annex-panel p,
+      .annex-panel li,
+      .annex-head p {
+        color: var(--annex-muted);
+      }
+
+      .annex-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        gap: 1rem;
+        padding-top: 1.2rem;
+      }
+
+      .annex-summary,
+      .annex-detail {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .annex-panel {
         padding: 1rem;
+        border: 1px solid var(--annex-line);
+        background: var(--annex-panel);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
       }
 
-      .deck-card h3 {
-        font-size: clamp(1.6rem, 3vw, 2.45rem);
+      .annex-panel:hover {
+        border-color: rgba(124, 194, 255, 0.24);
+        background: rgba(22, 29, 50, 0.96);
       }
 
-      .deck-card p {
-        margin: 0.75rem 0 0;
+      .annex-panel h3 {
+        font-size: clamp(1.55rem, 3vw, 2.4rem);
+      }
+
+      .annex-panel p,
+      .annex-panel ul {
+        margin: 0.7rem 0 0;
         line-height: 1.72;
       }
 
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.5rem 0.68rem;
-        border: 1px solid currentColor;
-        background: rgba(255, 255, 255, 0.04);
-        font-size: 0.8rem;
+      .annex-panel ul {
+        padding-left: 1.05rem;
       }
 
-      .chip-dot {
-        width: 0.58rem;
-        height: 0.58rem;
-        border-radius: 999px;
+      .annex-pills {
+        margin-top: 1rem;
+      }
+
+      .annex-pill {
+        border-color: var(--annex-line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--annex-ink);
       }
 
       .tab-row {
         margin-top: 1rem;
       }
 
-      .tab-button,
-      button {
-        border-color: var(--deck-line);
+      .tab-button {
+        border-color: var(--annex-line);
         background: rgba(255, 255, 255, 0.04);
-        color: var(--deck-ink);
-        font-size: 0.72rem;
+        color: var(--annex-ink);
       }
 
       .tab-button.active {
-        border-color: rgba(119, 194, 255, 0.34);
-        background: rgba(119, 194, 255, 0.12);
-        color: white;
-      }
-
-      .deck-detail {
-        padding-top: 1rem;
+        border-color: rgba(124, 194, 255, 0.4);
+        background: rgba(124, 194, 255, 0.12);
       }
 
       .tab-panel {
@@ -568,280 +805,108 @@
         display: block;
       }
 
-      .diagram-layout {
+      .systems-map {
         display: grid;
-        grid-template-columns: minmax(0, 1.28fr) minmax(18rem, 0.92fr);
-        gap: 1rem;
-      }
-
-      .diagram-board {
-        position: relative;
-        min-height: 43rem;
-        border: 1px solid var(--deck-line);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
-          linear-gradient(180deg, rgba(11, 17, 29, 0.62), rgba(7, 12, 24, 0.94));
-        overflow: hidden;
-      }
-
-      .diagram-board::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 2.4rem 2.4rem;
-        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.86), transparent 96%);
-        pointer-events: none;
-      }
-
-      .node {
-        position: absolute;
-        width: 14rem;
-        padding: 0.95rem;
-        border: 1px solid var(--deck-line);
-        background: var(--deck-panel-strong);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.26);
-        transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease, opacity 240ms ease;
-      }
-
-      .node.active {
-        border-color: rgba(119, 194, 255, 0.52);
-        box-shadow: 0 18px 60px rgba(90, 163, 255, 0.18);
-      }
-
-      .node.user { top: 2rem; left: 2rem; }
-      .node.proxy { top: 2rem; left: calc(50% - 7rem); }
-      .node.inbox { top: 12rem; left: calc(50% - 7rem); }
-      .node.runner { top: 22rem; left: calc(50% - 7rem); }
-      .node.team-a { top: 32rem; left: 2rem; }
-      .node.team-b { top: 32rem; left: calc(50% - 7rem); }
-      .node.team-c { top: 32rem; right: 2rem; }
-      .node.reply { top: 12rem; right: 2rem; }
-
-      .node-type {
-        margin-bottom: 0.55rem;
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: var(--deck-muted);
-      }
-
-      .node h3 {
-        font-size: 1.22rem;
-        line-height: 1.02;
-      }
-
-      .node p {
-        margin: 0.52rem 0 0;
-        line-height: 1.55;
-        font-size: 0.92rem;
-      }
-
-      .node.user .node-type,
-      .signal.response {
-        color: var(--deck-green);
-      }
-
-      .node.proxy .node-type,
-      .signal.request {
-        color: var(--deck-accent);
-      }
-
-      .node.runner .node-type,
-      .signal.handoff {
-        color: var(--deck-gold);
-      }
-
-      .edge-layer {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-
-      .signal {
-        position: absolute;
-        height: 2px;
-        transform-origin: 0 50%;
-        border-radius: 999px;
-        opacity: 0.32;
-        transition: opacity 240ms ease;
-      }
-
-      .signal::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -1px;
-        width: 0.72rem;
-        height: 0.72rem;
-        border-top: 2px solid currentColor;
-        border-right: 2px solid currentColor;
-        transform: translateY(-50%) rotate(45deg);
-      }
-
-      .signal.request {
-        background: linear-gradient(90deg, rgba(116, 196, 255, 0.08), rgba(116, 196, 255, 0.84));
-      }
-
-      .signal.response {
-        background: linear-gradient(90deg, rgba(112, 227, 172, 0.08), rgba(112, 227, 172, 0.84));
-      }
-
-      .signal.handoff {
-        background: linear-gradient(90deg, rgba(250, 208, 107, 0.08), rgba(250, 208, 107, 0.84));
-      }
-
-      .signal.active {
-        opacity: 1;
-        animation: pulseLine 1.25s ease-in-out infinite alternate;
-      }
-
-      .signal-tag {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        padding: 0.24rem 0.44rem;
-        border: 1px solid currentColor;
-        background: rgba(8, 13, 24, 0.92);
-        font-size: 0.56rem;
-        font-weight: 800;
-        white-space: nowrap;
-      }
-
-      .panel-card h4 {
-        font-size: 1.28rem;
-      }
-
-      .steps {
-        list-style: none;
-        margin: 0.9rem 0 0;
-        padding: 0;
-        display: grid;
-        gap: 0.65rem;
-      }
-
-      .step {
-        display: grid;
-        grid-template-columns: 2.15rem minmax(0, 1fr);
-        gap: 0.75rem;
-        padding: 0.72rem;
-        border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.03);
-        transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
-        cursor: pointer;
-      }
-
-      .step.active,
-      .step:hover {
-        border-color: rgba(119, 194, 255, 0.24);
-        background: rgba(119, 194, 255, 0.08);
-      }
-
-      .step-index {
-        display: inline-grid;
-        place-items: center;
-        width: 2.15rem;
-        aspect-ratio: 1;
-        border: 1px solid var(--deck-line);
-        font-size: 0.66rem;
-        font-weight: 800;
-        color: var(--deck-accent);
-      }
-
-      .step strong {
-        display: block;
-        margin-bottom: 0.18rem;
-        color: white;
-      }
-
-      .legend-row,
-      .controls {
-        margin-top: 0.85rem;
-      }
-
-      .fact-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.85rem;
       }
 
-      .fact {
+      .map-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 0.8rem;
+        align-items: center;
+      }
+
+      .map-node,
+      .flow-card {
         padding: 0.9rem;
+        border: 1px solid var(--annex-line);
+        background: var(--annex-panel-strong);
       }
 
-      .fact strong {
+      .map-node strong,
+      .flow-card strong {
         display: block;
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--deck-accent);
+        font-size: 0.98rem;
+        line-height: 1.18;
       }
 
-      .fact p {
-        margin: 0.5rem 0 0;
-        line-height: 1.62;
+      .map-node p,
+      .flow-card p {
+        margin: 0.45rem 0 0;
+        color: var(--annex-muted);
+        line-height: 1.6;
+      }
+
+      .map-link {
+        min-width: 3.1rem;
+        text-align: center;
+        color: var(--annex-accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .handoff-grid,
+      .reason-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
       }
 
       footer {
-        margin-top: 1.4rem;
         padding: 1rem;
-        border: 1px solid var(--paper-line);
-        background: rgba(255, 251, 243, 0.68);
+        background: rgba(255, 251, 244, 0.75);
       }
 
       .footer-links {
+        display: flex;
+        flex-wrap: wrap;
         justify-content: flex-end;
-      }
-
-      @keyframes pulseLine {
-        from { filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
-        to { filter: drop-shadow(0 0 10px rgba(119, 194, 255, 0.2)); }
+        gap: 0.8rem;
       }
 
       @media (prefers-reduced-motion: no-preference) {
-        .hero-shell::before,
-        .deck-shell::before {
-          animation: floatA 12s ease-in-out infinite alternate;
+        .hero::before,
+        .annex::before {
+          animation: float-a 12s ease-in-out infinite alternate;
         }
 
-        .hero-shell::after,
-        .deck-shell::after {
-          animation: floatB 14s ease-in-out infinite alternate;
+        .hero::after,
+        .annex::after {
+          animation: float-b 14s ease-in-out infinite alternate;
         }
 
-        .topbar,
-        .display,
-        .hero-copy,
-        .hero-actions,
-        .hero-meta,
-        .hero-rail,
-        .story,
-        .overview-shell,
-        .projects-shell,
-        .deck-shell,
+        .hero,
+        .overview,
+        .ledger,
+        .operating-model,
+        .annex,
         footer {
           animation: rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        .hero-copy {
+        .overview {
           animation-delay: 80ms;
         }
 
-        .hero-actions,
-        .hero-meta,
-        .hero-rail {
+        .ledger {
           animation-delay: 140ms;
         }
 
-        .story,
-        .overview-shell {
-          animation-delay: 180ms;
+        .operating-model {
+          animation-delay: 200ms;
+        }
+
+        .annex {
+          animation-delay: 260ms;
         }
 
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(26px);
           }
 
           to {
@@ -850,738 +915,592 @@
           }
         }
 
-        @keyframes floatA {
+        @keyframes float-a {
           from { transform: translate3d(0, 0, 0); }
-          to { transform: translate3d(1.1rem, 0.75rem, 0); }
+          to { transform: translate3d(1rem, 0.8rem, 0); }
         }
 
-        @keyframes floatB {
+        @keyframes float-b {
           from { transform: translate3d(0, 0, 0); }
-          to { transform: translate3d(-1rem, 0.8rem, 0); }
+          to { transform: translate3d(-0.8rem, 0.9rem, 0); }
         }
       }
 
-      @media (max-width: 1080px) {
+      @media (max-width: 1120px) {
         .hero-grid,
-        .story,
-        .tracks-grid,
-        .deck-head,
-        .deck-grid,
-        .diagram-layout {
+        .operating-grid,
+        .annex-grid,
+        .overview-grid,
+        .overview-callout,
+        .hero-proof,
+        .hero-band {
           grid-template-columns: 1fr;
         }
-
-        .diagram-board {
-          min-height: 50rem;
-        }
       }
 
-      @media (max-width: 920px) {
-        .project-card,
-        .fact-grid {
+      @media (max-width: 940px) {
+        .ledger-row,
+        .checkpoint-grid,
+        .handoff-grid,
+        .reason-grid {
           grid-template-columns: 1fr;
         }
 
         .section-head,
-        .deck-head,
+        .annex-head,
         footer {
-          align-items: start;
           flex-direction: column;
         }
       }
 
-      @media (max-width: 820px) {
+      @media (max-width: 760px) {
         .page {
-          width: min(var(--max), calc(100vw - 1rem));
-          padding-top: 0.5rem;
+          width: min(var(--max), calc(100vw - 0.8rem));
+          padding-top: 0.4rem;
         }
 
-        .hero-shell {
+        .hero {
           min-height: auto;
-          padding-inline: 1rem;
+          padding-inline: 0.95rem;
         }
 
-        .name {
-          font-size: clamp(3.2rem, 18vw, 5rem);
+        .hero-mark {
+          font-size: clamp(3.2rem, 18vw, 5.2rem);
         }
 
-        .thesis {
-          font-size: clamp(1.75rem, 10vw, 3rem);
+        .hero-thesis {
+          font-size: clamp(1.8rem, 10vw, 3.4rem);
         }
 
-        .diagram-board {
-          min-height: auto;
-          display: grid;
-          gap: 0.8rem;
-          padding: 0.9rem;
+        .map-row {
+          grid-template-columns: 1fr;
         }
 
-        .node,
-        .node.user,
-        .node.proxy,
-        .node.inbox,
-        .node.runner,
-        .node.team-a,
-        .node.team-b,
-        .node.team-c,
-        .node.reply {
-          position: relative;
-          inset: auto;
-          width: 100%;
-        }
-
-        .edge-layer {
-          display: none;
+        .map-link {
+          text-align: left;
         }
       }
 
       @media (max-width: 640px) {
         .topbar,
+        .topnav,
         .hero-actions,
         .hero-meta,
-        .project-links,
+        .ledger-links,
         .tab-row,
+        .annex-pills,
         .footer-links {
           flex-direction: column;
           align-items: stretch;
         }
 
         .button-link,
-        .tab-button,
-        button {
+        .tab-button {
           width: 100%;
         }
       }
     </style>
   </head>
   <body>
-    <main class="page">
-      <section class="shell hero-shell">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <main class="page" id="content">
+      <section class="hero">
         <header class="topbar">
-          <div class="brand">Leobot</div>
-          <div class="micro">Shared-workspace engineer • Sharp product explanation</div>
+          <div>
+            <div class="brand">Leobot</div>
+            <div class="micro">Shared-workspace systems explained with sharp edges, not startup fog</div>
+          </div>
+          <nav class="topnav" aria-label="Primary">
+            <a href="#overview">Reading guide</a>
+            <a href="#ledger">Projects</a>
+            <a href="#operating-model">Operating model</a>
+            <a href="#agent-annex">AI annex</a>
+          </nav>
         </header>
 
         <div class="hero-grid">
           <div>
-            <span class="eyebrow">Front page, not filler</span>
-            <div class="display">
-              <h1 class="name">Leobot</h1>
-              <h2 class="thesis">Systems that make agent work readable under pressure.</h2>
-            </div>
+            <span class="eyebrow">Homepage for people who need the mechanics</span>
+            <h1 class="hero-mark">Leobot</h1>
+            <h2 class="hero-thesis">A cleaner front page for the stack behind agent work.</h2>
+            <p class="hero-lead">
+              Understand what each project does, how the shared workspace operates, and where the AI-specific machinery starts without wading through a vague landing page.
+            </p>
             <p class="hero-copy">
-              This homepage is built for people trying to understand how the stack actually works. It explains the shared-workspace runtime,
-              handoff infrastructure, public surfaces, and the projects around <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>
-              without collapsing everything into one vague AI claim.
+              This site is for readers trying to understand how the surrounding projects fit together without being forced through a generic AI landing page.
+              The homepage explains the product stack first. The deeper <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> mechanics live
+              in a deliberately separate technical annex, so the explanation stays readable.
             </p>
             <div class="hero-actions">
-              <a class="button-link primary" href="#projects">Read the product stack</a>
-              <a class="button-link" href="#agent-deck">Open the agent deck</a>
+              <a class="button-link primary" href="#ledger">Read the stack</a>
+              <a class="button-link" href="#operating-model">See the sequence</a>
+              <a class="button-link" href="#agent-annex">Open the AI annex</a>
             </div>
-            <div class="hero-meta" aria-label="Site position">
-              <span class="chip">Audience: technical readers</span>
-              <span class="chip">Main job: explanation</span>
-              <span class="chip">Tone: sharp</span>
+            <div class="hero-meta" aria-label="Design context">
+              <span class="meta-pill">Audience: people learning the mechanics</span>
+              <span class="meta-pill">Main job: product explanation</span>
+              <span class="meta-pill">Reading mode: public first, technical second</span>
+            </div>
+            <div class="hero-proof" aria-label="What the homepage helps you do">
+              <article class="hero-proof-card">
+                <strong>Orient in one pass</strong>
+                <p>The first screen tells you what this site covers, where to start, and which section is optional depth.</p>
+              </article>
+              <article class="hero-proof-card">
+                <strong>Read by decision</strong>
+                <p>Jump straight to project inventory, operating sequence, or AI mechanics depending on what you need.</p>
+              </article>
+              <article class="hero-proof-card">
+                <strong>Keep the split intact</strong>
+                <p>The annex still holds dense system behavior, but it no longer overwhelms the homepage story.</p>
+              </article>
             </div>
           </div>
 
-          <aside class="hero-rail" aria-label="Homepage summary">
-            <article class="meta-card">
-              <div class="meta-label">What visitors get</div>
-              <div class="meta-value">Structure</div>
-              <p class="meta-copy">The page reads like a system brief, with each project tied to a concrete role in the stack.</p>
-            </article>
-            <article class="meta-card">
-              <div class="meta-label">What changed</div>
-              <div class="meta-value">Separation</div>
-              <p class="meta-copy">The AI-agent mechanics now live in an isolated deck instead of bleeding into the core homepage story.</p>
-            </article>
-            <article class="meta-card">
-              <div class="meta-label">What stays true</div>
-              <div class="meta-value">Purpose</div>
-              <p class="meta-copy">This is still a product explanation layer, not a founder bio and not a decorative landing page.</p>
-            </article>
+          <aside class="hero-signal" aria-label="Homepage summary">
+            <div class="signal-grid">
+              <div>
+                <div class="signal-label">Start here</div>
+                <div class="signal-title">Three stops. One clean path.</div>
+                <p class="signal-copy">
+                  Scan the product ledger first, use the operating model to connect the systems, then enter the annex only if you need runner and proxy detail.
+                </p>
+              </div>
+
+              <div class="signal-list">
+                <article class="signal-card">
+                  <strong>1. Read the homepage track</strong>
+                  <p>Project ledger, stack positioning, and public-facing explanation for fast comprehension.</p>
+                </article>
+                <article class="signal-card">
+                  <strong>2. Connect the operating model</strong>
+                  <p>See how public surface, shared runtime, and specialist execution line up in sequence.</p>
+                </article>
+                <article class="signal-card">
+                  <strong>3. Open the annex when needed</strong>
+                  <p>Proxy intake, runner lifecycle, and handoff behavior stay available without diluting the main story.</p>
+                </article>
+              </div>
+            </div>
           </aside>
         </div>
 
-        <div class="story">
-          <article class="track">
-            <div class="track-label">Main track</div>
-            <h3>The homepage handles the stack story.</h3>
-            <p>
-              The top of the page explains why these projects belong together: Git handoff, shared runtime, public publishing, and durable skill memory.
-              It gives a reader enough operational context to understand the portfolio fast.
-            </p>
+        <div class="hero-band">
+          <article class="band">
+            <div class="band-label">01 Product first</div>
+            <p class="band-copy">The main story explains what exists and why each system belongs in the stack.</p>
           </article>
-          <article class="track">
-            <div class="track-label">Separate track</div>
-            <h3>The AI layer gets its own room.</h3>
-            <p>
-              The deeper mechanics for <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong> sit in a dedicated dark deck with tabs,
-              motion, and a clearer systems lens, so the detail feels intentional instead of bolted onto the homepage.
-            </p>
+          <article class="band">
+            <div class="band-label">02 Separation on purpose</div>
+            <p class="band-copy">The AI-agent content no longer leaks into every block. It is isolated and easier to read.</p>
+          </article>
+          <article class="band">
+            <div class="band-label">03 Better visual discipline</div>
+            <p class="band-copy">The layout now feels intentional instead of improvised, with clearer pacing and stronger section contrast.</p>
           </article>
         </div>
       </section>
 
-      <section class="overview">
-        <div class="shell overview-shell">
-          <div class="section-head">
-            <div>
-              <span class="section-kicker">Reading guide</span>
-              <h2>One workspace, three clear jobs.</h2>
-            </div>
-            <p>
-              The redesign pushes the site into three distinct lanes: what the systems are, how they fit together, and where the AI request lifecycle belongs.
-            </p>
+      <section class="overview" id="overview">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Reading guide</span>
+            <h2>Three lanes. No blurred story.</h2>
           </div>
+          <p>
+            The redesign tightens the message into three distinct jobs: show the product stack, explain the operating model, and quarantine the
+            AI request lifecycle in a visibly separate section.
+          </p>
+        </div>
 
-          <div class="tracks-grid">
-            <article class="track">
-              <div class="track-label">01 Product stack</div>
-              <h3>What exists</h3>
-              <p>The project ledger names each system and states why it deserves a place in the stack.</p>
-            </article>
-            <article class="track">
-              <div class="track-label">02 Operational logic</div>
-              <h3>How it fits</h3>
-              <p>The copy emphasizes shared workspace continuity, inspectable handoff, and practical runtime boundaries.</p>
-            </article>
-            <article class="track">
-              <div class="track-label">03 Agent mechanics</div>
-              <h3>Where it lives</h3>
-              <p>The AI explanation sits in a separate tabbed deck so it reads like a technical appendix, not homepage clutter.</p>
-            </article>
-          </div>
+        <div class="overview-callout">
+          <article class="callout-panel">
+            <div class="mini-label">Use the page like this</div>
+            <p>
+              If you are new here, start with the ledger. If you already know the projects and want the connective tissue, read the operating model.
+              Only jump to the annex if you need the concrete request flow for proxy and runner behavior.
+            </p>
+          </article>
+          <article class="callout-list">
+            <div class="mini-label">Fast scan</div>
+            <ul>
+              <li>The homepage explains products and boundaries.</li>
+              <li>The middle section explains sequence and ownership.</li>
+              <li>The annex acts like a technical appendix, not a second homepage.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="overview-grid">
+          <article class="overview-card">
+            <div class="mini-label">Lane 01</div>
+            <h3>What exists</h3>
+            <p>The homepage acts like a ledger: each project gets a function, a boundary, and a practical reason to care.</p>
+          </article>
+          <article class="overview-card">
+            <div class="mini-label">Lane 02</div>
+            <h3>How it fits</h3>
+            <p>The site frames shared-workspace continuity, Git-aware handoff, and public surfaces as one operational system.</p>
+          </article>
+          <article class="overview-card">
+            <div class="mini-label">Lane 03</div>
+            <h3>Where AI detail belongs</h3>
+            <p>The mechanics for `ai-agent-proxy` and `agent-runner` sit in an annex that feels intentionally detached from the main narrative.</p>
+          </article>
         </div>
       </section>
 
-      <section class="projects" id="projects">
-        <div class="shell projects-shell">
-          <div class="section-head">
+      <section class="ledger" id="ledger">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Current systems</span>
+            <h2>Project ledger</h2>
+          </div>
+          <p>
+            Each entry is framed by role first: what it does, what boundary it owns, and why it matters to someone trying to understand the stack.
+          </p>
+        </div>
+
+        <div class="ledger-list">
+          <article class="ledger-row">
             <div>
-              <span class="section-kicker">Current systems</span>
-              <h2>Project ledger</h2>
+              <div class="ledger-kind">Version control</div>
+              <h3>git2</h3>
+              <div class="ledger-note">Handoff and branch continuity</div>
             </div>
-            <p>Each entry is framed by function first: what it does, what boundary it owns, and why a technical reader should care.</p>
-          </div>
+            <div>
+              <p class="ledger-copy">A Python wrapper around system Git with a custom `branch2` flow for agent handoff and repository-backed work.</p>
+              <p class="ledger-why">It keeps collaboration attached to real Git state instead of detached copies, snapshots, or short-lived context.</p>
+              <div class="ledger-links">
+                <a href="https://github.com/leoustcai/git2">Repository</a>
+              </div>
+            </div>
+          </article>
 
-          <div class="project-list">
-            <article class="project-card">
-              <div>
-                <div class="project-kind">Version control</div>
-                <h3>git2</h3>
+          <article class="ledger-row">
+            <div>
+              <div class="ledger-kind">Agent runtime</div>
+              <h3>OpenClaw</h3>
+              <div class="ledger-note">Shared workspace execution</div>
+            </div>
+            <div>
+              <p class="ledger-copy">A shared runtime for messaging, memory, notes, task handling, and code execution inside one coordinated workspace.</p>
+              <p class="ledger-why">It exists so agents can work against durable files and aligned context, not disposable sessions with no continuity.</p>
+              <div class="ledger-links">
+                <a href="https://github.com/leoustc/openclaw">Repository</a>
               </div>
-              <div>
-                <p class="project-copy">A Python wrapper around system Git with a custom <code>branch2</code> flow for agent handoff and real repository work.</p>
-                <p class="project-why">It keeps collaboration attached to actual Git state instead of loose copies and detached process memory.</p>
-                <div class="project-links">
-                  <a href="https://github.com/leoustcai/git2">Repository</a>
-                </div>
-              </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="project-card">
-              <div>
-                <div class="project-kind">Agent runtime</div>
-                <h3>OpenClaw</h3>
+          <article class="ledger-row">
+            <div>
+              <div class="ledger-kind">Publishing</div>
+              <h3>leoclaw-github</h3>
+              <div class="ledger-note">Public output layer</div>
+            </div>
+            <div>
+              <p class="ledger-copy">Public coding and editorial surfaces, including the AI news product, with a cleaner outward-facing structure.</p>
+              <p class="ledger-why">It turns active implementation into something inspectable instead of leaving the work locked inside the private workspace.</p>
+              <div class="ledger-links">
+                <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
+                <a href="https://ai-news.leoustc.workers.dev">Live surface</a>
               </div>
-              <div>
-                <p class="project-copy">A shared runtime for messaging, memory, notes, task handling, and code execution inside one coordinated workspace.</p>
-                <p class="project-why">It exists so agents can work against durable context and real files rather than isolated, disposable sessions.</p>
-                <div class="project-links">
-                  <a href="https://github.com/leoustc/openclaw">Repository</a>
-                </div>
-              </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="project-card">
-              <div>
-                <div class="project-kind">Publishing</div>
-                <h3>leoclaw-github</h3>
+          <article class="ledger-row">
+            <div>
+              <div class="ledger-kind">Skill memory</div>
+              <h3>skills-collection</h3>
+              <div class="ledger-note">Reusable operating patterns</div>
+            </div>
+            <div>
+              <p class="ledger-copy">Reusable operational skills, workflow notes, and patterns that are worth preserving across sessions.</p>
+              <p class="ledger-why">It stops useful agent workflows from vanishing the moment one task ends and another one starts.</p>
+              <div class="ledger-links">
+                <a href="https://github.com/leoustcai/skills-collection">Repository</a>
               </div>
-              <div>
-                <p class="project-copy">Public coding and editorial surfaces, including the AI news product, with a cleaner outward-facing structure.</p>
-                <p class="project-why">It turns active implementation into something inspectable and useful beyond the private workspace.</p>
-                <div class="project-links">
-                  <a href="https://github.com/leoustc/leoclaw-github">Repository</a>
-                  <a href="https://ai-news.leoustc.workers.dev">Live surface</a>
-                </div>
-              </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="project-card">
-              <div>
-                <div class="project-kind">Skill memory</div>
-                <h3>skills-collection</h3>
+          <article class="ledger-row">
+            <div>
+              <div class="ledger-kind">Public surface</div>
+              <h3>mywebsite</h3>
+              <div class="ledger-note">Explanation layer</div>
+            </div>
+            <div>
+              <p class="ledger-copy">The homepage itself: an explanation layer for current systems, stack logic, and the AI-agent mechanics that sit behind them.</p>
+              <p class="ledger-why">Its job is to make the full system legible quickly while keeping the dense AI flow detail in a separate technical room.</p>
+              <div class="ledger-links">
+                <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
               </div>
-              <div>
-                <p class="project-copy">Reusable operational skills, workflow notes, and patterns that are worth preserving across sessions.</p>
-                <p class="project-why">It stops good agent workflows from disappearing once a single task is done.</p>
-                <div class="project-links">
-                  <a href="https://github.com/leoustcai/skills-collection">Repository</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card">
-              <div>
-                <div class="project-kind">Public surface</div>
-                <h3>mywebsite</h3>
-              </div>
-              <div>
-                <p class="project-copy">This homepage: a sharper explanation layer for current systems, current work, and the agent mechanics behind them.</p>
-                <p class="project-why">It exists to make the stack legible fast, with the AI details separated instead of mixed into every section.</p>
-                <div class="project-links">
-                  <a href="https://github.com/leoustcai/leoustcai.github.io">Repository</a>
-                </div>
-              </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="deck" id="agent-deck">
-        <div class="deck-shell">
-          <div class="deck-head">
-            <div>
-              <div class="deck-note">Separate section • AI-agent mechanics</div>
-              <h2>Agent operations deck</h2>
-            </div>
-            <p>
-              This is intentionally not part of the homepage track above. It is a dedicated tabbed surface for the mechanics behind
-              <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>, aimed at readers who want the request lifecycle in detail.
-            </p>
+      <section class="operating-model" id="operating-model">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Operational logic</span>
+            <h2>The stack reads in sequence.</h2>
           </div>
+          <p>
+            A visitor should be able to move from public surface to shared runtime to specialist execution without guessing how the pieces relate.
+          </p>
+        </div>
 
-          <div class="deck-grid">
-            <article class="deck-card">
+        <div class="operating-grid">
+          <article class="rail-panel">
+            <div class="mini-label">How to read the system</div>
+            <div class="rail">
+              <div class="rail-step">
+                <div class="step-index">01</div>
+                <div>
+                  <strong>Start at the public surface</strong>
+                  <p>The site explains what the projects are before asking the reader to care about internal AI mechanics.</p>
+                </div>
+              </div>
+              <div class="rail-step">
+                <div class="step-index">02</div>
+                <div>
+                  <strong>Move into the shared workspace</strong>
+                  <p>OpenClaw, Git-aware handoff, and skill memory make the work durable instead of ephemeral.</p>
+                </div>
+              </div>
+              <div class="rail-step">
+                <div class="step-index">03</div>
+                <div>
+                  <strong>Enter the specialist loop only when needed</strong>
+                  <p>The annex handles proxy intake, runner ownership, and handoff behavior for readers who want implementation detail.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="checkpoints">
+            <div class="mini-label">What changed in the redesign</div>
+            <div class="checkpoint-grid">
+              <div class="checkpoint">
+                <h4>Sharper hierarchy</h4>
+                <p>The hero now establishes the message, the ledger carries the stack, and the annex handles dense technical detail.</p>
+              </div>
+              <div class="checkpoint">
+                <h4>Cleaner pacing</h4>
+                <p>Sections no longer compete with each other. The page alternates between explanation, inventory, and appendix.</p>
+              </div>
+              <div class="checkpoint">
+                <h4>Intentional contrast</h4>
+                <p>The AI mechanics live in a darker, separate environment so the split feels structural rather than cosmetic.</p>
+              </div>
+              <div class="checkpoint">
+                <h4>Responsive by default</h4>
+                <p>The layout collapses into single-column reading on smaller screens without hiding any critical explanation.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="annex" id="agent-annex">
+        <div class="annex-head">
+          <div>
+            <div class="annex-note">Technical annex • intentionally separate from the homepage track</div>
+            <h2>AI-agent mechanics</h2>
+          </div>
+          <p class="annex-copy">
+            This section is for readers who specifically want the mechanics behind <strong>ai-agent-proxy</strong> and <strong>agent-runner</strong>.
+            It uses a distinct visual language so the material feels like a controlled appendix, not homepage spillover.
+          </p>
+        </div>
+
+        <div class="annex-grid">
+          <div class="annex-summary">
+            <article class="annex-panel">
               <h3>Why the split is strict</h3>
               <p>
-                Most visitors need the product story first. The mechanics crowd needs the routing model, handoff chain, and return path.
-                Combining both in one visual rhythm makes the page worse for everyone.
+                Most visitors need the stack story first. The mechanics crowd needs routing, inbox writes, execution ownership, and reply paths.
+                Treating both audiences as one page rhythm makes the site worse for both.
               </p>
-              <div class="chip-row">
-                <span class="chip"><span class="chip-dot" style="background: var(--deck-accent);"></span> Familiar request intake</span>
-                <span class="chip"><span class="chip-dot" style="background: var(--deck-gold);"></span> Runner-owned handoff</span>
-                <span class="chip"><span class="chip-dot" style="background: var(--deck-green);"></span> Predictable response path</span>
+              <div class="annex-pills">
+                <span class="annex-pill">Familiar API intake</span>
+                <span class="annex-pill">Runner-owned execution</span>
+                <span class="annex-pill">Shared-workspace continuity</span>
               </div>
             </article>
 
-            <article class="deck-card">
-              <h3>What this deck covers</h3>
+            <article class="annex-panel">
+              <h3>What this annex covers</h3>
               <p>
-                The tabs below split the material into a live map, a lifecycle explanation, and the architectural reasons this model is useful.
-                The result feels like a technical deck with its own mood, not a leftover homepage section.
+                The tabs split the material into system map, execution flow, and architectural reasons. It reads like a technical appendix with its
+                own mood instead of a leftover section bolted onto the homepage.
               </p>
-              <div class="tab-row" role="tablist" aria-label="Agent operations deck tabs">
-                <button class="tab-button active" id="tab-map" data-tab="map" role="tab" aria-selected="true" aria-controls="panel-map" type="button">System map</button>
-                <button class="tab-button" id="tab-lifecycle" data-tab="lifecycle" role="tab" aria-selected="false" aria-controls="panel-lifecycle" type="button">Lifecycle</button>
-                <button class="tab-button" id="tab-why" data-tab="why" role="tab" aria-selected="false" aria-controls="panel-why" type="button">Why it exists</button>
+              <div class="tab-row" role="tablist" aria-label="AI mechanics tabs">
+                <button class="tab-button active" type="button" id="tab-map" data-tab="map" role="tab" aria-selected="true" aria-controls="panel-map">System map</button>
+                <button class="tab-button" type="button" id="tab-flow" data-tab="flow" role="tab" aria-selected="false" aria-controls="panel-flow">Execution flow</button>
+                <button class="tab-button" type="button" id="tab-why" data-tab="why" role="tab" aria-selected="false" aria-controls="panel-why">Why this model</button>
               </div>
             </article>
           </div>
 
-          <div class="deck-detail">
+          <div class="annex-detail">
             <section class="tab-panel active" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
-              <div class="diagram-layout">
-                <div class="diagram-board" id="diagram-board" aria-label="AI agent proxy system diagram">
-                  <svg class="edge-layer" id="edge-layer" aria-hidden="true"></svg>
-
-                  <article class="node user" id="node-user">
-                    <div class="node-type">External caller</div>
-                    <h3>User / Client</h3>
-                    <p>Sends a chat-completions style request that already fits existing OpenAI or vLLM client habits.</p>
-                  </article>
-
-                  <article class="node proxy" id="node-proxy">
-                    <div class="node-type">API front door</div>
-                    <h3>ai-agent-proxy</h3>
-                    <p>Accepts the request, chooses the route, and writes a concrete task payload into the correct inbox.</p>
-                  </article>
-
-                  <article class="node inbox" id="node-inbox">
-                    <div class="node-type">Filesystem queue</div>
-                    <h3>Agent inbox</h3>
-                    <p>Messages land in a durable format that the selected runner can inspect, read, and act on.</p>
-                  </article>
-
-                  <article class="node runner" id="node-runner">
-                    <div class="node-type">Worker loop</div>
-                    <h3>Agent runner</h3>
-                    <p>Watches inbox folders, launches the assigned agent, and owns the task lifecycle until completion.</p>
-                  </article>
-
-                  <article class="node team-a" id="node-team-a">
-                    <div class="node-type">Specialist</div>
-                    <h3>Architect</h3>
-                    <p>Can reshape the task, split work, or set direction before specialist execution starts.</p>
-                  </article>
-
-                  <article class="node team-b" id="node-team-b">
-                    <div class="node-type">Specialist</div>
-                    <h3>Frontend engineer</h3>
-                    <p>Takes UI, interaction, layout, and presentation work when the request needs product-facing execution.</p>
-                  </article>
-
-                  <article class="node team-c" id="node-team-c">
-                    <div class="node-type">Specialist</div>
-                    <h3>Backend engineer</h3>
-                    <p>Takes server logic, automation, or systems work when the job belongs deeper in implementation.</p>
-                  </article>
-
-                  <article class="node reply" id="node-reply">
-                    <div class="node-type">Return path</div>
-                    <h3>Reply</h3>
-                    <p>The completed result is collected and sent back through the proxy as a normal API-shaped response.</p>
-                  </article>
+              <article class="annex-panel">
+                <h3>System map</h3>
+                <p>The request path stays readable because each system owns a narrow job instead of pretending one process does everything.</p>
+                <div class="systems-map">
+                  <div class="map-row">
+                    <div class="map-node">
+                      <strong>User / Client</strong>
+                      <p>Sends a chat-completions style request through a familiar public contract.</p>
+                    </div>
+                    <div class="map-link">into</div>
+                    <div class="map-node">
+                      <strong>ai-agent-proxy</strong>
+                      <p>Accepts the request, chooses the route, and writes the task into a concrete inbox.</p>
+                    </div>
+                  </div>
+                  <div class="map-row">
+                    <div class="map-node">
+                      <strong>Agent inbox</strong>
+                      <p>Stores the handoff in a durable filesystem message instead of transient state.</p>
+                    </div>
+                    <div class="map-link">picked up by</div>
+                    <div class="map-node">
+                      <strong>agent-runner</strong>
+                      <p>Owns the execution loop and starts the right specialist path.</p>
+                    </div>
+                  </div>
+                  <div class="map-row">
+                    <div class="map-node">
+                      <strong>Specialist agents</strong>
+                      <p>Architect, frontend, backend, or others can take bounded work inside the same workspace.</p>
+                    </div>
+                    <div class="map-link">returns through</div>
+                    <div class="map-node">
+                      <strong>Reply path</strong>
+                      <p>The result comes back through the chain as a normal API-shaped response.</p>
+                    </div>
+                  </div>
                 </div>
-
-                <aside class="deck-panel">
-                  <div class="panel-card">
-                    <h4>Flow walkthrough</h4>
-                    <ol class="steps" id="steps">
-                      <li class="step active" data-step="0">
-                        <div class="step-index">01</div>
-                        <div>
-                          <strong>Request hits the proxy</strong>
-                          <span>The public contract stays familiar, so existing clients do not need a bespoke agent protocol.</span>
-                        </div>
-                      </li>
-                      <li class="step" data-step="1">
-                        <div class="step-index">02</div>
-                        <div>
-                          <strong>Proxy writes the task</strong>
-                          <span>The request becomes a concrete inbox message targeted at the correct role or runner.</span>
-                        </div>
-                      </li>
-                      <li class="step" data-step="2">
-                        <div class="step-index">03</div>
-                        <div>
-                          <strong>Runner picks it up</strong>
-                          <span>The long-lived work loop notices the message and starts the correct execution path.</span>
-                        </div>
-                      </li>
-                      <li class="step" data-step="3">
-                        <div class="step-index">04</div>
-                        <div>
-                          <strong>Specialists can hand off</strong>
-                          <span>The active agent can route work across architect, frontend, backend, or other specialists in the same workspace.</span>
-                        </div>
-                      </li>
-                      <li class="step" data-step="4">
-                        <div class="step-index">05</div>
-                        <div>
-                          <strong>Result returns cleanly</strong>
-                          <span>The response exits through the same operational chain, so the caller sees a normal API result.</span>
-                        </div>
-                      </li>
-                    </ol>
-
-                    <div class="controls">
-                      <button id="play-flow" type="button">Play flow</button>
-                      <button id="pause-flow" type="button">Pause</button>
-                      <button id="reset-flow" type="button">Reset</button>
-                    </div>
-                  </div>
-
-                  <div class="panel-card">
-                    <h4>Legend</h4>
-                    <div class="legend-row">
-                      <span class="chip"><span class="chip-dot" style="background: var(--deck-accent);"></span> Request</span>
-                      <span class="chip"><span class="chip-dot" style="background: var(--deck-gold);"></span> Handoff</span>
-                      <span class="chip"><span class="chip-dot" style="background: var(--deck-green);"></span> Response</span>
-                    </div>
-                  </div>
-                </aside>
-              </div>
+              </article>
             </section>
 
-            <section class="tab-panel" id="panel-lifecycle" role="tabpanel" aria-labelledby="tab-lifecycle">
-              <div class="fact-grid">
-                <article class="fact">
-                  <strong>1. Intake</strong>
-                  <p>The caller sends an OpenAI-style request to the proxy, which keeps the public API familiar.</p>
-                </article>
-                <article class="fact">
-                  <strong>2. Dispatch</strong>
-                  <p>The proxy writes a task into an inbox, which makes routing visible instead of hiding it in transient state.</p>
-                </article>
-                <article class="fact">
-                  <strong>3. Execution</strong>
-                  <p>The runner owns the long-lived work loop and can start the right specialist path without mixing concerns into the proxy.</p>
-                </article>
-                <article class="fact">
-                  <strong>4. Shared context</strong>
-                  <p>Agents operate in the same filesystem context, which keeps files, notes, and implementation state aligned.</p>
-                </article>
-                <article class="fact">
-                  <strong>5. Handoff</strong>
-                  <p>One agent can delegate to another without losing continuity, which matters once tasks become genuinely multi-step.</p>
-                </article>
-                <article class="fact">
-                  <strong>6. Return path</strong>
-                  <p>The completed result comes back through a predictable chain rather than being manually stitched together afterward.</p>
-                </article>
-              </div>
+            <section class="tab-panel" id="panel-flow" role="tabpanel" aria-labelledby="tab-flow">
+              <article class="annex-panel">
+                <h3>Execution flow</h3>
+                <div class="handoff-grid">
+                  <div class="flow-card">
+                    <strong>1. Intake stays familiar</strong>
+                    <p>The caller speaks an OpenAI-style shape, so adoption does not require a bespoke client protocol.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>2. Dispatch becomes visible</strong>
+                    <p>The proxy writes an inbox task, which exposes routing rather than hiding it inside memory.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>3. Runner owns the loop</strong>
+                    <p>The execution lifecycle stays with the runner, keeping the proxy thin and easier to reason about.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>4. Specialists can hand off</strong>
+                    <p>One agent can route to another without losing workspace continuity, files, or current task state.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>5. Shared context remains real</strong>
+                    <p>Agents act against the same filesystem, notes, and codebase instead of isolated sandboxes with no durable memory.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>6. Response exits cleanly</strong>
+                    <p>The finished result returns through the operational chain and reaches the caller in a predictable format.</p>
+                  </div>
+                </div>
+              </article>
             </section>
 
             <section class="tab-panel" id="panel-why" role="tabpanel" aria-labelledby="tab-why">
-              <div class="fact-grid">
-                <article class="fact">
-                  <strong>Familiar API</strong>
-                  <p>Clients keep speaking a protocol they already know while the internals stay agent-native.</p>
-                </article>
-                <article class="fact">
-                  <strong>Visible routing</strong>
-                  <p>Inbox messages expose ownership and movement, which matters once multiple agents collaborate.</p>
-                </article>
-                <article class="fact">
-                  <strong>Runner control plane</strong>
-                  <p>The runner owns lifecycle management so the proxy stays thin and focused on intake.</p>
-                </article>
-                <article class="fact">
-                  <strong>Specialists over monoliths</strong>
-                  <p>Tasks can move across architect, frontend, backend, or other roles without flattening everything into one worker.</p>
-                </article>
-                <article class="fact">
-                  <strong>Shared workspace continuity</strong>
-                  <p>The same filesystem context keeps notes, code, and active work coherent across handoffs.</p>
-                </article>
-                <article class="fact">
-                  <strong>Homepage discipline</strong>
-                  <p>Keeping this material here preserves the homepage as a product explanation surface rather than an overloaded AI dump.</p>
-                </article>
-              </div>
+              <article class="annex-panel">
+                <h3>Why this model exists</h3>
+                <div class="reason-grid">
+                  <div class="flow-card">
+                    <strong>Familiar public contract</strong>
+                    <p>Clients keep using a protocol they already understand while the internals remain agent-native.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>Visible ownership</strong>
+                    <p>Inbox messages make routing, assignment, and responsibility legible once multiple agents collaborate.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>Thin proxy boundary</strong>
+                    <p>The proxy handles intake, while execution complexity stays where it belongs: inside the runner and workspace.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>Specialists over monoliths</strong>
+                    <p>Frontend, backend, and architecture work can split cleanly instead of collapsing into one opaque worker.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>Durable shared context</strong>
+                    <p>The same workspace keeps files, notes, and active implementation aligned across handoffs.</p>
+                  </div>
+                  <div class="flow-card">
+                    <strong>Homepage discipline</strong>
+                    <p>Keeping this content here preserves the homepage as a product explanation surface instead of an overloaded AI dump.</p>
+                  </div>
+                </div>
+              </article>
             </section>
           </div>
         </div>
       </section>
 
       <footer>
-        <div>Leobot. Practical systems, made legible.</div>
+        <div>Leobot. Practical systems, explained without blur.</div>
         <div class="footer-links">
           <a class="footer-link" href="https://github.com/leoustcai">GitHub</a>
           <a class="footer-link" href="https://x.com/leoustcai">X</a>
-          <a class="footer-link" href="#projects">Projects</a>
-          <a class="footer-link" href="#agent-deck">Agent deck</a>
+          <a class="footer-link" href="#ledger">Projects</a>
+          <a class="footer-link" href="#agent-annex">AI annex</a>
         </div>
       </footer>
     </main>
 
     <script>
-      const stepDefinitions = [
-        {
-          activeNodes: ["node-user", "node-proxy"],
-          activeEdges: ["edge-user-proxy"],
-        },
-        {
-          activeNodes: ["node-proxy", "node-inbox"],
-          activeEdges: ["edge-proxy-inbox"],
-        },
-        {
-          activeNodes: ["node-inbox", "node-runner"],
-          activeEdges: ["edge-inbox-runner"],
-        },
-        {
-          activeNodes: ["node-runner", "node-team-a", "node-team-b", "node-team-c"],
-          activeEdges: ["edge-runner-team-a", "edge-runner-team-b", "edge-runner-team-c", "edge-team-a-runner", "edge-team-b-runner", "edge-team-c-runner"],
-        },
-        {
-          activeNodes: ["node-runner", "node-reply", "node-proxy", "node-user"],
-          activeEdges: ["edge-runner-reply", "edge-reply-proxy", "edge-proxy-user"],
-        },
-      ];
-
-      const edgeDefinitions = [
-        { id: "edge-user-proxy", from: "node-user", to: "node-proxy", type: "request", label: "API request" },
-        { id: "edge-proxy-inbox", from: "node-proxy", to: "node-inbox", type: "request", label: "Write task" },
-        { id: "edge-inbox-runner", from: "node-inbox", to: "node-runner", type: "request", label: "Pickup" },
-        { id: "edge-runner-team-a", from: "node-runner", to: "node-team-a", type: "handoff", label: "Plan" },
-        { id: "edge-runner-team-b", from: "node-runner", to: "node-team-b", type: "handoff", label: "UI task" },
-        { id: "edge-runner-team-c", from: "node-runner", to: "node-team-c", type: "handoff", label: "Backend task" },
-        { id: "edge-team-a-runner", from: "node-team-a", to: "node-runner", type: "handoff", label: "Return" },
-        { id: "edge-team-b-runner", from: "node-team-b", to: "node-runner", type: "handoff", label: "Return" },
-        { id: "edge-team-c-runner", from: "node-team-c", to: "node-runner", type: "handoff", label: "Return" },
-        { id: "edge-runner-reply", from: "node-runner", to: "node-reply", type: "response", label: "Compose reply" },
-        { id: "edge-reply-proxy", from: "node-reply", to: "node-proxy", type: "response", label: "Response ready" },
-        { id: "edge-proxy-user", from: "node-proxy", to: "node-user", type: "response", label: "API response" },
-      ];
-
-      const board = document.getElementById("diagram-board");
-      const edgeLayer = document.getElementById("edge-layer");
-      const steps = Array.from(document.querySelectorAll(".step"));
-      const playButton = document.getElementById("play-flow");
-      const pauseButton = document.getElementById("pause-flow");
-      const resetButton = document.getElementById("reset-flow");
       const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
       const tabPanels = Array.from(document.querySelectorAll(".tab-panel"));
-      let currentStep = 0;
-      let timer = null;
-
-      function clearActive() {
-        document.querySelectorAll(".node.active").forEach((el) => el.classList.remove("active"));
-        document.querySelectorAll(".signal.active").forEach((el) => el.classList.remove("active"));
-        steps.forEach((step) => step.classList.remove("active"));
-      }
-
-      function updateDiagram(stepIndex) {
-        currentStep = stepIndex;
-        clearActive();
-
-        const config = stepDefinitions[stepIndex];
-        if (!config) return;
-
-        config.activeNodes.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.classList.add("active");
-        });
-
-        config.activeEdges.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.classList.add("active");
-        });
-
-        const stepEl = steps.find((step) => Number(step.dataset.step) === stepIndex);
-        if (stepEl) stepEl.classList.add("active");
-      }
-
-      function renderEdges() {
-        if (!board || !edgeLayer || window.innerWidth <= 820) {
-          if (edgeLayer) edgeLayer.innerHTML = "";
-          return;
-        }
-
-        const boardRect = board.getBoundingClientRect();
-        edgeLayer.setAttribute("viewBox", `0 0 ${boardRect.width} ${boardRect.height}`);
-        edgeLayer.setAttribute("width", boardRect.width);
-        edgeLayer.setAttribute("height", boardRect.height);
-        edgeLayer.innerHTML = "";
-
-        edgeDefinitions.forEach((edge) => {
-          const fromEl = document.getElementById(edge.from);
-          const toEl = document.getElementById(edge.to);
-          if (!fromEl || !toEl) return;
-
-          const fromRect = fromEl.getBoundingClientRect();
-          const toRect = toEl.getBoundingClientRect();
-
-          const startX = fromRect.left - boardRect.left + fromRect.width / 2;
-          const startY = fromRect.top - boardRect.top + fromRect.height / 2;
-          const endX = toRect.left - boardRect.left + toRect.width / 2;
-          const endY = toRect.top - boardRect.top + toRect.height / 2;
-
-          const dx = endX - startX;
-          const dy = endY - startY;
-          const length = Math.hypot(dx, dy);
-          const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-          const minX = Math.min(startX, endX) - 30;
-          const minY = Math.min(startY, endY) - 30;
-          const midX = startX + dx / 2;
-          const midY = startY + dy / 2;
-
-          const line = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-          line.setAttribute("x", minX);
-          line.setAttribute("y", minY);
-          line.setAttribute("width", Math.abs(dx) + 60);
-          line.setAttribute("height", Math.abs(dy) + 60);
-
-          const wrapper = document.createElement("div");
-          wrapper.style.width = `${Math.abs(dx) + 60}px`;
-          wrapper.style.height = `${Math.abs(dy) + 60}px`;
-          wrapper.style.position = "relative";
-
-          const signal = document.createElement("div");
-          signal.className = `signal ${edge.type}`;
-          signal.id = edge.id;
-          signal.style.width = `${length}px`;
-          signal.style.left = `${startX - minX}px`;
-          signal.style.top = `${startY - minY}px`;
-          signal.style.transform = `translateY(-50%) rotate(${angle}deg)`;
-
-          const tag = document.createElement("div");
-          tag.className = "signal-tag";
-          tag.textContent = edge.label;
-          tag.style.left = `${midX - minX}px`;
-          tag.style.top = `${midY - minY}px`;
-          tag.style.color = getComputedStyle(document.documentElement).getPropertyValue(
-            edge.type === "request" ? "--deck-accent" : edge.type === "response" ? "--deck-green" : "--deck-gold"
-          );
-
-          wrapper.appendChild(signal);
-          wrapper.appendChild(tag);
-          line.appendChild(wrapper);
-          edgeLayer.appendChild(line);
-        });
-
-        updateDiagram(currentStep);
-      }
-
-      function stopFlow() {
-        if (timer) {
-          window.clearInterval(timer);
-          timer = null;
-        }
-      }
-
-      function playFlow() {
-        stopFlow();
-        timer = window.setInterval(() => {
-          currentStep = (currentStep + 1) % stepDefinitions.length;
-          updateDiagram(currentStep);
-        }, 1600);
-      }
 
       function activateTab(tabName) {
         tabButtons.forEach((button) => {
           const active = button.dataset.tab === tabName;
           button.classList.toggle("active", active);
           button.setAttribute("aria-selected", String(active));
+          button.setAttribute("tabindex", active ? "0" : "-1");
         });
 
         tabPanels.forEach((panel) => {
           panel.classList.toggle("active", panel.id === `panel-${tabName}`);
         });
-
-        if (tabName === "map") {
-          window.requestAnimationFrame(renderEdges);
-        } else {
-          stopFlow();
-        }
       }
-
-      steps.forEach((step) => {
-        step.addEventListener("click", () => {
-          stopFlow();
-          updateDiagram(Number(step.dataset.step));
-        });
-      });
 
       tabButtons.forEach((button) => {
         button.addEventListener("click", () => activateTab(button.dataset.tab));
+        button.addEventListener("keydown", (event) => {
+          const currentIndex = tabButtons.indexOf(button);
+          if (event.key === "ArrowRight") {
+            const next = tabButtons[(currentIndex + 1) % tabButtons.length];
+            next.focus();
+            activateTab(next.dataset.tab);
+          }
+
+          if (event.key === "ArrowLeft") {
+            const previous = tabButtons[(currentIndex - 1 + tabButtons.length) % tabButtons.length];
+            previous.focus();
+            activateTab(previous.dataset.tab);
+          }
+        });
       });
 
-      if (playButton) {
-        playButton.addEventListener("click", playFlow);
-      }
-
-      if (pauseButton) {
-        pauseButton.addEventListener("click", stopFlow);
-      }
-
-      if (resetButton) {
-        resetButton.addEventListener("click", () => {
-          stopFlow();
-          updateDiagram(0);
-        });
-      }
-
-      window.addEventListener("resize", renderEdges);
-      window.addEventListener("load", renderEdges);
-
       activateTab("map");
-      updateDiagram(0);
-      renderEdges();
     </script>
   </body>
 </html>
