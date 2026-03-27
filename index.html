@@ -3,33 +3,31 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leo | Dispatches, Projects, and the Social Team</title>
+    <title>Dr. Leo | AI Infrastructure and Systems Work</title>
     <meta
       name="description"
-      content="Leo's editorial homepage for active projects, operating notes, and the Social Team philosopher debate on the future of AI."
+      content="Personal site for Leo's AI infrastructure work, selected projects, profile notes, patents, and a dedicated Social Team topic page."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
         color-scheme: light;
-        --paper: #f5efe6;
-        --paper-deep: #e8ddcf;
-        --panel: rgba(255, 250, 244, 0.82);
-        --panel-solid: #fbf6ee;
-        --ink: #18120f;
-        --muted: #65564c;
-        --line: rgba(24, 18, 15, 0.12);
-        --line-strong: rgba(24, 18, 15, 0.2);
-        --accent: #9a432c;
-        --accent-soft: rgba(154, 67, 44, 0.12);
-        --olive: #53604f;
-        --shadow: 0 32px 90px rgba(46, 31, 22, 0.11);
-        --max: 1220px;
+        --bg: #f4f5ef;
+        --surface: #ffffff;
+        --surface-soft: #eef1e5;
+        --ink: #142117;
+        --muted: #566255;
+        --line: #d8ded0;
+        --line-strong: #bfc8b7;
+        --accent: #254e3a;
+        --accent-soft: #dce8de;
+        --max: 1100px;
+        --shadow: 0 22px 60px rgba(20, 33, 23, 0.08);
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
       }
 
@@ -44,12 +42,11 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Manrope", sans-serif;
+        font-family: "IBM Plex Sans", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 24%),
-          radial-gradient(circle at 88% 8%, rgba(154, 67, 44, 0.12), transparent 18%),
-          linear-gradient(180deg, var(--paper), var(--paper-deep));
+          linear-gradient(180deg, rgba(255, 255, 255, 0.64), transparent 18rem),
+          var(--bg);
       }
 
       a {
@@ -61,11 +58,11 @@
       }
 
       ::selection {
-        background: rgba(154, 67, 44, 0.2);
+        background: rgba(37, 78, 58, 0.16);
       }
 
       :focus-visible {
-        outline: 3px solid rgba(154, 67, 44, 0.3);
+        outline: 3px solid rgba(37, 78, 58, 0.24);
         outline-offset: 3px;
       }
 
@@ -75,8 +72,9 @@
         left: 1rem;
         z-index: 20;
         padding: 0.8rem 1rem;
-        background: var(--panel-solid);
-        border: 1px solid var(--line-strong);
+        color: var(--surface);
+        text-decoration: none;
+        background: var(--accent);
         transform: translateY(-140%);
         transition: transform 180ms ease;
       }
@@ -86,142 +84,93 @@
       }
 
       .page {
-        width: min(calc(100vw - 1.25rem), var(--max));
+        width: min(calc(100vw - 1.5rem), var(--max));
         margin: 0 auto;
-        padding: 0.7rem 0 1.4rem;
       }
 
-      .shell {
-        position: relative;
-        overflow: hidden;
-        border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(255, 252, 247, 0.72), rgba(247, 239, 229, 0.92));
-        box-shadow: var(--shadow);
-      }
-
-      .shell::before,
-      .shell::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-        pointer-events: none;
-      }
-
-      .shell::before {
-        width: 30rem;
-        height: 30rem;
-        left: -15rem;
-        top: -14rem;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.84), transparent 72%);
-      }
-
-      .shell::after {
-        width: 28rem;
-        height: 28rem;
-        right: -14rem;
-        bottom: 10rem;
-        background: radial-gradient(circle, rgba(83, 96, 79, 0.12), transparent 72%);
-      }
-
-      .hero,
-      .section {
-        position: relative;
-        z-index: 1;
-        padding: clamp(1rem, 2vw, 1.6rem);
-      }
-
-      .hero {
-        display: grid;
-        gap: clamp(2rem, 5vw, 4rem);
-        min-height: calc(100svh - 1.4rem);
-      }
-
-      .topbar,
-      .hero-grid,
-      .hero-marks,
-      .section-head,
-      .story,
-      .project-row,
-      .team-note,
-      footer {
+      .site-header {
         display: flex;
-        gap: 1rem;
+        align-items: center;
         justify-content: space-between;
-      }
-
-      .topbar {
-        align-items: flex-start;
-        padding-bottom: 1rem;
+        gap: 1rem;
+        padding: 1.1rem 0;
         border-bottom: 1px solid var(--line);
       }
 
-      .brand,
-      .eyebrow,
-      .section-tag,
-      .kicker,
-      .story-meta,
-      .chip,
+      .brand {
+        display: grid;
+        gap: 0.2rem;
+      }
+
+      .brand-mark,
+      .section-kicker,
+      .mini-label,
       .project-kind,
+      .story-meta,
       .round-picker button,
       .philosopher-picker button {
-        text-transform: uppercase;
+        font-size: 0.76rem;
+        font-weight: 700;
         letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
 
-      .brand,
-      .section-tag,
-      .story-meta,
-      .project-kind,
-      .round-picker button,
-      .philosopher-picker button {
-        font-size: 0.74rem;
-        font-weight: 700;
+      .brand-mark {
+        color: var(--accent);
       }
 
-      .eyebrow,
-      .chip,
-      .kicker {
-        font-size: 0.72rem;
-        font-weight: 700;
+      .brand p,
+      .intro-copy p,
+      .section-intro p,
+      .project-summary p,
+      .panel p,
+      .profile-list li,
+      .social-intro p,
+      .spotlight-subtitle,
+      .transcript-label,
+      .contact-card p,
+      footer p {
         color: var(--muted);
       }
 
       nav,
       .hero-actions,
-      .hero-marks,
-      .chip-row,
-      .project-tags,
-      .philosopher-picker,
+      .hero-links,
+      .project-filter,
       .round-picker,
-      .footer-links {
+      .philosopher-picker,
+      .patent-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.55rem;
+        gap: 0.6rem;
       }
 
       nav a,
       .hero-actions a,
+      .hero-links a,
       .project-filter button,
       .round-picker button,
       .philosopher-picker button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 2.7rem;
-        padding: 0.72rem 1rem;
+        min-height: 2.65rem;
+        padding: 0.7rem 1rem;
+        border: 1px solid var(--line);
         text-decoration: none;
-        border: 1px solid transparent;
-        background: transparent;
+        background: var(--surface);
         transition:
           transform 180ms var(--ease),
-          background 180ms ease,
-          border-color 180ms ease;
+          border-color 180ms ease,
+          background 180ms ease;
       }
 
       nav a:hover,
       nav a:focus-visible,
       .hero-actions a:hover,
       .hero-actions a:focus-visible,
+      .hero-links a:hover,
+      .hero-links a:focus-visible,
       .project-filter button:hover,
       .project-filter button:focus-visible,
       .round-picker button:hover,
@@ -230,249 +179,239 @@
       .philosopher-picker button:focus-visible {
         transform: translateY(-1px);
         border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.42);
+        background: #f8faf5;
       }
 
-      .hero-grid {
-        align-items: end;
-      }
-
-      .hero-copy {
-        max-width: 46rem;
-      }
-
-      .hero-side {
-        width: min(26rem, 100%);
+      .hero {
         display: grid;
-        gap: 1rem;
+        grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.8fr);
+        gap: clamp(2rem, 4vw, 4rem);
+        padding: clamp(2rem, 4vw, 4rem) 0 clamp(2.5rem, 5vw, 4.5rem);
+      }
+
+      .intro-copy {
+        display: grid;
+        align-content: start;
+        gap: 1.1rem;
       }
 
       h1,
       h2,
       h3 {
         margin: 0;
-        line-height: 0.94;
-        font-family: "Cormorant Garamond", serif;
-        font-weight: 600;
+        font-family: "Source Serif 4", serif;
+        line-height: 0.96;
       }
 
       h1 {
-        max-width: 9ch;
-        font-size: clamp(4rem, 9vw, 8.8rem);
+        max-width: 10ch;
+        font-size: clamp(3.5rem, 8vw, 6.8rem);
       }
 
       h2 {
-        max-width: 12ch;
-        font-size: clamp(2.5rem, 5vw, 4.8rem);
+        font-size: clamp(2.2rem, 4.4vw, 3.7rem);
       }
 
       h3 {
-        font-size: clamp(1.5rem, 2.1vw, 2.1rem);
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
       }
 
       p {
         margin: 0;
-        line-height: 1.62;
+        line-height: 1.65;
       }
 
-      .lede {
+      .lead {
         max-width: 42rem;
-        margin-top: 1.2rem;
-        font-size: clamp(1.02rem, 1.5vw, 1.18rem);
-        color: var(--muted);
-      }
-
-      .hero-actions {
-        margin-top: 1.5rem;
+        font-size: clamp(1.02rem, 1.45vw, 1.15rem);
       }
 
       .hero-actions .primary {
-        color: #fbf4ec;
-        background: var(--ink);
+        color: var(--surface);
+        border-color: var(--accent);
+        background: var(--accent);
       }
 
-      .hero-actions .secondary,
-      .project-filter button,
-      .round-picker button,
-      .philosopher-picker button {
-        border-color: var(--line);
-        background: rgba(255, 255, 255, 0.34);
-      }
-
-      .hero-card,
-      .note-card,
-      .story,
-      .roster-card,
-      .spotlight,
-      .project,
-      .transcript-card {
-        border: 1px solid var(--line);
-        background: var(--panel);
-        backdrop-filter: blur(12px);
-      }
-
-      .hero-card,
-      .note-card,
-      .spotlight,
-      .project,
-      .transcript-card {
-        padding: 1rem;
-      }
-
-      .hero-card,
-      .note-card,
-      .spotlight {
+      .hero-aside {
         display: grid;
-        gap: 0.85rem;
-        align-content: start;
+        gap: 1rem;
+      }
+
+      .panel,
+      .project,
+      .profile-card,
+      .patent-card,
+      .spotlight,
+      .transcript-card,
+      .roster-card,
+      .contact-card {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .panel,
+      .project,
+      .profile-card,
+      .patent-card,
+      .spotlight,
+      .transcript-card,
+      .roster-card,
+      .contact-card {
+        padding: 1.2rem;
+      }
+
+      .project,
+      .profile-card,
+      .patent-card,
+      .roster-card,
+      .transcript-card {
+        contain: content;
+        content-visibility: auto;
+      }
+
+      .panel {
+        display: grid;
+        gap: 0.8rem;
       }
 
       .status {
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
-        padding: 0.5rem 0.7rem;
         width: fit-content;
+        padding: 0.45rem 0.7rem;
         border: 1px solid var(--line);
+        background: var(--surface-soft);
       }
 
       .status::before {
         content: "";
-        width: 0.48rem;
-        height: 0.48rem;
+        width: 0.5rem;
+        height: 0.5rem;
         border-radius: 999px;
         background: var(--accent);
       }
 
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.48rem 0.68rem;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.44);
+      .mini-label {
+        color: var(--muted);
       }
 
-      .section {
+      .hero-links a {
+        background: transparent;
+      }
+
+      section {
+        padding: 2rem 0;
         border-top: 1px solid var(--line);
       }
 
-      .section-head {
-        align-items: end;
-        margin-bottom: 1.35rem;
-      }
-
-      .section-head p {
-        max-width: 34rem;
-        color: var(--muted);
-      }
-
-      .story-list,
-      .projects,
-      .transcript-grid {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .story {
-        padding: 1rem;
-        align-items: flex-start;
-      }
-
-      .story-copy {
-        max-width: 42rem;
-        display: grid;
-        gap: 0.6rem;
-      }
-
-      .story-side {
-        width: min(18rem, 100%);
-        display: grid;
-        gap: 0.75rem;
-      }
-
-      .story-side strong,
-      .hero-card strong,
-      .project strong,
-      .spotlight strong {
-        display: block;
-        font-size: 1.02rem;
-      }
-
-      .story-side p,
-      .project-side p,
-      .spotlight p,
-      .note-card p,
-      .hero-card p {
-        color: var(--muted);
-      }
-
-      .team-grid,
-      .roster-grid {
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .member-card,
-      .roster-card {
-        grid-column: span 4;
-        display: grid;
-        gap: 0.8rem;
-        padding: 1rem;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.32);
-      }
-
-      .member-card:nth-child(2),
-      .member-card:nth-child(5),
-      .roster-card:nth-child(2),
-      .roster-card:nth-child(5),
-      .roster-card:nth-child(8),
-      .roster-card:nth-child(11),
-      .roster-card:nth-child(14) {
-        transform: translateY(1.4rem);
-      }
-
-      .member-role,
-      .roster-role,
-      .spotlight-subtitle,
-      .project-side p,
-      .transcript-label {
-        color: var(--muted);
-      }
-
-      .project-filter {
+      .section-intro,
+      .social-intro,
+      .contact-layout,
+      footer {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-bottom: 1rem;
+        gap: 1rem;
+        justify-content: space-between;
+      }
+
+      .section-intro,
+      .social-intro {
+        align-items: end;
+        margin-bottom: 1.3rem;
+      }
+
+      .section-intro p,
+      .social-intro p {
+        max-width: 34rem;
       }
 
       .project-filter button[aria-pressed="true"],
       .round-picker button[aria-pressed="true"],
       .philosopher-picker button[aria-pressed="true"] {
-        color: #fbf4ec;
-        background: var(--ink);
-        border-color: var(--ink);
+        color: var(--surface);
+        border-color: var(--accent);
+        background: var(--accent);
       }
 
-      .project-row {
-        align-items: flex-start;
-      }
-
-      .project-main {
-        max-width: 43rem;
-      }
-
-      .project-side {
-        width: min(22rem, 100%);
+      .projects,
+      .roster-grid,
+      .profile-grid,
+      .patent-grid,
+      .transcript-grid {
         display: grid;
-        gap: 0.7rem;
+        gap: 1rem;
+      }
+
+      .project {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .project-head {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: start;
+      }
+
+      .project-kind {
+        color: var(--accent);
+      }
+
+      .project-summary {
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .project-note {
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
       }
 
       .project[data-hidden="true"] {
         display: none;
+      }
+
+      .profile-grid,
+      .patent-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .profile-card,
+      .patent-card,
+      .contact-card {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .profile-list,
+      .patent-list {
+        display: grid;
+        gap: 0.8rem;
+        margin: 0;
+        padding-left: 1.15rem;
+      }
+
+      .patent-card {
+        background: linear-gradient(180deg, #ffffff, #f8faf5);
+      }
+
+      .patent-item {
+        display: grid;
+        gap: 0.22rem;
+      }
+
+      .patent-id {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .patent-tags span {
+        padding: 0.42rem 0.68rem;
+        border: 1px solid var(--line);
+        background: var(--surface-soft);
+        color: var(--muted);
       }
 
       .social-shell {
@@ -480,21 +419,36 @@
         gap: 1rem;
       }
 
+      .roster-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      .roster-card {
+        grid-column: span 4;
+        display: grid;
+        gap: 0.6rem;
+      }
+
       .social-toolbar {
         display: grid;
         gap: 0.85rem;
+      }
+
+      .spotlight {
+        display: grid;
+        gap: 1rem;
       }
 
       .spotlight-head {
         display: flex;
         gap: 1rem;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: start;
       }
 
       .spotlight-body {
         display: grid;
-        gap: 0.8rem;
+        gap: 0.55rem;
       }
 
       .spotlight-body p {
@@ -511,12 +465,12 @@
       }
 
       .transcript-card[open] {
-        background: rgba(255, 252, 248, 0.9);
+        background: #fbfcf9;
       }
 
       .transcript-head {
         display: grid;
-        gap: 0.3rem;
+        gap: 0.28rem;
       }
 
       .transcript-rounds {
@@ -525,31 +479,30 @@
         margin-top: 1rem;
       }
 
-      .transcript-entry {
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
-        display: grid;
-        gap: 0.45rem;
+      .transcript-placeholder {
+        padding: 1rem 0;
+        color: var(--muted);
       }
 
-      .team-note {
-        margin-top: 1.2rem;
-        padding-top: 1rem;
+      .transcript-entry {
+        display: grid;
+        gap: 0.45rem;
+        padding-top: 0.9rem;
         border-top: 1px solid var(--line);
-        color: var(--muted);
       }
 
       footer {
         align-items: end;
+        padding: 1.4rem 0 3rem;
         color: var(--muted);
       }
 
       [data-reveal] {
         opacity: 0;
-        transform: translateY(22px);
+        transform: translateY(18px);
         transition:
-          opacity 700ms var(--ease),
-          transform 700ms var(--ease);
+          opacity 600ms var(--ease),
+          transform 600ms var(--ease);
         transition-delay: var(--delay, 0ms);
       }
 
@@ -558,51 +511,40 @@
         transform: translateY(0);
       }
 
-      @media (max-width: 1080px) {
-        .hero-grid,
-        .section-head,
-        .story,
-        .project-row,
-        .team-note,
+      @media (max-width: 980px) {
+        .hero,
+        .section-intro,
+        .social-intro,
+        .contact-layout,
         footer,
+        .project-head,
         .spotlight-head {
+          grid-template-columns: 1fr;
           flex-direction: column;
         }
 
-        .hero-side,
-        .story-side,
-        .project-side {
-          width: 100%;
+        .profile-grid,
+        .patent-grid {
+          grid-template-columns: 1fr;
         }
 
-        .member-card,
         .roster-card {
           grid-column: span 6;
-        }
-
-        .member-card:nth-child(2),
-        .member-card:nth-child(5),
-        .roster-card:nth-child(2),
-        .roster-card:nth-child(5),
-        .roster-card:nth-child(8),
-        .roster-card:nth-child(11),
-        .roster-card:nth-child(14) {
-          transform: none;
         }
       }
 
       @media (max-width: 720px) {
         .page {
-          width: min(calc(100vw - 0.75rem), var(--max));
+          width: min(calc(100vw - 1rem), var(--max));
         }
 
-        .hero,
-        .section {
-          padding: 0.9rem;
+        .site-header {
+          align-items: start;
         }
 
         nav a,
         .hero-actions a,
+        .hero-links a,
         .project-filter button,
         .round-picker button,
         .philosopher-picker button {
@@ -610,7 +552,6 @@
           justify-content: flex-start;
         }
 
-        .member-card,
         .roster-card {
           grid-column: span 12;
         }
@@ -638,382 +579,330 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="page">
-      <div class="shell">
-        <header class="hero">
-          <div class="topbar" data-reveal style="--delay: 20ms;">
-            <div>
-              <div class="brand">Leo's Dispatch</div>
-              <p class="eyebrow">AI infrastructure notes, live projects, and experiments that ship.</p>
+      <header class="site-header" data-reveal style="--delay: 20ms;">
+        <div class="brand">
+          <div class="brand-mark">Dr. Leo</div>
+          <p>AI infrastructure architect building practical systems and tools.</p>
+        </div>
+        <nav aria-label="Primary">
+          <a href="#projects">Projects</a>
+          <a href="#profile">Profile</a>
+          <a href="#patents">Patents</a>
+          <a href="./social-team.html">Social Team</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main">
+        <section class="hero">
+          <div class="intro-copy" data-reveal style="--delay: 90ms;">
+            <div class="section-kicker">About</div>
+            <h1>AI infrastructure, clearer tools, and work that stays usable.</h1>
+            <p class="lead">
+              I'm Leo. I build around distributed systems, local AI operations, developer tooling,
+              and interfaces that make complex work easier to scan and run. This page keeps the
+              structure simple: what I do, what I am building, and one dedicated Social Team topic page.
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="#projects">View Projects</a>
+              <a href="./social-team.html">Open Social Team</a>
             </div>
-            <nav aria-label="Primary">
-              <a href="#dispatches">Dispatches</a>
-              <a href="#projects">Projects</a>
-              <a href="#social-team">Social Team</a>
-              <a href="#method">Method</a>
-            </nav>
+            <div class="hero-links">
+              <a href="mailto:info@leoustc.com">info@leoustc.com</a>
+              <a href="https://github.com/leoustc">GitHub</a>
+            </div>
           </div>
 
-          <div class="hero-grid">
-            <div class="hero-copy" data-reveal style="--delay: 100ms;">
-              <p class="eyebrow">Independent builder's journal</p>
-              <h1>Sharp work, clear voice, real artifacts.</h1>
-              <p class="lede">
-                This page borrows the feel of an editorial front page instead of a startup landing page:
-                current bets, current tools, and now a dedicated Social Team tab tracking seventeen
-                philosopher agents debating the future of AI across five rounds.
+          <aside class="hero-aside">
+            <article class="panel" data-reveal style="--delay: 150ms;">
+              <div class="status">Current focus</div>
+              <h3>Build systems that feel direct instead of fragile.</h3>
+              <p>
+                Recent work spans remote execution, workflow tooling, self-hosted assistants, and
+                a lightweight front door for explaining the work clearly.
+              </p>
+            </article>
+            <article class="panel" data-reveal style="--delay: 210ms;">
+              <div class="mini-label">This site</div>
+              <p>
+                Structured closer to a personal profile than an editorial homepage, with the Social
+                Team kept as an added live section rather than the main frame of the entire site.
+              </p>
+            </article>
+          </aside>
+        </section>
+
+        <section id="projects">
+          <div class="section-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Projects</div>
+              <h2>Current work.</h2>
+            </div>
+            <p>
+              A concise view of the active project inventory, grouped by type and explained in plain
+              terms.
+            </p>
+          </div>
+
+          <div class="project-filter" aria-label="Project filters" data-reveal>
+            <button type="button" aria-pressed="true" data-filter="all">All</button>
+            <button type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
+            <button type="button" aria-pressed="false" data-filter="platform">Platform</button>
+            <button type="button" aria-pressed="false" data-filter="web">Web</button>
+            <button type="button" aria-pressed="false" data-filter="library">Library</button>
+          </div>
+
+          <div class="projects">
+            <article class="project" data-category="tooling" data-reveal style="--delay: 20ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Tooling</div>
+                  <h3>git2</h3>
+                  <p>
+                    A Python CLI wrapper around system Git that keeps the useful `branch2`
+                    workflow while removing the maintenance cost of an embedded Git fork.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: keep the workflow improvement and cut the baggage.</p>
+            </article>
+
+            <article class="project" data-category="tooling" data-reveal style="--delay: 60ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Tooling</div>
+                  <h3>git2-upstream-sync</h3>
+                  <p>
+                    An upstream-facing Git fork used to explore shared-filesystem multi-agent
+                    workflows while keeping compatibility visible.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: a realistic testbed for collaboration and sync discipline.</p>
+            </article>
+
+            <article class="project" data-category="platform" data-reveal style="--delay: 100ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Platform</div>
+                  <h3>openclaw</h3>
+                  <p>
+                    A personal assistant platform that runs on Leo's own hardware and connects to
+                    the channels people already use.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: locally owned assistant behavior with persistent operations.</p>
+            </article>
+
+            <article class="project" data-category="library" data-reveal style="--delay: 140ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Library</div>
+                  <h3>skills-collection</h3>
+                  <p>
+                    A reusable library of skills, operating notes, and workflows so useful patterns
+                    survive across repos and sessions.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: cumulative improvement instead of repeated setup.</p>
+            </article>
+
+            <article class="project" data-category="web" data-reveal style="--delay: 180ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Web</div>
+                  <h3>mywebsite</h3>
+                  <p>
+                    The public front door for Leo's work, with a separate topic page for the Social
+                    Team discussion instead of burying it inside the main profile flow.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: a clearer home page plus one focused discussion page.</p>
+            </article>
+
+            <article class="project" data-category="platform" data-reveal style="--delay: 220ms;">
+              <div class="project-head">
+                <div class="project-summary">
+                  <div class="project-kind">Platform</div>
+                  <h3>leoclaw-github</h3>
+                  <p>
+                    A compact proving ground for repo messaging, coding workflows, and smaller
+                    product surfaces before they expand further.
+                  </p>
+                </div>
+              </div>
+              <p class="project-note">Outcome: a lighter place to test presentation and repo-level clarity.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="profile">
+          <div class="section-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Profile</div>
+              <h2>How I work.</h2>
+            </div>
+            <p>
+              A short profile section modeled after the reference site's straightforward framing.
+            </p>
+          </div>
+
+          <div class="profile-grid">
+            <article class="profile-card" data-reveal style="--delay: 20ms;">
+              <div class="mini-label">Focus areas</div>
+              <ul class="profile-list">
+                <li>AI infrastructure, remote execution, and distributed systems that scale cleanly.</li>
+                <li>Practical developer tooling that reduces friction instead of adding ceremony.</li>
+                <li>Self-hosted assistant systems with durable local ownership and operational clarity.</li>
+              </ul>
+            </article>
+
+            <article class="profile-card" data-reveal style="--delay: 80ms;">
+              <div class="mini-label">Working style</div>
+              <ul class="profile-list">
+                <li>Prefer simple boundaries, readable artifacts, and interfaces that explain themselves quickly.</li>
+                <li>Use static, production-usable surfaces wherever a heavier application is unnecessary.</li>
+                <li>Treat the site as a profile and project index first, then extend it with live experiments.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="patents">
+          <div class="section-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Patents</div>
+              <h2>Selected patent work.</h2>
+            </div>
+            <p>
+              Representative items aligned with the profile-first structure used on the live reference
+              site.
+            </p>
+          </div>
+
+          <div class="patent-grid">
+            <article class="patent-card" data-reveal style="--delay: 20ms;">
+              <div class="mini-label">Selected items</div>
+              <div class="patent-list">
+                <div class="patent-item">
+                  <span class="patent-id">US20120290696</span>
+                  <p>Longest Prefix Matching of Variable-Sized Hierarchical Names by Treelets</p>
+                </div>
+                <div class="patent-item">
+                  <span class="patent-id">CN119179440A</span>
+                  <p>Distributed Storage Based on Centralized Metadata</p>
+                </div>
+                <div class="patent-item">
+                  <span class="patent-id">CN119336686A</span>
+                  <p>Expanding Base Address Register Space in PCIe Devices</p>
+                </div>
+                <div class="patent-item">
+                  <span class="patent-id">CN114827151A</span>
+                  <p>Heterogenous Clustered Devices via PCIe, CXL, and UCIe</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="patent-card" data-reveal style="--delay: 80ms;">
+              <div class="mini-label">Themes</div>
+              <p>
+                The patent list reinforces the same themes visible across Leo's current projects:
+                system connectivity, distributed storage, networked execution, and practical
+                infrastructure design.
+              </p>
+              <div class="patent-tags">
+                <span>Distributed storage</span>
+                <span>PCIe / CXL / UCIe</span>
+                <span>Networked systems</span>
+                <span>Infrastructure tooling</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="social-team">
+          <div class="social-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Social Team</div>
+              <h2>Philosopher archive.</h2>
+            </div>
+            <p>
+              The discussion now lives in its own topic page so the home page stays compact while
+              the full philosopher debate remains easy to open and browse.
+            </p>
+          </div>
+
+          <div class="profile-grid">
+            <article class="contact-card" data-reveal style="--delay: 20ms;">
+              <div class="mini-label">Topic Page</div>
+              <h3>Future of AI, consolidated.</h3>
+              <p>
+                One page now holds the Social Team discussion: the framing, the roster, the
+                round-by-round spotlight, and the full archive.
               </p>
               <div class="hero-actions">
-                <a class="primary" href="#social-team">Open the Social Team</a>
-                <a class="secondary" href="#projects">Scan active projects</a>
+                <a class="primary" href="./social-team.html">Open Topic Page</a>
               </div>
-            </div>
+            </article>
 
-            <aside class="hero-side">
-              <div class="hero-card" data-reveal style="--delay: 180ms;">
-                <div class="status">Live archive</div>
-                <div>
-                  <strong>Seventeen philosophers, one AI argument.</strong>
-                  <p>
-                    The debate below is not placeholder copy. It is the actual five-round exchange run
-                    through the local Social Team and published as a readable archive.
-                  </p>
-                </div>
-                <div class="hero-marks">
-                  <span class="chip">17 agents</span>
-                  <span class="chip">5 rounds</span>
-                  <span class="chip">full transcript</span>
-                </div>
-              </div>
-
-              <div class="note-card" data-reveal style="--delay: 260ms;">
-                <p class="eyebrow">Current editorial line</p>
-                <strong>Less product theater, more dispatches.</strong>
-                <p>
-                  The tone is intentionally closer to a working publication: featured items, compact
-                  summaries, and enough structure that a visitor can jump straight to what matters.
-                </p>
-              </div>
-            </aside>
+            <article class="contact-card" data-reveal style="--delay: 80ms;">
+              <div class="mini-label">Inside</div>
+              <ul class="profile-list">
+                <li>17 philosopher agents with role, soul, and idea framing.</li>
+                <li>5 rounds on the future of AI with a live spotlight view.</li>
+                <li>One dedicated archive page instead of a long home-page section.</li>
+              </ul>
+            </article>
           </div>
-        </header>
+        </section>
 
-        <main id="main">
-          <section class="section" id="dispatches">
-            <div class="section-head" data-reveal>
+        <section id="contact">
+          <div class="contact-layout">
+            <div class="section-intro" data-reveal>
               <div>
-                <div class="section-tag">Dispatches</div>
-                <h2>Featured fronts.</h2>
+                <div class="section-kicker">Contact</div>
+                <h2>Reach out.</h2>
               </div>
               <p>
-                The homepage now reads more like Leo's blog reference: editorial entries first, clear
-                context second, and no generic dashboard framing.
+                Contact details and links stay simple here, following the same direct tone as the
+                reference site.
               </p>
             </div>
-
-            <div class="story-list">
-              <article class="story" data-reveal style="--delay: 30ms;">
-                <div class="story-copy">
-                  <div class="story-meta">Featured Experiment</div>
-                  <h3>Social Team: seventeen philosophers on the future of AI.</h3>
-                  <p>
-                    A dedicated archive for the philosopher agents Leo asked for. Each member has a
-                    short summary, and the debate section preserves every round of the five-round exchange.
-                  </p>
-                </div>
-                <div class="story-side">
-                  <strong>What changed</strong>
-                  <p>
-                    Added a first-class Social Team section, interactive round browsing, and a full
-                    transcript archive driven from the local agent outputs.
-                  </p>
-                  <div class="chip-row">
-                    <span class="chip">editorial layout</span>
-                    <span class="chip">real debate data</span>
-                  </div>
-                </div>
-              </article>
-
-              <article class="story" data-reveal style="--delay: 90ms;">
-                <div class="story-copy">
-                  <div class="story-meta">Ongoing Work</div>
-                  <h3>Projects with clear surfaces instead of vague promises.</h3>
-                  <p>
-                    The projects block remains, but it now sits in a more article-like frame: each item
-                    gets a concise why-it-matters explanation rather than startup-speak.
-                  </p>
-                </div>
-                <div class="story-side">
-                  <strong>Signal over noise</strong>
-                  <p>
-                    The point is to make the repos legible fast: what exists, why it exists, and what
-                    kind of work is actually happening there.
-                  </p>
-                  <div class="chip-row">
-                    <span class="chip">static site</span>
-                    <span class="chip">GitHub Pages</span>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <section class="section" id="projects">
-            <div class="section-head" data-reveal>
-              <div>
-                <div class="section-tag">Projects</div>
-                <h2>The active slate.</h2>
-              </div>
-              <p>
-                These are the actual working repos in Leo's orbit, grouped by what they are trying to
-                sharpen right now.
-              </p>
-            </div>
-
-            <div class="project-filter" aria-label="Project filters" data-reveal>
-              <button type="button" aria-pressed="true" data-filter="all">All work</button>
-              <button type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
-              <button type="button" aria-pressed="false" data-filter="platform">Platform</button>
-              <button type="button" aria-pressed="false" data-filter="web">Web</button>
-              <button type="button" aria-pressed="false" data-filter="library">Library</button>
-            </div>
-
-            <div class="projects">
-              <article class="project" data-category="tooling" data-reveal style="--delay: 20ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Tooling</div>
-                    <h3>git2</h3>
-                    <p>
-                      A Python CLI wrapper around system Git that keeps one custom workflow, `branch2`,
-                      and removes the maintenance burden of an embedded Git fork.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It keeps the useful part of the experiment while cutting the expensive baggage.</p>
-                    <div class="project-tags">
-                      <span class="chip">Python CLI</span>
-                      <span class="chip">branch sync</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project" data-category="tooling" data-reveal style="--delay: 60ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Tooling</div>
-                    <h3>git2-upstream-sync</h3>
-                    <p>
-                      The upstream-facing Git fork for exploring shared-filesystem multi-agent workflows
-                      while keeping compatibility and sync discipline visible.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It creates a testbed for collaboration without pretending the upstream constraints do not exist.</p>
-                    <div class="project-tags">
-                      <span class="chip">upstream sync</span>
-                      <span class="chip">collab workflow</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project" data-category="platform" data-reveal style="--delay: 100ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Platform</div>
-                    <h3>openclaw</h3>
-                    <p>
-                      A personal assistant platform that lives on Leo's own hardware and reaches out over
-                      the channels people already use, from chat apps to scheduled digests.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It turns assistant behavior into something operational, persistent, and locally owned.</p>
-                    <div class="project-tags">
-                      <span class="chip">self-hosted feel</span>
-                      <span class="chip">multi-channel</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project" data-category="library" data-reveal style="--delay: 140ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Library</div>
-                    <h3>skills-collection</h3>
-                    <p>
-                      A growing library of reusable skills, operating notes, and learned workflows so good
-                      patterns survive beyond one repo or one session.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It lets the system improve cumulatively instead of relearning the same moves from zero.</p>
-                    <div class="project-tags">
-                      <span class="chip">reusable skills</span>
-                      <span class="chip">workflow memory</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project" data-category="web" data-reveal style="--delay: 180ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Web</div>
-                    <h3>mywebsite</h3>
-                    <p>
-                      The front door. This static page now acts like a concise publication: featured
-                      dispatches, live project summaries, and a searchable Social Team archive.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It gives the work a voice that feels human, sharp, and easier to remember.</p>
-                    <div class="project-tags">
-                      <span class="chip">editorial front page</span>
-                      <span class="chip">GitHub Pages</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project" data-category="platform" data-reveal style="--delay: 220ms;">
-                <div class="project-row">
-                  <div class="project-main">
-                    <div class="project-kind">Platform</div>
-                    <h3>leoclaw-github</h3>
-                    <p>
-                      A compact proving ground for repo messaging, coding workflows, and small product
-                      surfaces before they expand into larger systems.
-                    </p>
-                  </div>
-                  <div class="project-side">
-                    <strong>Why it matters</strong>
-                    <p>It is the lightweight place to test presentation and repo-level communication cleanly.</p>
-                    <div class="project-tags">
-                      <span class="chip">demo surface</span>
-                      <span class="chip">repo messaging</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <section class="section" id="social-team">
-            <div class="section-head" data-reveal>
-              <div>
-                <div class="section-tag">Social Team</div>
-                <h2>The philosopher tab.</h2>
-              </div>
-              <p>
-                The team roster comes first, then the five-round debate on the future of AI. The
-                spotlight lets you browse by philosopher and round; the full archive below keeps every
-                reply on the page.
-              </p>
-            </div>
-
-            <div class="social-shell">
-              <div class="roster-grid" id="social-team-roster" data-reveal></div>
-
-              <div class="social-toolbar" data-reveal style="--delay: 80ms;">
-                <div class="round-picker" id="round-picker" aria-label="Debate round picker"></div>
-                <div class="philosopher-picker" id="philosopher-picker" aria-label="Philosopher picker"></div>
-              </div>
-
-              <article class="spotlight" id="debate-spotlight" data-reveal style="--delay: 120ms;">
-                <div class="spotlight-head">
-                  <div>
-                    <p class="eyebrow" id="spotlight-round-label">Round 1</p>
-                    <h3 id="spotlight-name">Socrates</h3>
-                    <p class="spotlight-subtitle" id="spotlight-summary"></p>
-                  </div>
-                  <div class="chip-row">
-                    <span class="chip">Topic: Future of AI</span>
-                    <span class="chip">Five rounds</span>
-                  </div>
-                </div>
-                <div class="spotlight-body">
-                  <strong id="spotlight-role"></strong>
-                  <p id="spotlight-answer"></p>
-                </div>
-              </article>
-
-              <div class="team-note" data-reveal style="--delay: 160ms;">
-                <div>
-                  <p class="section-tag">Reading note</p>
-                  <p>
-                    The spotlight is for quick browsing. The archive below is the full record, grouped by
-                    philosopher and preserving all five rounds in order.
-                  </p>
-                </div>
-                <div class="chip-row">
-                  <span class="chip">17 philosophers</span>
-                  <span class="chip">85 answers</span>
-                </div>
-              </div>
-
-              <div class="transcript-grid" id="transcript-archive" data-reveal style="--delay: 200ms;"></div>
-            </div>
-          </section>
-
-          <section class="section" id="method">
-            <div class="section-head" data-reveal>
-              <div>
-                <div class="section-tag">Method</div>
-                <h2>Build it, then make it legible.</h2>
-              </div>
-              <p>
-                The site should stay close to real work: clear ownership, readable artifacts, and enough
-                editorial judgment that visitors can tell what is alive right now.
-              </p>
-            </div>
-
-            <div class="team-grid">
-              <article class="member-card" data-reveal style="--delay: 20ms;">
-                <div class="kicker">Direction</div>
-                <h3>Leo</h3>
-                <p class="member-role">Product lead</p>
-                <p>Chooses the bets, keeps the bar sharp, and cuts anything that sounds clever but does not help.</p>
-              </article>
-              <article class="member-card" data-reveal style="--delay: 60ms;">
-                <div class="kicker">Manager</div>
-                <h3>Local runner system</h3>
-                <p class="member-role">Execution lane</p>
-                <p>Routes work, holds context, and turns live agent activity into something consistent enough to ship.</p>
-              </article>
-              <article class="member-card" data-reveal style="--delay: 100ms;">
-                <div class="kicker">Presentation</div>
-                <h3>Editorial framing</h3>
-                <p class="member-role">Site voice</p>
-                <p>Explains the work without flattening it into pitch-deck language or generic AI aesthetics.</p>
-              </article>
-            </div>
-          </section>
-        </main>
-
-        <footer class="section">
-          <div data-reveal>
-            <div class="brand">Leo's Dispatch</div>
-            <p>Projects, notes, and the Social Team archive.</p>
           </div>
-          <div class="footer-links" data-reveal style="--delay: 60ms;">
-            <a href="#dispatches">Dispatches</a>
-            <a href="#projects">Projects</a>
-            <a href="#social-team">Social Team</a>
-            <a href="#method">Method</a>
+
+          <div class="profile-grid">
+            <article class="contact-card" data-reveal style="--delay: 20ms;">
+              <div class="mini-label">Email</div>
+              <h3><a href="mailto:info@leoustc.com">info@leoustc.com</a></h3>
+              <p>Best for project discussions, infrastructure collaboration, and direct outreach.</p>
+            </article>
+
+            <article class="contact-card" data-reveal style="--delay: 80ms;">
+              <div class="mini-label">GitHub</div>
+              <h3><a href="https://github.com/leoustc">github.com/leoustc</a></h3>
+              <p>Project references, code surfaces, and the broader public work trail.</p>
+            </article>
           </div>
-        </footer>
-      </div>
+        </section>
+      </main>
+
+      <footer>
+        <div data-reveal>
+          <div class="brand-mark">Dr. Leo</div>
+          <p>Projects, profile, selected patents, and a dedicated Social Team topic page.</p>
+        </div>
+        <nav aria-label="Footer">
+          <a href="#projects">Projects</a>
+          <a href="#profile">Profile</a>
+          <a href="#patents">Patents</a>
+          <a href="./social-team.html">Social Team</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </footer>
     </div>
-
-    <script src="./social-team-data.js"></script>
     <script>
       const filterButtons = document.querySelectorAll("[data-filter]");
       const projects = document.querySelectorAll(".project");
@@ -1032,111 +921,6 @@
           });
         });
       });
-
-      const members = window.socialTeamMembers || [];
-      const debate = window.socialTeamDebate || {};
-      const rounds = [1, 2, 3, 4, 5];
-      const roster = document.querySelector("#social-team-roster");
-      const roundPicker = document.querySelector("#round-picker");
-      const philosopherPicker = document.querySelector("#philosopher-picker");
-      const archive = document.querySelector("#transcript-archive");
-      const spotlightName = document.querySelector("#spotlight-name");
-      const spotlightRoundLabel = document.querySelector("#spotlight-round-label");
-      const spotlightSummary = document.querySelector("#spotlight-summary");
-      const spotlightRole = document.querySelector("#spotlight-role");
-      const spotlightAnswer = document.querySelector("#spotlight-answer");
-
-      let activeRound = 1;
-      let activePhilosopher = "socrates";
-
-      function memberSummary(member) {
-        return `${member.soul}. ${member.idea}`;
-      }
-
-      function renderRoster() {
-        roster.innerHTML = members.map((member) => `
-          <article class="roster-card">
-            <div class="kicker">${member.name}</div>
-            <h3>${member.name}</h3>
-            <p class="roster-role">${member.role}</p>
-            <p>${memberSummary(member)}</p>
-          </article>
-        `).join("");
-      }
-
-      function renderPickers() {
-        roundPicker.innerHTML = rounds.map((round) => `
-          <button
-            type="button"
-            data-round="${round}"
-            aria-pressed="${String(round === activeRound)}"
-          >
-            Round ${round}
-          </button>
-        `).join("");
-
-        philosopherPicker.innerHTML = members.map((member) => `
-          <button
-            type="button"
-            data-philosopher="${member.slug}"
-            aria-pressed="${String(member.slug === activePhilosopher)}"
-          >
-            ${member.name}
-          </button>
-        `).join("");
-
-        roundPicker.querySelectorAll("button").forEach((button) => {
-          button.addEventListener("click", () => {
-            activeRound = Number(button.dataset.round);
-            renderPickers();
-            renderSpotlight();
-          });
-        });
-
-        philosopherPicker.querySelectorAll("button").forEach((button) => {
-          button.addEventListener("click", () => {
-            activePhilosopher = button.dataset.philosopher;
-            renderPickers();
-            renderSpotlight();
-          });
-        });
-      }
-
-      function renderSpotlight() {
-        const member = members.find((item) => item.slug === activePhilosopher) || members[0];
-        const answer = debate?.[member.slug]?.[String(activeRound)] || "No stored answer for this round.";
-
-        spotlightRoundLabel.textContent = `Round ${activeRound}`;
-        spotlightName.textContent = member.name;
-        spotlightSummary.textContent = memberSummary(member);
-        spotlightRole.textContent = member.role;
-        spotlightAnswer.textContent = answer;
-      }
-
-      function renderArchive() {
-        archive.innerHTML = members.map((member, index) => `
-          <details class="transcript-card" ${index === 0 ? "open" : ""}>
-            <summary class="transcript-head">
-              <div class="kicker">${member.name}</div>
-              <h3>${member.name}</h3>
-              <p class="transcript-label">${member.role}</p>
-            </summary>
-            <div class="transcript-rounds">
-              ${rounds.map((round) => `
-                <section class="transcript-entry">
-                  <div class="story-meta">Round ${round}</div>
-                  <p>${debate?.[member.slug]?.[String(round)] || "No stored answer for this round."}</p>
-                </section>
-              `).join("")}
-            </div>
-          </details>
-        `).join("");
-      }
-
-      renderRoster();
-      renderPickers();
-      renderSpotlight();
-      renderArchive();
 
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const observer = new IntersectionObserver(

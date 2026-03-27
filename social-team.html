@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dr. Leo | Social Team Topic</title>
+    <meta
+      name="description"
+      content="A dedicated topic page for Leo's Social Team discussion on the future of AI, with the full philosopher roster and transcript archive."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f5ef;
+        --surface: #ffffff;
+        --surface-soft: #eef1e5;
+        --ink: #142117;
+        --muted: #566255;
+        --line: #d8ded0;
+        --line-strong: #bfc8b7;
+        --accent: #254e3a;
+        --accent-soft: #dce8de;
+        --max: 1100px;
+        --shadow: 0 22px 60px rgba(20, 33, 23, 0.08);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "IBM Plex Sans", sans-serif;
+        color: var(--ink);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.64), transparent 18rem),
+          var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      ::selection {
+        background: rgba(37, 78, 58, 0.16);
+      }
+
+      :focus-visible {
+        outline: 3px solid rgba(37, 78, 58, 0.24);
+        outline-offset: 3px;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        z-index: 20;
+        padding: 0.8rem 1rem;
+        color: var(--surface);
+        text-decoration: none;
+        background: var(--accent);
+        transform: translateY(-140%);
+        transition: transform 180ms ease;
+      }
+
+      .skip-link:focus-visible {
+        transform: translateY(0);
+      }
+
+      .page {
+        width: min(calc(100vw - 1.5rem), var(--max));
+        margin: 0 auto;
+      }
+
+      .site-header,
+      .section-intro,
+      .social-intro,
+      footer {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+      }
+
+      .site-header {
+        align-items: center;
+        padding: 1.1rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: grid;
+        gap: 0.2rem;
+      }
+
+      .brand-mark,
+      .section-kicker,
+      .mini-label,
+      .story-meta,
+      .round-picker button,
+      .philosopher-picker button {
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        color: var(--accent);
+      }
+
+      .brand p,
+      .hero-copy p,
+      .panel p,
+      .section-intro p,
+      .social-intro p,
+      .profile-list li,
+      .spotlight-subtitle,
+      .transcript-label,
+      footer p {
+        color: var(--muted);
+      }
+
+      nav,
+      .hero-actions,
+      .round-picker,
+      .philosopher-picker,
+      .patent-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      nav a,
+      .hero-actions a,
+      .round-picker button,
+      .philosopher-picker button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.65rem;
+        padding: 0.7rem 1rem;
+        border: 1px solid var(--line);
+        text-decoration: none;
+        background: var(--surface);
+        transition:
+          transform 180ms var(--ease),
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      nav a:hover,
+      nav a:focus-visible,
+      .hero-actions a:hover,
+      .hero-actions a:focus-visible,
+      .round-picker button:hover,
+      .round-picker button:focus-visible,
+      .philosopher-picker button:hover,
+      .philosopher-picker button:focus-visible {
+        transform: translateY(-1px);
+        border-color: var(--line-strong);
+        background: #f8faf5;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.8fr);
+        gap: clamp(2rem, 4vw, 4rem);
+        padding: clamp(2rem, 4vw, 4rem) 0 clamp(2.5rem, 5vw, 4.5rem);
+      }
+
+      .hero-copy,
+      .hero-aside,
+      .panel,
+      .spotlight,
+      .roster-card,
+      .transcript-card,
+      .profile-card {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .hero-copy {
+        align-content: start;
+        gap: 1.1rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: "Source Serif 4", serif;
+        line-height: 0.96;
+      }
+
+      h1 {
+        max-width: 10ch;
+        font-size: clamp(3.5rem, 8vw, 6.5rem);
+      }
+
+      h2 {
+        font-size: clamp(2.2rem, 4.4vw, 3.7rem);
+      }
+
+      h3 {
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.65;
+      }
+
+      .lead {
+        max-width: 44rem;
+        font-size: clamp(1.02rem, 1.45vw, 1.15rem);
+      }
+
+      .hero-actions .primary,
+      .round-picker button[aria-pressed="true"],
+      .philosopher-picker button[aria-pressed="true"] {
+        color: var(--surface);
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .panel,
+      .spotlight,
+      .roster-card,
+      .transcript-card,
+      .profile-card {
+        padding: 1.2rem;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        width: fit-content;
+        padding: 0.45rem 0.7rem;
+        border: 1px solid var(--line);
+        background: var(--surface-soft);
+      }
+
+      .status::before {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .mini-label {
+        color: var(--muted);
+      }
+
+      section {
+        padding: 2rem 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-intro,
+      .social-intro {
+        align-items: end;
+        margin-bottom: 1.3rem;
+      }
+
+      .section-intro p,
+      .social-intro p {
+        max-width: 34rem;
+      }
+
+      .profile-grid,
+      .roster-grid,
+      .transcript-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .profile-list {
+        display: grid;
+        gap: 0.8rem;
+        margin: 0;
+        padding-left: 1.15rem;
+      }
+
+      .roster-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      .roster-card {
+        grid-column: span 4;
+        contain: content;
+        content-visibility: auto;
+      }
+
+      .social-shell,
+      .social-toolbar {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .spotlight-head,
+      footer {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: end;
+      }
+
+      .spotlight-head {
+        align-items: start;
+      }
+
+      .spotlight-body {
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .spotlight-body p {
+        color: var(--ink);
+      }
+
+      .patent-tags span {
+        padding: 0.42rem 0.68rem;
+        border: 1px solid var(--line);
+        background: var(--surface-soft);
+        color: var(--muted);
+      }
+
+      .transcript-card {
+        contain: content;
+        content-visibility: auto;
+      }
+
+      .transcript-card summary {
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .transcript-card summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .transcript-card[open] {
+        background: #fbfcf9;
+      }
+
+      .transcript-head {
+        display: grid;
+        gap: 0.28rem;
+      }
+
+      .transcript-rounds {
+        display: grid;
+        gap: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      .transcript-placeholder {
+        padding: 1rem 0;
+        color: var(--muted);
+      }
+
+      .transcript-entry {
+        display: grid;
+        gap: 0.45rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      footer {
+        padding: 1.4rem 0 3rem;
+        color: var(--muted);
+      }
+
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 600ms var(--ease),
+          transform 600ms var(--ease);
+        transition-delay: var(--delay, 0ms);
+      }
+
+      [data-reveal].is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .site-header,
+        .section-intro,
+        .social-intro,
+        .spotlight-head,
+        footer {
+          flex-direction: column;
+          grid-template-columns: 1fr;
+        }
+
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .roster-card {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: min(calc(100vw - 1rem), var(--max));
+        }
+
+        nav a,
+        .hero-actions a,
+        .round-picker button,
+        .philosopher-picker button {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .roster-card {
+          grid-column: span 12;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition-duration: 0ms !important;
+        }
+
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page">
+      <header class="site-header" data-reveal style="--delay: 20ms;">
+        <div class="brand">
+          <div class="brand-mark">Dr. Leo</div>
+          <p>AI infrastructure architect building practical systems and tools.</p>
+        </div>
+        <nav aria-label="Primary">
+          <a href="./index.html">Home</a>
+          <a href="#framing">Framing</a>
+          <a href="#roster">Roster</a>
+          <a href="#debate">Spotlight</a>
+          <a href="#archive">Archive</a>
+        </nav>
+      </header>
+
+      <main id="main">
+        <section class="hero">
+          <div class="hero-copy" data-reveal style="--delay: 90ms;">
+            <div class="section-kicker">Social Team</div>
+            <h1>Future of AI, argued in one place.</h1>
+            <p class="lead">
+              This page consolidates the Social Team discussion into a single topic surface: the
+              framing, the full philosopher roster, a round-by-round spotlight, and the complete
+              transcript archive.
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="#debate">Open Spotlight</a>
+              <a href="#archive">Read Archive</a>
+            </div>
+          </div>
+
+          <aside class="hero-aside">
+            <article class="panel" data-reveal style="--delay: 150ms;">
+              <div class="status">Topic Scope</div>
+              <h3>17 philosophers. 5 rounds. 1 question.</h3>
+              <p>
+                The discussion asks what AI is likely to do to civilization and what price humans
+                should accept to govern it well.
+              </p>
+            </article>
+            <article class="panel" data-reveal style="--delay: 210ms;">
+              <div class="mini-label">Why this page</div>
+              <p>
+                The home page now stays lean while the full social discussion becomes a proper topic
+                page instead of a long embedded section.
+              </p>
+            </article>
+          </aside>
+        </section>
+
+        <section id="framing">
+          <div class="section-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Framing</div>
+              <h2>What the discussion covers.</h2>
+            </div>
+            <p>
+              A single topic page works better here because the material is coherent, long, and
+              easier to scan when it is not competing with the rest of the site.
+            </p>
+          </div>
+
+          <div class="profile-grid">
+            <article class="profile-card" data-reveal style="--delay: 20ms;">
+              <div class="mini-label">Core prompt</div>
+              <ul class="profile-list">
+                <li>Will AI destroy civilization or raise it to a higher level?</li>
+                <li>Is this chiefly AI evolution, human evolution, or co-evolution?</li>
+                <li>What institutions, tradeoffs, and red lines matter most?</li>
+              </ul>
+            </article>
+
+            <article class="profile-card" data-reveal style="--delay: 80ms;">
+              <div class="mini-label">Reading mode</div>
+              <ul class="profile-list">
+                <li>Scan the roster first to understand each thinker’s role and posture.</li>
+                <li>Use the spotlight to compare one philosopher across each round.</li>
+                <li>Open the archive when you want the full transcript by person.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="roster">
+          <div class="social-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Roster</div>
+              <h2>Philosopher panel.</h2>
+            </div>
+            <p>
+              Each member carries a role, a soul, and an idea frame so the debate reads like a set
+              of distinct positions rather than interchangeable responses.
+            </p>
+          </div>
+
+          <div class="roster-grid" id="social-team-roster" data-reveal></div>
+        </section>
+
+        <section id="debate">
+          <div class="social-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Spotlight</div>
+              <h2>Round-by-round comparison.</h2>
+            </div>
+            <p>
+              Pick a philosopher and a round to move through the discussion without loading the
+              entire transcript wall first.
+            </p>
+          </div>
+
+          <div class="social-shell">
+            <div class="social-toolbar" data-reveal style="--delay: 60ms;">
+              <div class="round-picker" id="round-picker" aria-label="Debate round picker"></div>
+              <div class="philosopher-picker" id="philosopher-picker" aria-label="Philosopher picker"></div>
+            </div>
+
+            <article class="spotlight" id="debate-spotlight" data-reveal style="--delay: 120ms;">
+              <div class="spotlight-head">
+                <div>
+                  <p class="mini-label" id="spotlight-round-label">Round 1</p>
+                  <h3 id="spotlight-name">Socrates</h3>
+                  <p class="spotlight-subtitle" id="spotlight-summary"></p>
+                </div>
+                <div class="patent-tags">
+                  <span>Future of AI</span>
+                  <span>5 rounds</span>
+                  <span>17 philosophers</span>
+                </div>
+              </div>
+              <div class="spotlight-body">
+                <strong id="spotlight-role"></strong>
+                <p id="spotlight-answer"></p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="archive">
+          <div class="social-intro" data-reveal>
+            <div>
+              <div class="section-kicker">Archive</div>
+              <h2>Full transcript archive.</h2>
+            </div>
+            <p>
+              The archive is deferred until this section enters view so the topic page keeps a
+              lighter first paint even with the full discussion preserved.
+            </p>
+          </div>
+
+          <div class="transcript-grid" id="transcript-archive" data-reveal style="--delay: 180ms;">
+            <p class="transcript-placeholder">Archive loads when this section enters view.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div data-reveal>
+          <div class="brand-mark">Dr. Leo</div>
+          <p>Home for Leo's Social Team discussion on the future of AI.</p>
+        </div>
+        <nav aria-label="Footer">
+          <a href="./index.html">Home</a>
+          <a href="#framing">Framing</a>
+          <a href="#roster">Roster</a>
+          <a href="#debate">Spotlight</a>
+          <a href="#archive">Archive</a>
+        </nav>
+      </footer>
+    </div>
+
+    <script src="./social-team-data.js"></script>
+    <script>
+      const members = window.socialTeamMembers || [];
+      const debate = window.socialTeamDebate || {};
+      const rounds = [1, 2, 3, 4, 5];
+      const roster = document.querySelector("#social-team-roster");
+      const roundPicker = document.querySelector("#round-picker");
+      const philosopherPicker = document.querySelector("#philosopher-picker");
+      const archive = document.querySelector("#transcript-archive");
+      const spotlightName = document.querySelector("#spotlight-name");
+      const spotlightRoundLabel = document.querySelector("#spotlight-round-label");
+      const spotlightSummary = document.querySelector("#spotlight-summary");
+      const spotlightRole = document.querySelector("#spotlight-role");
+      const spotlightAnswer = document.querySelector("#spotlight-answer");
+
+      let activeRound = 1;
+      let activePhilosopher = "socrates";
+      let archiveRendered = false;
+
+      function memberSummary(member) {
+        return `${member.soul}. ${member.idea}`;
+      }
+
+      function renderRoster() {
+        roster.innerHTML = members.map((member) => `
+          <article class="roster-card">
+            <div class="mini-label">${member.name}</div>
+            <h3>${member.name}</h3>
+            <p class="transcript-label">${member.role}</p>
+            <p>${memberSummary(member)}</p>
+          </article>
+        `).join("");
+      }
+
+      function renderPickers() {
+        roundPicker.innerHTML = rounds.map((round) => `
+          <button
+            type="button"
+            data-round="${round}"
+            aria-pressed="${String(round === activeRound)}"
+          >
+            Round ${round}
+          </button>
+        `).join("");
+
+        philosopherPicker.innerHTML = members.map((member) => `
+          <button
+            type="button"
+            data-philosopher="${member.slug}"
+            aria-pressed="${String(member.slug === activePhilosopher)}"
+          >
+            ${member.name}
+          </button>
+        `).join("");
+
+        roundPicker.querySelectorAll("button").forEach((button) => {
+          button.addEventListener("click", () => {
+            activeRound = Number(button.dataset.round);
+            renderPickers();
+            renderSpotlight();
+          });
+        });
+
+        philosopherPicker.querySelectorAll("button").forEach((button) => {
+          button.addEventListener("click", () => {
+            activePhilosopher = button.dataset.philosopher;
+            renderPickers();
+            renderSpotlight();
+          });
+        });
+      }
+
+      function renderSpotlight() {
+        const member = members.find((item) => item.slug === activePhilosopher) || members[0];
+        const answer = debate?.[member.slug]?.[String(activeRound)] || "No stored answer for this round.";
+
+        spotlightRoundLabel.textContent = `Round ${activeRound}`;
+        spotlightName.textContent = member.name;
+        spotlightSummary.textContent = memberSummary(member);
+        spotlightRole.textContent = member.role;
+        spotlightAnswer.textContent = answer;
+      }
+
+      function renderArchive() {
+        if (archiveRendered) {
+          return;
+        }
+
+        archive.innerHTML = members.map((member, index) => `
+          <details class="transcript-card" ${index === 0 ? "open" : ""}>
+            <summary class="transcript-head">
+              <div class="mini-label">${member.name}</div>
+              <h3>${member.name}</h3>
+              <p class="transcript-label">${member.role}</p>
+            </summary>
+            <div class="transcript-rounds">
+              ${rounds.map((round) => `
+                <section class="transcript-entry">
+                  <div class="story-meta">Round ${round}</div>
+                  <p>${debate?.[member.slug]?.[String(round)] || "No stored answer for this round."}</p>
+                </section>
+              `).join("")}
+            </div>
+          </details>
+        `).join("");
+
+        archiveRendered = true;
+      }
+
+      renderRoster();
+      renderPickers();
+      renderSpotlight();
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                if (entry.target === archive) {
+                  renderArchive();
+                }
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.16,
+            rootMargin: "0px 0px -40px 0px"
+          }
+        );
+
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          observer.observe(element);
+        });
+      } else {
+        renderArchive();
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+      }
+    </script>
+  </body>
+</html>
