@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dr. Leo | Social Team Topic</title>
+    <title>Dr. Leo | Social Team</title>
     <meta
       name="description"
-      content="A dedicated topic page for Leo's Social Team discussion on the future of AI, with the full philosopher roster and transcript archive."
+      content="Social Team discussion on the future of AI, presented as one scrollable group chat with a minimal roster."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,20 +23,15 @@
         --ink: #142117;
         --muted: #566255;
         --line: #d8ded0;
-        --line-strong: #bfc8b7;
         --accent: #254e3a;
-        --accent-soft: #dce8de;
+        --manager-bg: #e6f2e7;
+        --summary-bg: #fff9e8;
         --max: 1100px;
         --shadow: 0 22px 60px rgba(20, 33, 23, 0.08);
-        --ease: cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       * {
         box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
       }
 
       body {
@@ -53,34 +48,8 @@
         color: inherit;
       }
 
-      button {
-        font: inherit;
-      }
-
       ::selection {
         background: rgba(37, 78, 58, 0.16);
-      }
-
-      :focus-visible {
-        outline: 3px solid rgba(37, 78, 58, 0.24);
-        outline-offset: 3px;
-      }
-
-      .skip-link {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        z-index: 20;
-        padding: 0.8rem 1rem;
-        color: var(--surface);
-        text-decoration: none;
-        background: var(--accent);
-        transform: translateY(-140%);
-        transition: transform 180ms ease;
-      }
-
-      .skip-link:focus-visible {
-        transform: translateY(0);
       }
 
       .page {
@@ -89,12 +58,11 @@
       }
 
       .site-header,
-      .section-intro,
-      .social-intro,
-      footer {
+      .section-head,
+      .message-head {
         display: flex;
-        gap: 1rem;
         justify-content: space-between;
+        gap: 1rem;
       }
 
       .site-header {
@@ -105,285 +73,90 @@
 
       .brand {
         display: grid;
-        gap: 0.2rem;
+        gap: 0.15rem;
       }
 
       .brand-mark,
-      .section-kicker,
-      .mini-label,
-      .story-meta,
-      .round-picker button,
-      .speed-picker button {
+      .eyebrow,
+      .message-label {
         font-size: 0.76rem;
         font-weight: 700;
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
-      .brand-mark {
+      .brand-mark,
+      .message-label {
         color: var(--accent);
       }
 
       .brand p,
-      .hero-copy p,
-      .panel p,
-      .section-intro p,
-      .social-intro p,
-      .profile-list li,
-      .stream-note,
-      .transcript-label,
-      footer p {
+      .intro,
+      .message-meta,
+      .message-body,
+      .roster-note,
+      footer {
         color: var(--muted);
       }
 
-      nav,
-      .hero-actions,
-      .round-picker,
-      .speed-picker,
-      .patent-tags,
-      .playback-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-      }
-
-      nav a,
-      .hero-actions a,
-      .round-picker button,
-      .speed-picker button,
-      .playback-actions button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 2.65rem;
-        padding: 0.7rem 1rem;
-        border: 1px solid var(--line);
-        text-decoration: none;
-        background: var(--surface);
-        transition:
-          transform 180ms var(--ease),
-          border-color 180ms ease,
-          background 180ms ease;
-      }
-
-      nav a:hover,
-      nav a:focus-visible,
-      .hero-actions a:hover,
-      .hero-actions a:focus-visible,
-      .round-picker button:hover,
-      .round-picker button:focus-visible,
-      .speed-picker button:hover,
-      .speed-picker button:focus-visible,
-      .playback-actions button:hover,
-      .playback-actions button:focus-visible {
-        transform: translateY(-1px);
-        border-color: var(--line-strong);
-        background: #f8faf5;
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.8fr);
-        gap: clamp(2rem, 4vw, 4rem);
-        padding: clamp(2rem, 4vw, 4rem) 0 clamp(2.5rem, 5vw, 4.5rem);
-      }
-
-      .hero-copy,
-      .hero-aside,
-      .panel,
-      .question-card,
-      .chatbox,
-      .roster-card,
-      .transcript-card,
-      .profile-card {
-        display: grid;
-        gap: 0.9rem;
-      }
-
-      .hero-copy {
-        align-content: start;
-        gap: 1.1rem;
-      }
-
-      h1,
-      h2,
-      h3 {
-        margin: 0;
-        font-family: "Source Serif 4", serif;
-        line-height: 0.96;
-      }
-
-      h1 {
-        max-width: 10ch;
-        font-size: clamp(3.5rem, 8vw, 6.5rem);
-      }
-
-      h2 {
-        font-size: clamp(2.2rem, 4.4vw, 3.7rem);
-      }
-
-      h3 {
-        font-size: clamp(1.3rem, 2vw, 1.8rem);
-      }
-
-      p {
+      .brand p,
+      .intro,
+      .message-body,
+      .roster-note,
+      footer,
+      .roster-character {
         margin: 0;
         line-height: 1.65;
       }
 
-      .lead {
-        max-width: 44rem;
-        font-size: clamp(1.02rem, 1.45vw, 1.15rem);
+      main {
+        display: grid;
+        gap: 2rem;
+        padding: 1.5rem 0 3rem;
       }
 
-      .hero-actions .primary,
-      .round-picker button[aria-pressed="true"],
-      .speed-picker button[aria-pressed="true"] {
-        color: var(--surface);
-        border-color: var(--accent);
-        background: var(--accent);
-      }
-
-      .panel,
-      .question-card,
-      .chatbox,
-      .roster-card,
-      .transcript-card,
-      .profile-card {
-        padding: 1.2rem;
+      .chat-shell,
+      .roster-shell {
+        display: grid;
+        gap: 1rem;
+        padding: 1.25rem;
         border: 1px solid var(--line);
         background: var(--surface);
         box-shadow: var(--shadow);
       }
 
-      .status {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        width: fit-content;
-        padding: 0.45rem 0.7rem;
-        border: 1px solid var(--line);
-        background: var(--surface-soft);
+      .eyebrow {
+        color: var(--accent);
       }
 
-      .status::before {
-        content: "";
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 999px;
-        background: var(--accent);
-      }
-
-      .mini-label {
-        color: var(--muted);
-      }
-
-      section {
-        padding: 2rem 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .section-intro,
-      .social-intro {
-        align-items: end;
-        margin-bottom: 1.3rem;
-      }
-
-      .section-intro p,
-      .social-intro p {
-        max-width: 34rem;
-      }
-
-      .profile-grid,
-      .roster-grid,
-      .transcript-grid {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .profile-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .profile-list {
-        display: grid;
-        gap: 0.8rem;
+      h1,
+      h2,
+      .message-name,
+      .roster-name {
         margin: 0;
-        padding-left: 1.15rem;
+        font-family: "Source Serif 4", serif;
+        line-height: 1;
       }
 
-      .roster-grid {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
+      h1 {
+        font-size: clamp(2.5rem, 6vw, 4.6rem);
       }
 
-      .roster-card {
-        grid-column: span 4;
-        contain: content;
-        content-visibility: auto;
+      h2 {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
       }
 
-      .social-shell,
-      .social-toolbar,
-      .stream-stack,
-      .stream-header,
-      .chat-feed,
-      .message-body,
-      .group-meta {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .toolbar-row,
-      .spotlight-head,
-      footer {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-        align-items: end;
-      }
-
-      .toolbar-row,
-      .stream-header,
-      .spotlight-head {
-        align-items: start;
-      }
-
-      .toolbar-row {
-        flex-wrap: wrap;
-      }
-
-      .question-card,
-      .group-card {
-        background:
-          linear-gradient(135deg, rgba(37, 78, 58, 0.08), transparent 70%),
-          var(--surface);
-      }
-
-      .stream-header {
-        grid-template-columns: minmax(0, 1fr) auto;
-      }
-
-      .playback-actions button {
-        cursor: pointer;
-        background: var(--surface-soft);
-      }
-
-      .chatbox {
-        grid-template-rows: auto minmax(28rem, 1fr);
-        background:
-          linear-gradient(180deg, rgba(20, 33, 23, 0.02), transparent 30%),
-          var(--surface);
-      }
-
-      .chat-feed {
-        min-height: 28rem;
-        max-height: 56rem;
+      .chat-frame {
+        min-height: 70vh;
+        max-height: 80vh;
         overflow: auto;
         padding-right: 0.35rem;
+        display: grid;
+        gap: 0.85rem;
       }
 
       .message {
-        max-width: min(52rem, 90%);
+        max-width: min(54rem, 92%);
         padding: 0.95rem 1rem;
         border: 1px solid var(--line);
         background: #fbfcf9;
@@ -392,215 +165,66 @@
 
       .message[data-speaker="manager"] {
         justify-self: end;
-        background: #eef8ef;
-        border-color: #b8d8bc;
-      }
-
-      .message[data-speaker="manager"] .message-label,
-      .message[data-speaker="manager"] .message-meta {
-        color: #1f5d3c;
-      }
-
-      .message[data-speaker="system"] {
-        background: var(--accent);
-        color: var(--surface);
-        border-color: var(--accent);
-      }
-
-      .message[data-speaker="system"] .message-label,
-      .message[data-speaker="system"] .message-meta,
-      .message[data-speaker="system"] .message-body,
-      .message[data-speaker="system"] .message-name {
-        color: rgba(255, 255, 255, 0.86);
+        background: var(--manager-bg);
       }
 
       .message[data-speaker="summary"] {
         justify-self: center;
-        max-width: 44rem;
-        background: #fffdf4;
+        background: var(--summary-bg);
         border-style: dashed;
       }
 
-      .group-card {
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-        padding: 1.2rem;
-      }
-
-      .group-meta {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .group-meta div {
-        padding-top: 0.85rem;
-        border-top: 1px solid var(--line);
-      }
-
       .message-head {
-        display: flex;
-        gap: 0.8rem;
         align-items: baseline;
-        justify-content: space-between;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.55rem;
       }
 
-      .message-label {
-        font-size: 0.82rem;
+      .message-name {
+        font-size: 1.35rem;
+        color: var(--ink);
+      }
+
+      .message-meta {
+        font-size: 0.84rem;
+      }
+
+      .message-body {
+        color: var(--ink);
+        white-space: pre-wrap;
+      }
+
+      .roster-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .roster-card {
+        grid-column: span 4;
+        display: grid;
+        gap: 0.5rem;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        background: var(--surface-soft);
+      }
+
+      .roster-name {
+        font-size: 1.4rem;
+      }
+
+      .roster-character-label {
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--accent);
       }
 
-      .message-meta {
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
-
-      .message-name {
-        font-family: "Source Serif 4", serif;
-        font-size: 1.4rem;
-        line-height: 1;
-      }
-
-      .message-body {
-        color: var(--ink);
-      }
-
-      .typing-indicator {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        width: fit-content;
-        padding: 0.8rem 0.9rem;
-        border: 1px dashed var(--line-strong);
-        color: var(--muted);
-        background: rgba(255, 255, 255, 0.82);
-      }
-
-      .typing-indicator span {
-        width: 0.42rem;
-        height: 0.42rem;
-        border-radius: 999px;
-        background: currentColor;
-        animation: pulseDots 900ms var(--ease) infinite;
-      }
-
-      .typing-indicator span:nth-child(2) {
-        animation-delay: 120ms;
-      }
-
-      .typing-indicator span:nth-child(3) {
-        animation-delay: 240ms;
-      }
-
-      .day-divider {
-        justify-self: center;
-        padding: 0.42rem 0.8rem;
-        border: 1px solid var(--line);
-        color: var(--muted);
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(8px);
-      }
-
-      @keyframes pulseDots {
-        0%, 80%, 100% {
-          opacity: 0.28;
-          transform: translateY(0);
-        }
-
-        40% {
-          opacity: 1;
-          transform: translateY(-2px);
-        }
-      }
-
-      .patent-tags span {
-        padding: 0.42rem 0.68rem;
-        border: 1px solid var(--line);
-        background: var(--surface-soft);
-        color: var(--muted);
-      }
-
-      .transcript-card {
-        contain: content;
-        content-visibility: auto;
-      }
-
-      .transcript-card summary {
-        cursor: pointer;
-        list-style: none;
-      }
-
-      .transcript-card summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .transcript-card[open] {
-        background: #fbfcf9;
-      }
-
-      .transcript-head {
-        display: grid;
-        gap: 0.28rem;
-      }
-
-      .transcript-rounds {
-        display: grid;
-        gap: 0.9rem;
-        margin-top: 1rem;
-      }
-
-      .transcript-placeholder {
-        padding: 1rem 0;
-        color: var(--muted);
-      }
-
-      .transcript-entry {
-        display: grid;
-        gap: 0.45rem;
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
-      }
-
       footer {
-        padding: 1.4rem 0 3rem;
-        color: var(--muted);
-      }
-
-      [data-reveal] {
-        opacity: 0;
-        transform: translateY(18px);
-        transition:
-          opacity 600ms var(--ease),
-          transform 600ms var(--ease);
-        transition-delay: var(--delay, 0ms);
-      }
-
-      [data-reveal].is-visible {
-        opacity: 1;
-        transform: translateY(0);
+        padding-bottom: 2rem;
       }
 
       @media (max-width: 980px) {
-        .hero,
-        .site-header,
-        .section-intro,
-        .social-intro,
-        .stream-header,
-        footer {
-          flex-direction: column;
-          grid-template-columns: 1fr;
-        }
-
-        .group-meta {
-          grid-template-columns: 1fr;
-        }
-
-        .profile-grid {
-          grid-template-columns: 1fr;
-        }
-
         .roster-card {
           grid-column: span 6;
         }
@@ -611,242 +235,71 @@
           width: min(calc(100vw - 1rem), var(--max));
         }
 
-        nav a,
-        .hero-actions a,
-        .round-picker button,
-        .speed-picker button,
-        .playback-actions button {
-          width: 100%;
-          justify-content: flex-start;
+        .site-header,
+        .section-head,
+        .message-head {
+          flex-direction: column;
         }
 
-        .roster-card {
-          grid-column: span 12;
+        .chat-frame {
+          min-height: 60vh;
+          max-height: 72vh;
         }
 
         .message {
           max-width: 100%;
         }
-      }
 
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation: none !important;
-          transition-duration: 0ms !important;
-        }
-
-        [data-reveal] {
-          opacity: 1;
-          transform: none;
+        .roster-card {
+          grid-column: span 12;
         }
       }
     </style>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
     <div class="page">
-      <header class="site-header" data-reveal style="--delay: 20ms;">
+      <header class="site-header">
         <div class="brand">
           <div class="brand-mark">Dr. Leo</div>
           <p>AI infrastructure architect building practical systems and tools.</p>
         </div>
-        <nav aria-label="Primary">
-          <a href="./index.html">Home</a>
-          <a href="#framing">Framing</a>
-          <a href="#roster">Roster</a>
-          <a href="#debate">Chat</a>
-          <a href="#archive">Archive</a>
-        </nav>
+        <a href="./index.html">Home</a>
       </header>
 
-      <main id="main">
-        <section class="hero">
-          <div class="hero-copy" data-reveal style="--delay: 90ms;">
-            <div class="section-kicker">Social Team</div>
-            <h1>Future of AI, staged like one long group chat.</h1>
-            <p class="lead">
-              The discussion now reads like a long WhatsApp room: manager question, philosopher
-              replies, round summary, next prompt, and a final manager conclusion in one continuous
-              stream.
-            </p>
-            <div class="hero-actions">
-              <a class="primary" href="#debate">Open Chat</a>
-              <a href="#archive">Read Archive</a>
+      <main>
+        <section class="chat-shell" aria-labelledby="chat-title">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Social Team</div>
+              <h1 id="chat-title">One instant team chat history.</h1>
             </div>
+            <p class="intro">
+              The full discussion starts here, from the first manager prompt to the final manager
+              close. Scroll the chat box to read the whole debate.
+            </p>
           </div>
 
-          <aside class="hero-aside">
-            <article class="panel" data-reveal style="--delay: 150ms;">
-              <div class="status">Topic Scope</div>
-              <h3>17 philosophers. 5 rounds. 1 continuous room.</h3>
-              <p>
-                The discussion asks what AI is likely to do to civilization and what price humans
-                should accept to govern it well.
-              </p>
-            </article>
-            <article class="panel" data-reveal style="--delay: 210ms;">
-              <div class="mini-label">Why this page</div>
-              <p>
-                The topic page now behaves like a narrative chat log instead of a picker-driven demo,
-                which makes the debate feel closer to a real group conversation.
-              </p>
-            </article>
-          </aside>
+          <div class="chat-frame" id="chat-history" aria-label="Social Team chat history"></div>
         </section>
 
-        <section id="framing">
-          <div class="section-intro" data-reveal>
+        <section class="roster-shell" aria-labelledby="roster-title">
+          <div class="section-head">
             <div>
-              <div class="section-kicker">Framing</div>
-              <h2>What the discussion covers.</h2>
+              <div class="eyebrow">Roster</div>
+              <h2 id="roster-title">Agent name and character.</h2>
             </div>
-            <p>
-              A single topic page works better here because the material is coherent, long, and
-              easier to scan when it is not competing with the rest of the site.
+            <p class="roster-note">
+              Minimal roster only: each philosopher by name, plus the character line driving how
+              they speak in the discussion.
             </p>
           </div>
 
-          <div class="profile-grid">
-            <article class="profile-card" data-reveal style="--delay: 20ms;">
-              <div class="mini-label">Core prompt</div>
-              <ul class="profile-list">
-                <li>Will AI destroy civilization or raise it to a higher level?</li>
-                <li>Is this chiefly AI evolution, human evolution, or co-evolution?</li>
-                <li>What institutions, tradeoffs, and red lines matter most?</li>
-              </ul>
-            </article>
-
-            <article class="profile-card" data-reveal style="--delay: 80ms;">
-              <div class="mini-label">Reading mode</div>
-              <ul class="profile-list">
-                <li>Scan the roster first to understand each thinker’s role and posture.</li>
-                <li>Read the main chat to follow the full conversation from round 1 to final summary.</li>
-                <li>Open the archive when you want the full transcript grouped by person.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section id="roster">
-          <div class="social-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Roster</div>
-              <h2>Philosopher panel.</h2>
-            </div>
-            <p>
-              Each member carries a role, a soul, and an idea frame so the debate reads like a set
-              of distinct positions rather than interchangeable responses.
-            </p>
-          </div>
-
-          <div class="roster-grid" id="social-team-roster" data-reveal></div>
-        </section>
-
-        <section id="debate">
-          <div class="social-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Chat</div>
-              <h2>A long chat-room version of the debate.</h2>
-            </div>
-            <p>
-              The stream plays as one room, not five separate scenes: the manager opens each round,
-              the philosophers answer in sequence, then the manager closes the round and moves the
-              room forward.
-            </p>
-          </div>
-
-          <div class="social-shell">
-            <div class="social-toolbar" data-reveal style="--delay: 60ms;">
-              <div class="toolbar-row">
-                <div class="speed-picker" id="speed-picker" aria-label="Playback speed picker"></div>
-              </div>
-              <div class="toolbar-row">
-                <p class="stream-note" id="stream-note">
-                  The room autoplays from the opening manager question to the final conclusion.
-                </p>
-                <div class="playback-actions">
-                  <button type="button" id="replay-stream">Replay room</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="stream-stack">
-              <article class="group-card" data-reveal style="--delay: 100ms;">
-                <div class="mini-label">Room setup</div>
-                <h3>Manager-led Social Team thread.</h3>
-                <div class="group-meta">
-                  <div>
-                    <div class="story-meta">Format</div>
-                    <p>Manager prompt, 17 replies, manager summary, repeat.</p>
-                  </div>
-                  <div>
-                    <div class="story-meta">Cadence</div>
-                    <p>Five rounds with a final manager verdict.</p>
-                  </div>
-                  <div>
-                    <div class="story-meta">Mood</div>
-                    <p>Closer to a real WhatsApp group stream than a staged carousel.</p>
-                  </div>
-                </div>
-              </article>
-
-              <section class="chatbox" data-reveal style="--delay: 140ms;">
-                <div class="stream-header">
-                  <div>
-                    <div class="mini-label">Live room</div>
-                    <h3>Social Team group chat.</h3>
-                    <p class="stream-note" id="stream-status">
-                      The room is loading.
-                    </p>
-                  </div>
-                  <div class="patent-tags">
-                    <span>Future of AI</span>
-                    <span>5 rounds</span>
-                    <span>WhatsApp-style stream</span>
-                  </div>
-                </div>
-                <div class="chat-feed" id="chat-feed" aria-live="polite" aria-atomic="false"></div>
-              </section>
-            </div>
-          </div>
-        </section>
-
-        <section id="archive">
-          <div class="social-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Archive</div>
-              <h2>Full transcript archive.</h2>
-            </div>
-            <p>
-              The archive is deferred until this section enters view so the topic page keeps a
-              lighter first paint even with the full discussion preserved.
-            </p>
-          </div>
-
-          <div class="transcript-grid" id="transcript-archive" data-reveal style="--delay: 180ms;">
-            <p class="transcript-placeholder">Archive loads when this section enters view.</p>
-          </div>
+          <div class="roster-grid" id="social-team-roster"></div>
         </section>
       </main>
 
       <footer>
-        <div data-reveal>
-          <div class="brand-mark">Dr. Leo</div>
-          <p>Home for Leo's Social Team discussion on the future of AI.</p>
-        </div>
-        <nav aria-label="Footer">
-          <a href="./index.html">Home</a>
-          <a href="#framing">Framing</a>
-          <a href="#roster">Roster</a>
-          <a href="#debate">Chat</a>
-          <a href="#archive">Archive</a>
-        </nav>
+        Social Team discussion on the future of AI.
       </footer>
     </div>
 
@@ -854,57 +307,24 @@
     <script>
       const members = window.socialTeamMembers || [];
       const debate = window.socialTeamDebate || {};
-      const rounds = [1, 2, 3, 4, 5];
       const roundPrompts = {
-        1: {
-          title: "Round 1 opening question",
-          copy: "What is the real shape of AI's future? Will it destroy civilization or raise it higher, and is this mostly AI evolution, human evolution, or co-evolution?"
-        },
-        2: {
-          title: "Round 2 escalation",
-          copy: "Move from abstract philosophy to concrete mechanisms. Who gains power first, who loses it, and what does the 2026 to 2036 path actually look like?"
-        },
-        3: {
-          title: "Round 3 challenge",
-          copy: "Attack a rival camp and defend a governance design. I want a real institutional mechanism and an explicit tradeoff, not posture."
-        },
-        4: {
-          title: "Round 4 coalition test",
-          copy: "Steelman the rival view, revise your own position, and name the coalition plus first act that could actually ship within 24 months."
-        },
-        5: {
-          title: "Round 5 final call",
-          copy: "Close hard: state the non-negotiable human red line, the acceptable sacrifice, and your final judgment on what AI will do to civilization."
-        }
+        1: "What is the real shape of AI's future? Will it destroy civilization or raise it higher, and is this mostly AI evolution, human evolution, or co-evolution?",
+        2: "Move from abstract philosophy to concrete mechanisms. Who gains power first, who loses it, and what does the 2026 to 2036 path actually look like?",
+        3: "Attack a rival camp and defend a governance design. I want a real institutional mechanism and an explicit tradeoff, not posture.",
+        4: "Steelman the rival view, revise your own position, and name the coalition plus first act that could actually ship within 24 months.",
+        5: "Close hard: state the non-negotiable human red line, the acceptable sacrifice, and your final judgment on what AI will do to civilization."
       };
       const roundSummaries = {
-        1: "Manager summary, round 1: the room already converges on one core point. AI is not a detached species event here; it is a civilizational amplifier. Most thinkers frame the future as co-evolution, with the real fault line running through institutions, discipline, and human judgment rather than raw capability alone.",
-        2: "Manager summary, round 2: the abstractions collapsed into the same operating map. States, platforms, insurers, employers, and model vendors gain first because they can convert data plus workflow into action. Ordinary citizens, junior knowledge workers, and small institutions lose first because they face machine-ranked systems without equal power to inspect them.",
-        3: "Manager summary, round 3: the dispute sharpened. The panel split less over the danger than over the enforcement point. Some push constitutional liability and legal form; others insist local human appeal must exist where the injury lands. The shared tradeoff is explicit now: slower systems, higher cost, less frictionless scale.",
-        4: "Manager summary, round 4: the room became more practical. Rival camps were partly absorbed into hybrid governance designs: named accountability in law, funded appeal offices in practice, and procurement or insurance leverage to force compliance. The main fear across camps is ceremonial compliance that looks accountable while preserving opaque power.",
-        5: "Manager summary, round 5: the final positions are no longer far apart. The strongest consensus is that AI will split civilization upward and downward at the same time, depending on whether humans preserve contestability, responsibility, and visible judgment."
+        1: "The room converges early on one point: AI is a civilizational amplifier, and the real divide runs through institutions, discipline, and human judgment rather than raw capability alone.",
+        2: "The abstractions collapse into a concrete map: states, platforms, insurers, employers, and model vendors gain first; ordinary citizens, junior knowledge workers, and small institutions lose first.",
+        3: "The disagreement sharpens around the enforcement point. Some prioritize constitutional liability and legal form; others insist local human appeal must exist where the injury lands.",
+        4: "The panel starts to merge rival positions into hybrid governance: named accountability in law, funded appeal offices in practice, and procurement or insurance leverage to force compliance.",
+        5: "The final consensus is tight: AI will split civilization upward and downward at the same time, depending on whether humans preserve contestability, responsibility, and visible judgment."
       };
-      const finalManagerSummary = "Final manager summary: the Social Team lands on a fused co-evolution thesis. AI raises capacity, but it also trains institutions and citizens into whatever forms of judgment they tolerate. The non-negotiable red line is clear: no machine gets the unquestioned final word over persons. The price worth paying is also clear: slower deployment, more audits, more appeal, more named responsibility, and less blind worship of convenience.";
-      const speedModes = {
-        paced: { label: "Paced", delay: 95, minSteps: 22, maxSteps: 40, bubbleDelay: 320 },
-        brisk: { label: "Brisk", delay: 60, minSteps: 16, maxSteps: 30, bubbleDelay: 220 },
-        instant: { label: "Instant", delay: 0, minSteps: 1, maxSteps: 1, bubbleDelay: 0 }
-      };
+      const finalManagerSummary = "Final manager summary: AI raises capacity, but it also trains institutions and citizens into whatever forms of judgment they tolerate. The red line is simple: no machine gets the unquestioned final word over persons. The price worth paying is slower deployment, more audits, more appeal, and more named responsibility.";
+
+      const chatHistory = document.querySelector("#chat-history");
       const roster = document.querySelector("#social-team-roster");
-      const speedPicker = document.querySelector("#speed-picker");
-      const archive = document.querySelector("#transcript-archive");
-      const replayButton = document.querySelector("#replay-stream");
-      const streamStatus = document.querySelector("#stream-status");
-      const streamNote = document.querySelector("#stream-note");
-      const chatFeed = document.querySelector("#chat-feed");
-
-      let activeSpeed = "paced";
-      let archiveRendered = false;
-      let streamRunId = 0;
-
-      function memberSummary(member) {
-        return `${member.soul}. ${member.idea}`;
-      }
 
       function escapeHtml(value) {
         return String(value).replace(/[&<>"']/g, (char) => ({
@@ -916,266 +336,80 @@
         }[char]));
       }
 
-      function sleep(ms) {
-        return new Promise((resolve) => {
-          window.setTimeout(resolve, ms);
-        });
+      function makeMessage({ speaker, label, name, meta, body }) {
+        return `
+          <article class="message" data-speaker="${escapeHtml(speaker)}">
+            <div class="message-head">
+              <div>
+                <div class="message-label">${escapeHtml(label)}</div>
+                <div class="message-name">${escapeHtml(name)}</div>
+              </div>
+              <div class="message-meta">${escapeHtml(meta)}</div>
+            </div>
+            <div class="message-body">${escapeHtml(body)}</div>
+          </article>
+        `;
+      }
+
+      function renderChat() {
+        const transcript = [];
+
+        for (let round = 1; round <= 5; round += 1) {
+          transcript.push(makeMessage({
+            speaker: "manager",
+            label: "Manager prompt",
+            name: `Round ${round}`,
+            meta: "manager",
+            body: roundPrompts[round]
+          }));
+
+          for (const member of members) {
+            const entry = debate[member.slug]?.[round];
+            if (!entry) {
+              continue;
+            }
+
+            transcript.push(makeMessage({
+              speaker: "member",
+              label: member.role,
+              name: member.name,
+              meta: `round ${round}`,
+              body: entry
+            }));
+          }
+
+          transcript.push(makeMessage({
+            speaker: "summary",
+            label: "Manager summary",
+            name: `Round ${round}`,
+            meta: "manager",
+            body: roundSummaries[round]
+          }));
+        }
+
+        transcript.push(makeMessage({
+          speaker: "manager",
+          label: "Manager close",
+          name: "Final summary",
+          meta: "manager",
+          body: finalManagerSummary
+        }));
+
+        chatHistory.innerHTML = transcript.join("");
       }
 
       function renderRoster() {
         roster.innerHTML = members.map((member) => `
           <article class="roster-card">
-            <div class="mini-label">${member.name}</div>
-            <h3>${member.name}</h3>
-            <p class="transcript-label">${member.role}</p>
-            <p>${memberSummary(member)}</p>
+            <div class="roster-name">${escapeHtml(member.name)}</div>
+            <div class="roster-character-label">Character</div>
+            <p class="roster-character">${escapeHtml(member.soul)}</p>
           </article>
         `).join("");
       }
 
-      function renderStreamNote() {
-        streamNote.textContent = `The room autoplays from start to finish. Current pace: ${speedModes[activeSpeed].label.toLowerCase()}.`;
-      }
-
-      function renderPickers() {
-        speedPicker.innerHTML = Object.entries(speedModes).map(([key, mode]) => `
-          <button
-            type="button"
-            data-speed="${key}"
-            aria-pressed="${String(key === activeSpeed)}"
-          >
-            ${mode.label}
-          </button>
-        `).join("");
-
-        speedPicker.querySelectorAll("button").forEach((button) => {
-          button.addEventListener("click", () => {
-            activeSpeed = button.dataset.speed;
-            renderPickers();
-            renderStreamNote();
-            startConversationStream();
-          });
-        });
-      }
-
-      function createMessage({ speaker, label, name, meta }) {
-        const article = document.createElement("article");
-        article.className = "message";
-        article.dataset.speaker = speaker;
-        article.innerHTML = `
-          <div class="message-head">
-            <div>
-              <div class="message-label">${escapeHtml(label)}</div>
-              <div class="message-name">${escapeHtml(name)}</div>
-            </div>
-            <div class="message-meta">${escapeHtml(meta)}</div>
-          </div>
-          <div class="message-body"></div>
-        `;
-        return article;
-      }
-
-      function createTypingIndicator(name) {
-        const wrapper = document.createElement("div");
-        wrapper.className = "typing-indicator";
-        wrapper.setAttribute("aria-hidden", "true");
-        wrapper.innerHTML = `
-          <strong>${escapeHtml(name)}</strong>
-          <span></span>
-          <span></span>
-          <span></span>
-        `;
-        return wrapper;
-      }
-
-      function createDayDivider(label) {
-        const divider = document.createElement("div");
-        divider.className = "day-divider";
-        divider.textContent = label;
-        return divider;
-      }
-
-      async function typeText(target, text, mode, runId) {
-        if (mode.delay === 0) {
-          target.textContent = text;
-          return;
-        }
-
-        const words = text.split(/\s+/).filter(Boolean);
-        const steps = Math.max(mode.minSteps, Math.min(mode.maxSteps, words.length));
-        const chunkSize = Math.max(1, Math.ceil(words.length / steps));
-
-        target.textContent = "";
-
-        for (let index = 0; index < words.length; index += chunkSize) {
-          if (runId !== streamRunId) {
-            return;
-          }
-
-          target.textContent = words.slice(0, index + chunkSize).join(" ");
-          chatFeed.scrollTop = chatFeed.scrollHeight;
-          await sleep(mode.delay);
-        }
-
-        target.textContent = text;
-      }
-
-      async function appendStreamMessage(message, mode, runId) {
-        const typing = createTypingIndicator(message.name);
-        chatFeed.appendChild(typing);
-        chatFeed.scrollTop = chatFeed.scrollHeight;
-
-        if (mode.bubbleDelay > 0) {
-          await sleep(mode.bubbleDelay);
-        }
-
-        if (runId !== streamRunId) {
-          typing.remove();
-          return;
-        }
-
-        typing.remove();
-
-        const node = createMessage(message);
-        const body = node.querySelector(".message-body");
-        chatFeed.appendChild(node);
-        chatFeed.scrollTop = chatFeed.scrollHeight;
-        await typeText(body, message.body, mode, runId);
-      }
-
-      function buildConversation() {
-        const entries = [];
-
-        rounds.forEach((round) => {
-          const prompt = roundPrompts[round] || roundPrompts[1];
-
-          entries.push({
-            speaker: "manager",
-            label: round === 1 ? "Manager question" : "Manager next round",
-            name: "Manager",
-            meta: `Round ${round}`,
-            body: prompt.copy
-          });
-
-          members.forEach((member) => {
-            entries.push({
-              speaker: "philosopher",
-              label: member.role,
-              name: member.name,
-              meta: `Round ${round}`,
-              body: debate?.[member.slug]?.[String(round)] || "No stored answer for this round."
-            });
-          });
-
-          entries.push({
-            speaker: round === 5 ? "summary" : "manager",
-            label: round === 5 ? "Manager round summary" : "Manager summary",
-            name: "Manager",
-            meta: `After round ${round}`,
-            body: roundSummaries[round]
-          });
-        });
-
-        entries.push({
-          speaker: "system",
-          label: "Final manager summary",
-          name: "Manager",
-          meta: "Closing note",
-          body: finalManagerSummary
-        });
-
-        return entries;
-      }
-
-      async function startConversationStream() {
-        const runId = ++streamRunId;
-        const mode = speedModes[activeSpeed];
-        const entries = buildConversation();
-
-        chatFeed.innerHTML = "";
-        chatFeed.appendChild(createDayDivider("Social Team discussion"));
-        streamStatus.textContent = `Streaming the full room in ${mode.label.toLowerCase()} mode.`;
-
-        for (const entry of entries) {
-          if (runId !== streamRunId) {
-            return;
-          }
-
-          await appendStreamMessage(entry, mode, runId);
-        }
-
-        if (runId === streamRunId) {
-          streamStatus.textContent = "Full room complete. Replay it any time or switch pace to watch the whole thread again.";
-        }
-      }
-
-      function renderArchive() {
-        if (archiveRendered) {
-          return;
-        }
-
-        archive.innerHTML = members.map((member, index) => `
-          <details class="transcript-card" ${index === 0 ? "open" : ""}>
-            <summary class="transcript-head">
-              <div class="mini-label">${member.name}</div>
-              <h3>${member.name}</h3>
-              <p class="transcript-label">${member.role}</p>
-            </summary>
-            <div class="transcript-rounds">
-              ${rounds.map((round) => `
-                <section class="transcript-entry">
-                  <div class="story-meta">Round ${round}</div>
-                  <p>${debate?.[member.slug]?.[String(round)] || "No stored answer for this round."}</p>
-                </section>
-              `).join("")}
-            </div>
-          </details>
-        `).join("");
-
-        archiveRendered = true;
-      }
-
+      renderChat();
       renderRoster();
-      renderStreamNote();
-      renderPickers();
-      replayButton.addEventListener("click", () => {
-        startConversationStream();
-      });
-
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                if (entry.target === archive) {
-                  renderArchive();
-                }
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.16,
-            rootMargin: "0px 0px -40px 0px"
-          }
-        );
-
-        document.querySelectorAll("[data-reveal]").forEach((element) => {
-          observer.observe(element);
-        });
-
-        startConversationStream();
-      } else {
-        activeSpeed = "instant";
-        renderPickers();
-        renderStreamNote();
-        renderArchive();
-        document.querySelectorAll("[data-reveal]").forEach((element) => {
-          element.classList.add("is-visible");
-        });
-        startConversationStream();
-      }
     </script>
   </body>
 </html>
