@@ -113,7 +113,7 @@
       .mini-label,
       .story-meta,
       .round-picker button,
-      .philosopher-picker button {
+      .speed-picker button {
         font-size: 0.76rem;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -130,7 +130,7 @@
       .section-intro p,
       .social-intro p,
       .profile-list li,
-      .spotlight-subtitle,
+      .stream-note,
       .transcript-label,
       footer p {
         color: var(--muted);
@@ -139,8 +139,9 @@
       nav,
       .hero-actions,
       .round-picker,
-      .philosopher-picker,
-      .patent-tags {
+      .speed-picker,
+      .patent-tags,
+      .playback-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 0.6rem;
@@ -149,7 +150,8 @@
       nav a,
       .hero-actions a,
       .round-picker button,
-      .philosopher-picker button {
+      .speed-picker button,
+      .playback-actions button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -170,8 +172,10 @@
       .hero-actions a:focus-visible,
       .round-picker button:hover,
       .round-picker button:focus-visible,
-      .philosopher-picker button:hover,
-      .philosopher-picker button:focus-visible {
+      .speed-picker button:hover,
+      .speed-picker button:focus-visible,
+      .playback-actions button:hover,
+      .playback-actions button:focus-visible {
         transform: translateY(-1px);
         border-color: var(--line-strong);
         background: #f8faf5;
@@ -187,7 +191,8 @@
       .hero-copy,
       .hero-aside,
       .panel,
-      .spotlight,
+      .question-card,
+      .chatbox,
       .roster-card,
       .transcript-card,
       .profile-card {
@@ -233,14 +238,15 @@
 
       .hero-actions .primary,
       .round-picker button[aria-pressed="true"],
-      .philosopher-picker button[aria-pressed="true"] {
+      .speed-picker button[aria-pressed="true"] {
         color: var(--surface);
         border-color: var(--accent);
         background: var(--accent);
       }
 
       .panel,
-      .spotlight,
+      .question-card,
+      .chatbox,
       .roster-card,
       .transcript-card,
       .profile-card {
@@ -317,11 +323,16 @@
       }
 
       .social-shell,
-      .social-toolbar {
+      .social-toolbar,
+      .stream-stack,
+      .stream-header,
+      .chat-feed,
+      .message-body {
         display: grid;
         gap: 1rem;
       }
 
+      .toolbar-row,
       .spotlight-head,
       footer {
         display: flex;
@@ -330,17 +341,143 @@
         align-items: end;
       }
 
+      .toolbar-row,
+      .stream-header,
       .spotlight-head {
         align-items: start;
       }
 
-      .spotlight-body {
-        display: grid;
-        gap: 0.55rem;
+      .toolbar-row {
+        flex-wrap: wrap;
       }
 
-      .spotlight-body p {
+      .stream-stage {
+        display: grid;
+        gap: 1rem;
+        min-height: 34rem;
+      }
+
+      .question-card {
+        background:
+          linear-gradient(135deg, rgba(37, 78, 58, 0.08), transparent 70%),
+          var(--surface);
+      }
+
+      .stream-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .playback-actions button {
+        cursor: pointer;
+        background: var(--surface-soft);
+      }
+
+      .chatbox {
+        grid-template-rows: auto minmax(20rem, 1fr);
+        background:
+          linear-gradient(180deg, rgba(20, 33, 23, 0.02), transparent 30%),
+          var(--surface);
+      }
+
+      .chat-feed {
+        min-height: 24rem;
+        max-height: 56rem;
+        overflow: auto;
+        padding-right: 0.35rem;
+      }
+
+      .message {
+        max-width: min(52rem, 90%);
+        padding: 0.95rem 1rem;
+        border: 1px solid var(--line);
+        background: #fbfcf9;
+        box-shadow: 0 16px 40px rgba(20, 33, 23, 0.06);
+      }
+
+      .message:nth-child(even) {
+        justify-self: end;
+      }
+
+      .message[data-speaker="moderator"] {
+        background: var(--accent);
+        color: var(--surface);
+        border-color: var(--accent);
+      }
+
+      .message[data-speaker="moderator"] .message-label,
+      .message[data-speaker="moderator"] .message-meta,
+      .message[data-speaker="moderator"] .message-body {
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      .message-head {
+        display: flex;
+        gap: 0.8rem;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 0.6rem;
+      }
+
+      .message-label {
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .message-meta {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .message-name {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .message-body {
         color: var(--ink);
+      }
+
+      .typing-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        width: fit-content;
+        padding: 0.8rem 0.9rem;
+        border: 1px dashed var(--line-strong);
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .typing-indicator span {
+        width: 0.42rem;
+        height: 0.42rem;
+        border-radius: 999px;
+        background: currentColor;
+        animation: pulseDots 900ms var(--ease) infinite;
+      }
+
+      .typing-indicator span:nth-child(2) {
+        animation-delay: 120ms;
+      }
+
+      .typing-indicator span:nth-child(3) {
+        animation-delay: 240ms;
+      }
+
+      @keyframes pulseDots {
+        0%, 80%, 100% {
+          opacity: 0.28;
+          transform: translateY(0);
+        }
+
+        40% {
+          opacity: 1;
+          transform: translateY(-2px);
+        }
       }
 
       .patent-tags span {
@@ -415,7 +552,7 @@
         .site-header,
         .section-intro,
         .social-intro,
-        .spotlight-head,
+        .stream-header,
         footer {
           flex-direction: column;
           grid-template-columns: 1fr;
@@ -438,13 +575,18 @@
         nav a,
         .hero-actions a,
         .round-picker button,
-        .philosopher-picker button {
+        .speed-picker button,
+        .playback-actions button {
           width: 100%;
           justify-content: flex-start;
         }
 
         .roster-card {
           grid-column: span 12;
+        }
+
+        .message {
+          max-width: 100%;
         }
       }
 
@@ -479,7 +621,7 @@
           <a href="./index.html">Home</a>
           <a href="#framing">Framing</a>
           <a href="#roster">Roster</a>
-          <a href="#debate">Spotlight</a>
+          <a href="#debate">Stream</a>
           <a href="#archive">Archive</a>
         </nav>
       </header>
@@ -491,11 +633,11 @@
             <h1>Future of AI, argued in one place.</h1>
             <p class="lead">
               This page consolidates the Social Team discussion into a single topic surface: the
-              framing, the full philosopher roster, a round-by-round spotlight, and the complete
-              transcript archive.
+              framing, the full philosopher roster, a round-by-round streamed discussion, and the
+              complete transcript archive.
             </p>
             <div class="hero-actions">
-              <a class="primary" href="#debate">Open Spotlight</a>
+              <a class="primary" href="#debate">Open Stream</a>
               <a href="#archive">Read Archive</a>
             </div>
           </div>
@@ -545,8 +687,8 @@
               <div class="mini-label">Reading mode</div>
               <ul class="profile-list">
                 <li>Scan the roster first to understand each thinker’s role and posture.</li>
-                <li>Use the spotlight to compare one philosopher across each round.</li>
-                <li>Open the archive when you want the full transcript by person.</li>
+                <li>Use the stream to watch one round unfold across all 17 philosophers.</li>
+                <li>Open the archive when you want the full transcript grouped by person.</li>
               </ul>
             </article>
           </div>
@@ -570,39 +712,59 @@
         <section id="debate">
           <div class="social-intro" data-reveal>
             <div>
-              <div class="section-kicker">Spotlight</div>
-              <h2>Round-by-round comparison.</h2>
+              <div class="section-kicker">Stream</div>
+              <h2>Chatbox playback for the whole panel.</h2>
             </div>
             <p>
-              Pick a philosopher and a round to move through the discussion without loading the
-              entire transcript wall first.
+              Pick a round, then let the page stage the moderator prompt and stream every
+              philosopher reply into the room with a paced JS playback effect.
             </p>
           </div>
 
           <div class="social-shell">
             <div class="social-toolbar" data-reveal style="--delay: 60ms;">
-              <div class="round-picker" id="round-picker" aria-label="Debate round picker"></div>
-              <div class="philosopher-picker" id="philosopher-picker" aria-label="Philosopher picker"></div>
+              <div class="toolbar-row">
+                <div class="round-picker" id="round-picker" aria-label="Debate round picker"></div>
+                <div class="speed-picker" id="speed-picker" aria-label="Playback speed picker"></div>
+              </div>
+              <div class="toolbar-row">
+                <p class="stream-note" id="stream-note">
+                  The feed autoplays on round change. Replay it any time or switch to a faster pace.
+                </p>
+                <div class="playback-actions">
+                  <button type="button" id="replay-stream">Replay round</button>
+                </div>
+              </div>
             </div>
 
-            <article class="spotlight" id="debate-spotlight" data-reveal style="--delay: 120ms;">
-              <div class="spotlight-head">
-                <div>
-                  <p class="mini-label" id="spotlight-round-label">Round 1</p>
-                  <h3 id="spotlight-name">Socrates</h3>
-                  <p class="spotlight-subtitle" id="spotlight-summary"></p>
+            <div class="stream-stack">
+              <article class="question-card" data-reveal style="--delay: 100ms;">
+                <div class="mini-label" id="stream-round-label">Round 1 prompt</div>
+                <h3 id="stream-question-title">What is the real shape of AI's future?</h3>
+                <p id="stream-question-copy">
+                  The moderator frames the question, then the room fills with replies from each
+                  philosopher one by one.
+                </p>
+              </article>
+
+              <section class="chatbox" data-reveal style="--delay: 140ms;">
+                <div class="stream-header">
+                  <div>
+                    <div class="mini-label">Live room</div>
+                    <h3>Social Team discussion feed.</h3>
+                    <p class="stream-note" id="stream-status">
+                      Round 1 is loading into the room now.
+                    </p>
+                  </div>
+                  <div class="patent-tags">
+                    <span>Future of AI</span>
+                    <span>5 rounds</span>
+                    <span>17 philosophers</span>
+                  </div>
                 </div>
-                <div class="patent-tags">
-                  <span>Future of AI</span>
-                  <span>5 rounds</span>
-                  <span>17 philosophers</span>
-                </div>
-              </div>
-              <div class="spotlight-body">
-                <strong id="spotlight-role"></strong>
-                <p id="spotlight-answer"></p>
-              </div>
-            </article>
+                <div class="chat-feed" id="chat-feed" aria-live="polite" aria-atomic="false"></div>
+              </section>
+            </div>
           </div>
         </section>
 
@@ -633,7 +795,7 @@
           <a href="./index.html">Home</a>
           <a href="#framing">Framing</a>
           <a href="#roster">Roster</a>
-          <a href="#debate">Spotlight</a>
+          <a href="#debate">Stream</a>
           <a href="#archive">Archive</a>
         </nav>
       </footer>
@@ -644,22 +806,72 @@
       const members = window.socialTeamMembers || [];
       const debate = window.socialTeamDebate || {};
       const rounds = [1, 2, 3, 4, 5];
+      const roundPrompts = {
+        1: {
+          title: "What is the real shape of AI's future?",
+          copy: "Will AI destroy civilization or raise it higher, and is this mostly AI evolution, human evolution, or co-evolution?"
+        },
+        2: {
+          title: "Who gains power first, and who loses it?",
+          copy: "Force the panel into concrete mechanisms, institutions, and a 2026 to 2036 scenario rather than general philosophy."
+        },
+        3: {
+          title: "Attack a rival camp and defend a governance design.",
+          copy: "Every philosopher has to challenge another line of thought and propose a real institutional design with an explicit tradeoff."
+        },
+        4: {
+          title: "Steelman the rival and build a coalition.",
+          copy: "Each philosopher absorbs the best opposing point, then names a coalition and first act that could ship within 24 months."
+        },
+        5: {
+          title: "Deliver the final verdict and the price to pay.",
+          copy: "Close with the non-negotiable human red line, the acceptable sacrifice, and the final judgment on what AI will do to civilization."
+        }
+      };
+      const speedModes = {
+        paced: { label: "Paced", delay: 95, minSteps: 22, maxSteps: 40, bubbleDelay: 320 },
+        brisk: { label: "Brisk", delay: 60, minSteps: 16, maxSteps: 30, bubbleDelay: 220 },
+        instant: { label: "Instant", delay: 0, minSteps: 1, maxSteps: 1, bubbleDelay: 0 }
+      };
       const roster = document.querySelector("#social-team-roster");
       const roundPicker = document.querySelector("#round-picker");
-      const philosopherPicker = document.querySelector("#philosopher-picker");
+      const speedPicker = document.querySelector("#speed-picker");
       const archive = document.querySelector("#transcript-archive");
-      const spotlightName = document.querySelector("#spotlight-name");
-      const spotlightRoundLabel = document.querySelector("#spotlight-round-label");
-      const spotlightSummary = document.querySelector("#spotlight-summary");
-      const spotlightRole = document.querySelector("#spotlight-role");
-      const spotlightAnswer = document.querySelector("#spotlight-answer");
+      const replayButton = document.querySelector("#replay-stream");
+      const streamRoundLabel = document.querySelector("#stream-round-label");
+      const streamQuestionTitle = document.querySelector("#stream-question-title");
+      const streamQuestionCopy = document.querySelector("#stream-question-copy");
+      const streamStatus = document.querySelector("#stream-status");
+      const streamNote = document.querySelector("#stream-note");
+      const chatFeed = document.querySelector("#chat-feed");
 
       let activeRound = 1;
-      let activePhilosopher = "socrates";
+      let activeSpeed = "paced";
       let archiveRendered = false;
+      let streamRunId = 0;
 
       function memberSummary(member) {
         return `${member.soul}. ${member.idea}`;
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "\"": "&quot;",
+          "'": "&#39;"
+        }[char]));
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => {
+          window.setTimeout(resolve, ms);
+        });
+      }
+
+      function getRoundPrompt(round) {
+        return roundPrompts[round] || roundPrompts[1];
       }
 
       function renderRoster() {
@@ -673,6 +885,17 @@
         `).join("");
       }
 
+      function renderPrompt() {
+        const prompt = getRoundPrompt(activeRound);
+        streamRoundLabel.textContent = `Round ${activeRound} prompt`;
+        streamQuestionTitle.textContent = prompt.title;
+        streamQuestionCopy.textContent = prompt.copy;
+      }
+
+      function renderStreamNote() {
+        streamNote.textContent = `The feed autoplays on round change. Current pace: ${speedModes[activeSpeed].label.toLowerCase()}.`;
+      }
+
       function renderPickers() {
         roundPicker.innerHTML = rounds.map((round) => `
           <button
@@ -684,13 +907,13 @@
           </button>
         `).join("");
 
-        philosopherPicker.innerHTML = members.map((member) => `
+        speedPicker.innerHTML = Object.entries(speedModes).map(([key, mode]) => `
           <button
             type="button"
-            data-philosopher="${member.slug}"
-            aria-pressed="${String(member.slug === activePhilosopher)}"
+            data-speed="${key}"
+            aria-pressed="${String(key === activeSpeed)}"
           >
-            ${member.name}
+            ${mode.label}
           </button>
         `).join("");
 
@@ -698,28 +921,133 @@
           button.addEventListener("click", () => {
             activeRound = Number(button.dataset.round);
             renderPickers();
-            renderSpotlight();
+            renderPrompt();
+            startRoundStream();
           });
         });
 
-        philosopherPicker.querySelectorAll("button").forEach((button) => {
+        speedPicker.querySelectorAll("button").forEach((button) => {
           button.addEventListener("click", () => {
-            activePhilosopher = button.dataset.philosopher;
+            activeSpeed = button.dataset.speed;
             renderPickers();
-            renderSpotlight();
+            renderStreamNote();
+            startRoundStream();
           });
         });
       }
 
-      function renderSpotlight() {
-        const member = members.find((item) => item.slug === activePhilosopher) || members[0];
-        const answer = debate?.[member.slug]?.[String(activeRound)] || "No stored answer for this round.";
+      function createMessage({ speaker, label, name, meta }) {
+        const article = document.createElement("article");
+        article.className = "message";
+        article.dataset.speaker = speaker;
+        article.innerHTML = `
+          <div class="message-head">
+            <div>
+              <div class="message-label">${escapeHtml(label)}</div>
+              <div class="message-name">${escapeHtml(name)}</div>
+            </div>
+            <div class="message-meta">${escapeHtml(meta)}</div>
+          </div>
+          <div class="message-body"></div>
+        `;
+        return article;
+      }
 
-        spotlightRoundLabel.textContent = `Round ${activeRound}`;
-        spotlightName.textContent = member.name;
-        spotlightSummary.textContent = memberSummary(member);
-        spotlightRole.textContent = member.role;
-        spotlightAnswer.textContent = answer;
+      function createTypingIndicator(name) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "typing-indicator";
+        wrapper.setAttribute("aria-hidden", "true");
+        wrapper.innerHTML = `
+          <strong>${escapeHtml(name)}</strong>
+          <span></span>
+          <span></span>
+          <span></span>
+        `;
+        return wrapper;
+      }
+
+      async function typeText(target, text, mode, runId) {
+        if (mode.delay === 0) {
+          target.textContent = text;
+          return;
+        }
+
+        const words = text.split(/\s+/).filter(Boolean);
+        const steps = Math.max(mode.minSteps, Math.min(mode.maxSteps, words.length));
+        const chunkSize = Math.max(1, Math.ceil(words.length / steps));
+
+        target.textContent = "";
+
+        for (let index = 0; index < words.length; index += chunkSize) {
+          if (runId !== streamRunId) {
+            return;
+          }
+
+          target.textContent = words.slice(0, index + chunkSize).join(" ");
+          chatFeed.scrollTop = chatFeed.scrollHeight;
+          await sleep(mode.delay);
+        }
+
+        target.textContent = text;
+      }
+
+      async function appendStreamMessage(message, mode, runId) {
+        const typing = createTypingIndicator(message.name);
+        chatFeed.appendChild(typing);
+        chatFeed.scrollTop = chatFeed.scrollHeight;
+
+        if (mode.bubbleDelay > 0) {
+          await sleep(mode.bubbleDelay);
+        }
+
+        if (runId !== streamRunId) {
+          typing.remove();
+          return;
+        }
+
+        typing.remove();
+
+        const node = createMessage(message);
+        const body = node.querySelector(".message-body");
+        chatFeed.appendChild(node);
+        chatFeed.scrollTop = chatFeed.scrollHeight;
+        await typeText(body, message.body, mode, runId);
+      }
+
+      async function startRoundStream() {
+        const runId = ++streamRunId;
+        const mode = speedModes[activeSpeed];
+        const prompt = getRoundPrompt(activeRound);
+        const roundEntries = members.map((member) => ({
+          speaker: "philosopher",
+          label: member.role,
+          name: member.name,
+          meta: `Round ${activeRound}`,
+          body: debate?.[member.slug]?.[String(activeRound)] || "No stored answer for this round."
+        }));
+
+        chatFeed.innerHTML = "";
+        streamStatus.textContent = `Streaming round ${activeRound} in ${mode.label.toLowerCase()} mode.`;
+
+        await appendStreamMessage({
+          speaker: "moderator",
+          label: "Moderator prompt",
+          name: "Social Team Room",
+          meta: `Round ${activeRound}`,
+          body: prompt.copy
+        }, mode, runId);
+
+        for (const entry of roundEntries) {
+          if (runId !== streamRunId) {
+            return;
+          }
+
+          await appendStreamMessage(entry, mode, runId);
+        }
+
+        if (runId === streamRunId) {
+          streamStatus.textContent = `Round ${activeRound} complete. Replay it or switch pace to watch the room again.`;
+        }
       }
 
       function renderArchive() {
@@ -749,8 +1077,12 @@
       }
 
       renderRoster();
+      renderPrompt();
+      renderStreamNote();
       renderPickers();
-      renderSpotlight();
+      replayButton.addEventListener("click", () => {
+        startRoundStream();
+      });
 
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const observer = new IntersectionObserver(
@@ -774,11 +1106,17 @@
         document.querySelectorAll("[data-reveal]").forEach((element) => {
           observer.observe(element);
         });
+
+        startRoundStream();
       } else {
+        activeSpeed = "instant";
+        renderPickers();
+        renderStreamNote();
         renderArchive();
         document.querySelectorAll("[data-reveal]").forEach((element) => {
           element.classList.add("is-visible");
         });
+        startRoundStream();
       }
     </script>
   </body>
