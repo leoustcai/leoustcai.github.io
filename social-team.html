@@ -327,7 +327,8 @@
       .stream-stack,
       .stream-header,
       .chat-feed,
-      .message-body {
+      .message-body,
+      .group-meta {
         display: grid;
         gap: 1rem;
       }
@@ -351,13 +352,8 @@
         flex-wrap: wrap;
       }
 
-      .stream-stage {
-        display: grid;
-        gap: 1rem;
-        min-height: 34rem;
-      }
-
-      .question-card {
+      .question-card,
+      .group-card {
         background:
           linear-gradient(135deg, rgba(37, 78, 58, 0.08), transparent 70%),
           var(--surface);
@@ -373,14 +369,14 @@
       }
 
       .chatbox {
-        grid-template-rows: auto minmax(20rem, 1fr);
+        grid-template-rows: auto minmax(28rem, 1fr);
         background:
           linear-gradient(180deg, rgba(20, 33, 23, 0.02), transparent 30%),
           var(--surface);
       }
 
       .chat-feed {
-        min-height: 24rem;
+        min-height: 28rem;
         max-height: 56rem;
         overflow: auto;
         padding-right: 0.35rem;
@@ -394,20 +390,50 @@
         box-shadow: 0 16px 40px rgba(20, 33, 23, 0.06);
       }
 
-      .message:nth-child(even) {
+      .message[data-speaker="manager"] {
         justify-self: end;
+        background: #eef8ef;
+        border-color: #b8d8bc;
       }
 
-      .message[data-speaker="moderator"] {
+      .message[data-speaker="manager"] .message-label,
+      .message[data-speaker="manager"] .message-meta {
+        color: #1f5d3c;
+      }
+
+      .message[data-speaker="system"] {
         background: var(--accent);
         color: var(--surface);
         border-color: var(--accent);
       }
 
-      .message[data-speaker="moderator"] .message-label,
-      .message[data-speaker="moderator"] .message-meta,
-      .message[data-speaker="moderator"] .message-body {
+      .message[data-speaker="system"] .message-label,
+      .message[data-speaker="system"] .message-meta,
+      .message[data-speaker="system"] .message-body,
+      .message[data-speaker="system"] .message-name {
         color: rgba(255, 255, 255, 0.86);
+      }
+
+      .message[data-speaker="summary"] {
+        justify-self: center;
+        max-width: 44rem;
+        background: #fffdf4;
+        border-style: dashed;
+      }
+
+      .group-card {
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        padding: 1.2rem;
+      }
+
+      .group-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .group-meta div {
+        padding-top: 0.85rem;
+        border-top: 1px solid var(--line);
       }
 
       .message-head {
@@ -466,6 +492,15 @@
 
       .typing-indicator span:nth-child(3) {
         animation-delay: 240ms;
+      }
+
+      .day-divider {
+        justify-self: center;
+        padding: 0.42rem 0.8rem;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
       }
 
       @keyframes pulseDots {
@@ -558,6 +593,10 @@
           grid-template-columns: 1fr;
         }
 
+        .group-meta {
+          grid-template-columns: 1fr;
+        }
+
         .profile-grid {
           grid-template-columns: 1fr;
         }
@@ -621,7 +660,7 @@
           <a href="./index.html">Home</a>
           <a href="#framing">Framing</a>
           <a href="#roster">Roster</a>
-          <a href="#debate">Stream</a>
+          <a href="#debate">Chat</a>
           <a href="#archive">Archive</a>
         </nav>
       </header>
@@ -630,14 +669,14 @@
         <section class="hero">
           <div class="hero-copy" data-reveal style="--delay: 90ms;">
             <div class="section-kicker">Social Team</div>
-            <h1>Future of AI, argued in one place.</h1>
+            <h1>Future of AI, staged like one long group chat.</h1>
             <p class="lead">
-              This page consolidates the Social Team discussion into a single topic surface: the
-              framing, the full philosopher roster, a round-by-round streamed discussion, and the
-              complete transcript archive.
+              The discussion now reads like a long WhatsApp room: manager question, philosopher
+              replies, round summary, next prompt, and a final manager conclusion in one continuous
+              stream.
             </p>
             <div class="hero-actions">
-              <a class="primary" href="#debate">Open Stream</a>
+              <a class="primary" href="#debate">Open Chat</a>
               <a href="#archive">Read Archive</a>
             </div>
           </div>
@@ -645,7 +684,7 @@
           <aside class="hero-aside">
             <article class="panel" data-reveal style="--delay: 150ms;">
               <div class="status">Topic Scope</div>
-              <h3>17 philosophers. 5 rounds. 1 question.</h3>
+              <h3>17 philosophers. 5 rounds. 1 continuous room.</h3>
               <p>
                 The discussion asks what AI is likely to do to civilization and what price humans
                 should accept to govern it well.
@@ -654,8 +693,8 @@
             <article class="panel" data-reveal style="--delay: 210ms;">
               <div class="mini-label">Why this page</div>
               <p>
-                The home page now stays lean while the full social discussion becomes a proper topic
-                page instead of a long embedded section.
+                The topic page now behaves like a narrative chat log instead of a picker-driven demo,
+                which makes the debate feel closer to a real group conversation.
               </p>
             </article>
           </aside>
@@ -687,7 +726,7 @@
               <div class="mini-label">Reading mode</div>
               <ul class="profile-list">
                 <li>Scan the roster first to understand each thinker’s role and posture.</li>
-                <li>Use the stream to watch one round unfold across all 17 philosophers.</li>
+                <li>Read the main chat to follow the full conversation from round 1 to final summary.</li>
                 <li>Open the archive when you want the full transcript grouped by person.</li>
               </ul>
             </article>
@@ -712,54 +751,64 @@
         <section id="debate">
           <div class="social-intro" data-reveal>
             <div>
-              <div class="section-kicker">Stream</div>
-              <h2>Chatbox playback for the whole panel.</h2>
+              <div class="section-kicker">Chat</div>
+              <h2>A long chat-room version of the debate.</h2>
             </div>
             <p>
-              Pick a round, then let the page stage the moderator prompt and stream every
-              philosopher reply into the room with a paced JS playback effect.
+              The stream plays as one room, not five separate scenes: the manager opens each round,
+              the philosophers answer in sequence, then the manager closes the round and moves the
+              room forward.
             </p>
           </div>
 
           <div class="social-shell">
             <div class="social-toolbar" data-reveal style="--delay: 60ms;">
               <div class="toolbar-row">
-                <div class="round-picker" id="round-picker" aria-label="Debate round picker"></div>
                 <div class="speed-picker" id="speed-picker" aria-label="Playback speed picker"></div>
               </div>
               <div class="toolbar-row">
                 <p class="stream-note" id="stream-note">
-                  The feed autoplays on round change. Replay it any time or switch to a faster pace.
+                  The room autoplays from the opening manager question to the final conclusion.
                 </p>
                 <div class="playback-actions">
-                  <button type="button" id="replay-stream">Replay round</button>
+                  <button type="button" id="replay-stream">Replay room</button>
                 </div>
               </div>
             </div>
 
             <div class="stream-stack">
-              <article class="question-card" data-reveal style="--delay: 100ms;">
-                <div class="mini-label" id="stream-round-label">Round 1 prompt</div>
-                <h3 id="stream-question-title">What is the real shape of AI's future?</h3>
-                <p id="stream-question-copy">
-                  The moderator frames the question, then the room fills with replies from each
-                  philosopher one by one.
-                </p>
+              <article class="group-card" data-reveal style="--delay: 100ms;">
+                <div class="mini-label">Room setup</div>
+                <h3>Manager-led Social Team thread.</h3>
+                <div class="group-meta">
+                  <div>
+                    <div class="story-meta">Format</div>
+                    <p>Manager prompt, 17 replies, manager summary, repeat.</p>
+                  </div>
+                  <div>
+                    <div class="story-meta">Cadence</div>
+                    <p>Five rounds with a final manager verdict.</p>
+                  </div>
+                  <div>
+                    <div class="story-meta">Mood</div>
+                    <p>Closer to a real WhatsApp group stream than a staged carousel.</p>
+                  </div>
+                </div>
               </article>
 
               <section class="chatbox" data-reveal style="--delay: 140ms;">
                 <div class="stream-header">
                   <div>
                     <div class="mini-label">Live room</div>
-                    <h3>Social Team discussion feed.</h3>
+                    <h3>Social Team group chat.</h3>
                     <p class="stream-note" id="stream-status">
-                      Round 1 is loading into the room now.
+                      The room is loading.
                     </p>
                   </div>
                   <div class="patent-tags">
                     <span>Future of AI</span>
                     <span>5 rounds</span>
-                    <span>17 philosophers</span>
+                    <span>WhatsApp-style stream</span>
                   </div>
                 </div>
                 <div class="chat-feed" id="chat-feed" aria-live="polite" aria-atomic="false"></div>
@@ -795,7 +844,7 @@
           <a href="./index.html">Home</a>
           <a href="#framing">Framing</a>
           <a href="#roster">Roster</a>
-          <a href="#debate">Stream</a>
+          <a href="#debate">Chat</a>
           <a href="#archive">Archive</a>
         </nav>
       </footer>
@@ -808,44 +857,47 @@
       const rounds = [1, 2, 3, 4, 5];
       const roundPrompts = {
         1: {
-          title: "What is the real shape of AI's future?",
-          copy: "Will AI destroy civilization or raise it higher, and is this mostly AI evolution, human evolution, or co-evolution?"
+          title: "Round 1 opening question",
+          copy: "What is the real shape of AI's future? Will it destroy civilization or raise it higher, and is this mostly AI evolution, human evolution, or co-evolution?"
         },
         2: {
-          title: "Who gains power first, and who loses it?",
-          copy: "Force the panel into concrete mechanisms, institutions, and a 2026 to 2036 scenario rather than general philosophy."
+          title: "Round 2 escalation",
+          copy: "Move from abstract philosophy to concrete mechanisms. Who gains power first, who loses it, and what does the 2026 to 2036 path actually look like?"
         },
         3: {
-          title: "Attack a rival camp and defend a governance design.",
-          copy: "Every philosopher has to challenge another line of thought and propose a real institutional design with an explicit tradeoff."
+          title: "Round 3 challenge",
+          copy: "Attack a rival camp and defend a governance design. I want a real institutional mechanism and an explicit tradeoff, not posture."
         },
         4: {
-          title: "Steelman the rival and build a coalition.",
-          copy: "Each philosopher absorbs the best opposing point, then names a coalition and first act that could ship within 24 months."
+          title: "Round 4 coalition test",
+          copy: "Steelman the rival view, revise your own position, and name the coalition plus first act that could actually ship within 24 months."
         },
         5: {
-          title: "Deliver the final verdict and the price to pay.",
-          copy: "Close with the non-negotiable human red line, the acceptable sacrifice, and the final judgment on what AI will do to civilization."
+          title: "Round 5 final call",
+          copy: "Close hard: state the non-negotiable human red line, the acceptable sacrifice, and your final judgment on what AI will do to civilization."
         }
       };
+      const roundSummaries = {
+        1: "Manager summary, round 1: the room already converges on one core point. AI is not a detached species event here; it is a civilizational amplifier. Most thinkers frame the future as co-evolution, with the real fault line running through institutions, discipline, and human judgment rather than raw capability alone.",
+        2: "Manager summary, round 2: the abstractions collapsed into the same operating map. States, platforms, insurers, employers, and model vendors gain first because they can convert data plus workflow into action. Ordinary citizens, junior knowledge workers, and small institutions lose first because they face machine-ranked systems without equal power to inspect them.",
+        3: "Manager summary, round 3: the dispute sharpened. The panel split less over the danger than over the enforcement point. Some push constitutional liability and legal form; others insist local human appeal must exist where the injury lands. The shared tradeoff is explicit now: slower systems, higher cost, less frictionless scale.",
+        4: "Manager summary, round 4: the room became more practical. Rival camps were partly absorbed into hybrid governance designs: named accountability in law, funded appeal offices in practice, and procurement or insurance leverage to force compliance. The main fear across camps is ceremonial compliance that looks accountable while preserving opaque power.",
+        5: "Manager summary, round 5: the final positions are no longer far apart. The strongest consensus is that AI will split civilization upward and downward at the same time, depending on whether humans preserve contestability, responsibility, and visible judgment."
+      };
+      const finalManagerSummary = "Final manager summary: the Social Team lands on a fused co-evolution thesis. AI raises capacity, but it also trains institutions and citizens into whatever forms of judgment they tolerate. The non-negotiable red line is clear: no machine gets the unquestioned final word over persons. The price worth paying is also clear: slower deployment, more audits, more appeal, more named responsibility, and less blind worship of convenience.";
       const speedModes = {
         paced: { label: "Paced", delay: 95, minSteps: 22, maxSteps: 40, bubbleDelay: 320 },
         brisk: { label: "Brisk", delay: 60, minSteps: 16, maxSteps: 30, bubbleDelay: 220 },
         instant: { label: "Instant", delay: 0, minSteps: 1, maxSteps: 1, bubbleDelay: 0 }
       };
       const roster = document.querySelector("#social-team-roster");
-      const roundPicker = document.querySelector("#round-picker");
       const speedPicker = document.querySelector("#speed-picker");
       const archive = document.querySelector("#transcript-archive");
       const replayButton = document.querySelector("#replay-stream");
-      const streamRoundLabel = document.querySelector("#stream-round-label");
-      const streamQuestionTitle = document.querySelector("#stream-question-title");
-      const streamQuestionCopy = document.querySelector("#stream-question-copy");
       const streamStatus = document.querySelector("#stream-status");
       const streamNote = document.querySelector("#stream-note");
       const chatFeed = document.querySelector("#chat-feed");
 
-      let activeRound = 1;
       let activeSpeed = "paced";
       let archiveRendered = false;
       let streamRunId = 0;
@@ -870,10 +922,6 @@
         });
       }
 
-      function getRoundPrompt(round) {
-        return roundPrompts[round] || roundPrompts[1];
-      }
-
       function renderRoster() {
         roster.innerHTML = members.map((member) => `
           <article class="roster-card">
@@ -885,28 +933,11 @@
         `).join("");
       }
 
-      function renderPrompt() {
-        const prompt = getRoundPrompt(activeRound);
-        streamRoundLabel.textContent = `Round ${activeRound} prompt`;
-        streamQuestionTitle.textContent = prompt.title;
-        streamQuestionCopy.textContent = prompt.copy;
-      }
-
       function renderStreamNote() {
-        streamNote.textContent = `The feed autoplays on round change. Current pace: ${speedModes[activeSpeed].label.toLowerCase()}.`;
+        streamNote.textContent = `The room autoplays from start to finish. Current pace: ${speedModes[activeSpeed].label.toLowerCase()}.`;
       }
 
       function renderPickers() {
-        roundPicker.innerHTML = rounds.map((round) => `
-          <button
-            type="button"
-            data-round="${round}"
-            aria-pressed="${String(round === activeRound)}"
-          >
-            Round ${round}
-          </button>
-        `).join("");
-
         speedPicker.innerHTML = Object.entries(speedModes).map(([key, mode]) => `
           <button
             type="button"
@@ -917,21 +948,12 @@
           </button>
         `).join("");
 
-        roundPicker.querySelectorAll("button").forEach((button) => {
-          button.addEventListener("click", () => {
-            activeRound = Number(button.dataset.round);
-            renderPickers();
-            renderPrompt();
-            startRoundStream();
-          });
-        });
-
         speedPicker.querySelectorAll("button").forEach((button) => {
           button.addEventListener("click", () => {
             activeSpeed = button.dataset.speed;
             renderPickers();
             renderStreamNote();
-            startRoundStream();
+            startConversationStream();
           });
         });
       }
@@ -964,6 +986,13 @@
           <span></span>
         `;
         return wrapper;
+      }
+
+      function createDayDivider(label) {
+        const divider = document.createElement("div");
+        divider.className = "day-divider";
+        divider.textContent = label;
+        return divider;
       }
 
       async function typeText(target, text, mode, runId) {
@@ -1014,30 +1043,60 @@
         await typeText(body, message.body, mode, runId);
       }
 
-      async function startRoundStream() {
+      function buildConversation() {
+        const entries = [];
+
+        rounds.forEach((round) => {
+          const prompt = roundPrompts[round] || roundPrompts[1];
+
+          entries.push({
+            speaker: "manager",
+            label: round === 1 ? "Manager question" : "Manager next round",
+            name: "Manager",
+            meta: `Round ${round}`,
+            body: prompt.copy
+          });
+
+          members.forEach((member) => {
+            entries.push({
+              speaker: "philosopher",
+              label: member.role,
+              name: member.name,
+              meta: `Round ${round}`,
+              body: debate?.[member.slug]?.[String(round)] || "No stored answer for this round."
+            });
+          });
+
+          entries.push({
+            speaker: round === 5 ? "summary" : "manager",
+            label: round === 5 ? "Manager round summary" : "Manager summary",
+            name: "Manager",
+            meta: `After round ${round}`,
+            body: roundSummaries[round]
+          });
+        });
+
+        entries.push({
+          speaker: "system",
+          label: "Final manager summary",
+          name: "Manager",
+          meta: "Closing note",
+          body: finalManagerSummary
+        });
+
+        return entries;
+      }
+
+      async function startConversationStream() {
         const runId = ++streamRunId;
         const mode = speedModes[activeSpeed];
-        const prompt = getRoundPrompt(activeRound);
-        const roundEntries = members.map((member) => ({
-          speaker: "philosopher",
-          label: member.role,
-          name: member.name,
-          meta: `Round ${activeRound}`,
-          body: debate?.[member.slug]?.[String(activeRound)] || "No stored answer for this round."
-        }));
+        const entries = buildConversation();
 
         chatFeed.innerHTML = "";
-        streamStatus.textContent = `Streaming round ${activeRound} in ${mode.label.toLowerCase()} mode.`;
+        chatFeed.appendChild(createDayDivider("Social Team discussion"));
+        streamStatus.textContent = `Streaming the full room in ${mode.label.toLowerCase()} mode.`;
 
-        await appendStreamMessage({
-          speaker: "moderator",
-          label: "Moderator prompt",
-          name: "Social Team Room",
-          meta: `Round ${activeRound}`,
-          body: prompt.copy
-        }, mode, runId);
-
-        for (const entry of roundEntries) {
+        for (const entry of entries) {
           if (runId !== streamRunId) {
             return;
           }
@@ -1046,7 +1105,7 @@
         }
 
         if (runId === streamRunId) {
-          streamStatus.textContent = `Round ${activeRound} complete. Replay it or switch pace to watch the room again.`;
+          streamStatus.textContent = "Full room complete. Replay it any time or switch pace to watch the whole thread again.";
         }
       }
 
@@ -1077,11 +1136,10 @@
       }
 
       renderRoster();
-      renderPrompt();
       renderStreamNote();
       renderPickers();
       replayButton.addEventListener("click", () => {
-        startRoundStream();
+        startConversationStream();
       });
 
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -1107,7 +1165,7 @@
           observer.observe(element);
         });
 
-        startRoundStream();
+        startConversationStream();
       } else {
         activeSpeed = "instant";
         renderPickers();
@@ -1116,7 +1174,7 @@
         document.querySelectorAll("[data-reveal]").forEach((element) => {
           element.classList.add("is-visible");
         });
-        startRoundStream();
+        startConversationStream();
       }
     </script>
   </body>
