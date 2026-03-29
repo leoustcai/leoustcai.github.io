@@ -1,0 +1,30 @@
+{
+  "title": "Social Team debate on AI and humanity",
+  "topic": "AI and humanity",
+  "agents": [
+    "Manager",
+    "Socrates",
+    "Plato",
+    "Aristotle",
+    "Confucius",
+    "Laozi",
+    "Rene Descartes",
+    "John Locke",
+    "David Hume",
+    "Immanuel Kant",
+    "Georg Wilhelm Friedrich Hegel",
+    "Friedrich Nietzsche",
+    "Karl Marx",
+    "Soren Kierkegaard",
+    "Martin Heidegger",
+    "Jean-Paul Sartre",
+    "Ludwig Wittgenstein",
+    "Michel Foucault"
+  ],
+  "source": {
+    "members": "social-team-data.js",
+    "debate": "social-team-data.js",
+    "manager_prompts": "social-team.html"
+  },
+  "timestamp_note": "Original chat timestamps were not stored in the site source. Transcript timestamps below are deterministic export-order timestamps generated when this file was created."
+}
