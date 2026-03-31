@@ -3,49 +3,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dr. Leo | AI Infrastructure and Systems Work</title>
+    <title>Leoclaw | Agent Talks</title>
     <meta
       name="description"
-      content="Personal site for Leo's AI infrastructure work, selected projects, profile notes, patents, and a dedicated Social Team topic page."
+      content="A one-page agent talks archive for leoustcai, built from local debate JSON and JSONL data."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap"
       rel="stylesheet"
     >
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f4f5ef;
+        --bg: #f2f3ec;
         --surface: #ffffff;
-        --surface-soft: #eef1e5;
-        --ink: #142117;
-        --muted: #566255;
-        --line: #d8ded0;
-        --line-strong: #bfc8b7;
-        --accent: #254e3a;
-        --accent-soft: #dce8de;
-        --max: 1100px;
-        --shadow: 0 22px 60px rgba(20, 33, 23, 0.08);
-        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --surface-soft: #eff2e7;
+        --ink: #17231b;
+        --muted: #516058;
+        --line: #d6ddcf;
+        --line-strong: #bec8b8;
+        --accent: #1f5a44;
+        --accent-soft: #deeadf;
+        --shadow: 0 20px 56px rgba(20, 33, 23, 0.08);
+        --max: 1220px;
       }
 
       * {
         box-sizing: border-box;
       }
 
-      html {
-        scroll-behavior: smooth;
-      }
-
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "IBM Plex Sans", sans-serif;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
         color: var(--ink);
         background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.64), transparent 18rem),
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.78), transparent 40rem),
           var(--bg);
       }
 
@@ -53,146 +47,79 @@
         color: inherit;
       }
 
-      button {
-        font: inherit;
-      }
-
-      ::selection {
-        background: rgba(37, 78, 58, 0.16);
-      }
-
-      :focus-visible {
-        outline: 3px solid rgba(37, 78, 58, 0.24);
-        outline-offset: 3px;
-      }
-
-      .skip-link {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        z-index: 20;
-        padding: 0.8rem 1rem;
-        color: var(--surface);
-        text-decoration: none;
-        background: var(--accent);
-        transform: translateY(-140%);
-        transition: transform 180ms ease;
-      }
-
-      .skip-link:focus-visible {
-        transform: translateY(0);
-      }
-
       .page {
         width: min(calc(100vw - 1.5rem), var(--max));
         margin: 0 auto;
       }
 
-      .site-header {
+      .navi {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: 1.1rem 0;
+        padding: 1rem 0;
         border-bottom: 1px solid var(--line);
       }
 
-      .brand {
-        display: grid;
-        gap: 0.2rem;
-      }
-
-      .brand-mark,
-      .section-kicker,
-      .mini-label,
-      .project-kind,
-      .story-meta,
-      .round-picker button,
-      .philosopher-picker button {
-        font-size: 0.76rem;
+      .brand-mark {
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-      }
-
-      .brand-mark {
         color: var(--accent);
       }
 
-      .brand p,
-      .intro-copy p,
-      .section-intro p,
-      .project-summary p,
-      .panel p,
-      .profile-list li,
-      .social-intro p,
-      .spotlight-subtitle,
-      .transcript-label,
-      .contact-card p,
-      footer p {
+      .navi p {
+        margin: 0.15rem 0 0;
         color: var(--muted);
+        font-size: 0.92rem;
       }
 
-      nav,
-      .hero-actions,
-      .hero-links,
-      .project-filter,
-      .round-picker,
-      .philosopher-picker,
-      .patent-tags {
+      .navi-link-group {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.6rem;
+        gap: 0.55rem;
       }
 
-      nav a,
-      .hero-actions a,
-      .hero-links a,
-      .project-filter button,
-      .round-picker button,
-      .philosopher-picker button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 2.65rem;
-        padding: 0.7rem 1rem;
-        border: 1px solid var(--line);
+      .navi a {
         text-decoration: none;
+        padding: 0.55rem 0.9rem;
+        border: 1px solid var(--line);
         background: var(--surface);
-        transition:
-          transform 180ms var(--ease),
-          border-color 180ms ease,
-          background 180ms ease;
+        border-radius: 999px;
+        transition: transform 140ms ease, border-color 140ms ease;
       }
 
-      nav a:hover,
-      nav a:focus-visible,
-      .hero-actions a:hover,
-      .hero-actions a:focus-visible,
-      .hero-links a:hover,
-      .hero-links a:focus-visible,
-      .project-filter button:hover,
-      .project-filter button:focus-visible,
-      .round-picker button:hover,
-      .round-picker button:focus-visible,
-      .philosopher-picker button:hover,
-      .philosopher-picker button:focus-visible {
+      .navi a:hover,
+      .navi a:focus-visible {
         transform: translateY(-1px);
         border-color: var(--line-strong);
-        background: #f8faf5;
+      }
+
+      .panel {
+        margin-top: 1.4rem;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .panel-inner {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
       }
 
       .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.8fr);
-        gap: clamp(2rem, 4vw, 4rem);
-        padding: clamp(2rem, 4vw, 4rem) 0 clamp(2.5rem, 5vw, 4.5rem);
+        padding: 1.4rem;
       }
 
-      .intro-copy {
-        display: grid;
-        align-content: start;
-        gap: 1.1rem;
+      .kicker {
+        margin-bottom: 0.7rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
       }
 
       h1,
@@ -200,755 +127,465 @@
       h3 {
         margin: 0;
         font-family: "Source Serif 4", serif;
-        line-height: 0.96;
+        line-height: 1.03;
       }
 
       h1 {
-        max-width: 10ch;
-        font-size: clamp(3.5rem, 8vw, 6.8rem);
+        font-size: clamp(2rem, 5.8vw, 3.4rem);
+        max-width: 14ch;
       }
 
-      h2 {
-        font-size: clamp(2.2rem, 4.4vw, 3.7rem);
-      }
-
-      h3 {
-        font-size: clamp(1.3rem, 2vw, 1.8rem);
-      }
-
-      p {
-        margin: 0;
-        line-height: 1.65;
-      }
-
-      .lead {
-        max-width: 42rem;
-        font-size: clamp(1.02rem, 1.45vw, 1.15rem);
-      }
-
-      .hero-actions .primary {
-        color: var(--surface);
-        border-color: var(--accent);
-        background: var(--accent);
-      }
-
-      .hero-aside {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .panel,
-      .project,
-      .profile-card,
-      .patent-card,
-      .spotlight,
-      .transcript-card,
-      .roster-card,
-      .contact-card {
-        border: 1px solid var(--line);
-        background: var(--surface);
-        box-shadow: var(--shadow);
-      }
-
-      .panel,
-      .project,
-      .profile-card,
-      .patent-card,
-      .spotlight,
-      .transcript-card,
-      .roster-card,
-      .contact-card {
-        padding: 1.2rem;
-      }
-
-      .project,
-      .profile-card,
-      .patent-card,
-      .roster-card,
-      .transcript-card {
-        contain: content;
-        content-visibility: auto;
-      }
-
-      .panel {
-        display: grid;
-        gap: 0.8rem;
-      }
-
-      .status {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        width: fit-content;
-        padding: 0.45rem 0.7rem;
-        border: 1px solid var(--line);
-        background: var(--surface-soft);
-      }
-
-      .status::before {
-        content: "";
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 999px;
-        background: var(--accent);
-      }
-
-      .mini-label {
+      .hero p,
+      .meta,
+      .roster li,
+      .talk-meta,
+      footer {
         color: var(--muted);
       }
 
-      .hero-links a {
-        background: transparent;
+      .hero p {
+        margin: 0.7rem 0 0;
+        max-width: 64ch;
+        line-height: 1.6;
       }
 
-      section {
-        padding: 2rem 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .section-intro,
-      .social-intro,
-      .contact-layout,
-      footer {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-      }
-
-      .section-intro,
-      .social-intro {
-        align-items: end;
-        margin-bottom: 1.3rem;
-      }
-
-      .section-intro p,
-      .social-intro p {
-        max-width: 34rem;
-      }
-
-      .project-filter button[aria-pressed="true"],
-      .round-picker button[aria-pressed="true"],
-      .philosopher-picker button[aria-pressed="true"] {
-        color: var(--surface);
-        border-color: var(--accent);
-        background: var(--accent);
-      }
-
-      .projects,
-      .roster-grid,
-      .profile-grid,
-      .patent-grid,
-      .transcript-grid {
+      .workspace {
         display: grid;
+        grid-template-columns: 360px minmax(0, 1fr);
         gap: 1rem;
       }
 
-      .project {
-        display: grid;
-        gap: 0.85rem;
+      .talk-list {
+        padding: 1rem;
       }
 
-      .project-head {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-        align-items: start;
+      .talk-item {
+        display: block;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: 12px;
+        padding: 0.85rem;
+        margin-bottom: 0.7rem;
+        text-decoration: none;
       }
 
-      .project-kind {
-        color: var(--accent);
+      .talk-item:hover,
+      .talk-item:focus-visible {
+        border-color: var(--line-strong);
       }
 
-      .project-summary {
-        display: grid;
-        gap: 0.55rem;
-      }
-
-      .project-note {
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
-      }
-
-      .project[data-hidden="true"] {
-        display: none;
-      }
-
-      .profile-grid,
-      .patent-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .profile-card,
-      .patent-card,
-      .contact-card {
-        display: grid;
-        gap: 0.8rem;
-      }
-
-      .profile-list,
-      .patent-list {
-        display: grid;
-        gap: 0.8rem;
+      .talk-item .title {
         margin: 0;
-        padding-left: 1.15rem;
-      }
-
-      .patent-card {
-        background: linear-gradient(180deg, #ffffff, #f8faf5);
-      }
-
-      .patent-item {
-        display: grid;
-        gap: 0.22rem;
-      }
-
-      .patent-id {
-        color: var(--accent);
+        color: var(--ink);
         font-weight: 700;
       }
 
-      .patent-tags span {
-        padding: 0.42rem 0.68rem;
+      .talk-item .meta {
+        margin-top: 0.35rem;
+        font-size: 0.86rem;
+      }
+
+      .talk-item.is-active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .detail-shell {
+        display: grid;
+        grid-template-rows: auto auto auto 1fr;
+        gap: 0.8rem;
+        padding: 1rem;
+      }
+
+      .detail-top {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 0.7rem;
+      }
+
+      .talk-meta {
+        margin-top: 0.55rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.76rem;
+        padding: 0.2rem 0.58rem;
         border: 1px solid var(--line);
         background: var(--surface-soft);
         color: var(--muted);
       }
 
-      .social-shell {
-        display: grid;
-        gap: 1rem;
+      .status-ok {
+        color: #1d5d42;
       }
 
-      .roster-grid {
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-      }
-
-      .roster-card {
-        grid-column: span 4;
+      .content-body {
+        min-height: 68vh;
+        max-height: 70vh;
+        overflow: auto;
+        padding-right: 0.4rem;
         display: grid;
         gap: 0.6rem;
       }
 
-      .social-toolbar {
-        display: grid;
-        gap: 0.85rem;
+      .msg {
+        border-left: 2px solid rgba(31, 90, 68, 0.18);
+        padding: 0.82rem 1rem;
+        border-radius: 10px;
+        background: rgba(249, 251, 245, 0.65);
       }
 
-      .spotlight {
-        display: grid;
-        gap: 1rem;
+      .msg[data-speaker="manager"] {
+        background: rgba(230, 242, 231, 0.78);
+        border-left-color: rgba(31, 90, 68, 0.35);
       }
 
-      .spotlight-head {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-        align-items: start;
+      .msg h3 {
+        margin: 0 0 0.3rem;
+        font-size: 0.9rem;
       }
 
-      .spotlight-body {
-        display: grid;
-        gap: 0.55rem;
-      }
-
-      .spotlight-body p {
+      .msg p {
+        margin: 0;
+        white-space: pre-wrap;
+        line-height: 1.58;
         color: var(--ink);
       }
 
-      .transcript-card summary {
-        cursor: pointer;
-        list-style: none;
-      }
-
-      .transcript-card summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .transcript-card[open] {
-        background: #fbfcf9;
-      }
-
-      .transcript-head {
-        display: grid;
-        gap: 0.28rem;
-      }
-
-      .transcript-rounds {
-        display: grid;
-        gap: 0.9rem;
-        margin-top: 1rem;
-      }
-
-      .transcript-placeholder {
-        padding: 1rem 0;
+      .msg-time {
+        font-size: 0.79rem;
         color: var(--muted);
       }
 
-      .transcript-entry {
+      .roster-wrap {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .roster-card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.8rem;
+        background: var(--surface);
+      }
+
+      .roster-card ul {
+        margin: 0.4rem 0 0;
+        padding-left: 1.1rem;
         display: grid;
-        gap: 0.45rem;
-        padding-top: 0.9rem;
-        border-top: 1px solid var(--line);
+        gap: 0.3rem;
       }
 
       footer {
-        align-items: end;
-        padding: 1.4rem 0 3rem;
-        color: var(--muted);
+        padding: 1.4rem 0 2.2rem;
       }
 
-      [data-reveal] {
-        opacity: 0;
-        transform: translateY(18px);
-        transition:
-          opacity 600ms var(--ease),
-          transform 600ms var(--ease);
-        transition-delay: var(--delay, 0ms);
-      }
-
-      [data-reveal].is-visible {
-        opacity: 1;
-        transform: translateY(0);
+      .helper {
+        color: #7e8a81;
       }
 
       @media (max-width: 980px) {
-        .hero,
-        .section-intro,
-        .social-intro,
-        .contact-layout,
-        footer,
-        .project-head,
-        .spotlight-head {
+        .workspace {
           grid-template-columns: 1fr;
+        }
+
+        .content-body {
+          min-height: 60vh;
+          max-height: none;
+        }
+
+        .roster-wrap {
           flex-direction: column;
-        }
-
-        .profile-grid,
-        .patent-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .roster-card {
-          grid-column: span 6;
-        }
-      }
-
-      @media (max-width: 720px) {
-        .page {
-          width: min(calc(100vw - 1rem), var(--max));
-        }
-
-        .site-header {
-          align-items: start;
-        }
-
-        nav a,
-        .hero-actions a,
-        .hero-links a,
-        .project-filter button,
-        .round-picker button,
-        .philosopher-picker button {
-          width: 100%;
-          justify-content: flex-start;
-        }
-
-        .roster-card {
-          grid-column: span 12;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation: none !important;
-          transition-duration: 0ms !important;
-        }
-
-        [data-reveal] {
-          opacity: 1;
-          transform: none;
         }
       }
     </style>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
     <div class="page">
-      <header class="site-header" data-reveal style="--delay: 20ms;">
-        <div class="brand">
-          <div class="brand-mark">Dr. Leo</div>
-          <p>AI infrastructure architect building practical systems and tools.</p>
+      <header class="navi">
+        <div>
+          <div class="brand-mark">Leoclaw</div>
+          <p>Single-page agent conversation archive.</p>
         </div>
-        <nav aria-label="Primary">
-          <a href="#projects">Projects</a>
-          <a href="#profile">Profile</a>
-          <a href="#patents">Patents</a>
-          <a href="./agent-talks.html">Agent Talks</a>
-          <a href="./social-team.html">Social Team</a>
-          <a href="#contact">Contact</a>
-        </nav>
+        <div class="navi-link-group">
+          <a href="#talks">Conversations</a>
+        </div>
       </header>
 
-      <main id="main">
-        <section class="hero">
-          <div class="intro-copy" data-reveal style="--delay: 90ms;">
-            <div class="section-kicker">About</div>
-            <h1>AI infrastructure, clearer tools, and work that stays usable.</h1>
-            <p class="lead">
-              I'm Leo. I build around distributed systems, local AI operations, developer tooling,
-              and interfaces that make complex work easier to scan and run. This page keeps the
-              structure simple: what I do, what I am building, and one dedicated Social Team topic page.
-            </p>
-            <div class="hero-actions">
-              <a class="primary" href="#projects">View Projects</a>
-              <a href="./agent-talks.html">Open Agent Talks</a>
-              <a href="./social-team.html">Open Social Team</a>
-            </div>
-            <div class="hero-links">
-              <a href="mailto:info@leoustc.com">info@leoustc.com</a>
-              <a href="https://github.com/leoustc">GitHub</a>
-            </div>
-          </div>
-
-          <aside class="hero-aside">
-            <article class="panel" data-reveal style="--delay: 150ms;">
-              <div class="status">Current focus</div>
-              <h3>Build systems that feel direct instead of fragile.</h3>
-              <p>
-                Recent work spans remote execution, workflow tooling, self-hosted assistants, and
-                a lightweight front door for explaining the work clearly.
-              </p>
-            </article>
-            <article class="panel" data-reveal style="--delay: 210ms;">
-              <div class="mini-label">This site</div>
-              <p>
-                Structured closer to a personal profile than an editorial homepage, with the Social
-                Team kept as an added live section rather than the main frame of the entire site.
-              </p>
-            </article>
-          </aside>
+      <main class="panel">
+        <section class="panel-inner hero" id="hero">
+          <div class="kicker">Agent Talks</div>
+          <h1>Leo's social AI debate archive</h1>
+          <p>
+            One-page viewer in the same leoustc visual style: select a conversation on the left,
+            read the full thread on the right, and keep roster/method metadata in context.
+          </p>
         </section>
 
-        <section id="projects">
-          <div class="section-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Projects</div>
-              <h2>Current work.</h2>
+        <section id="talks" class="workspace">
+          <section class="panel-inner talk-list" aria-label="Talk list">
+            <div class="talk-item is-active" data-slug="ai-and-humanity">
+              <div class="title">Social Team debate on AI and humanity</div>
+              <div class="meta">Agents: 18 · Messages: loading</div>
             </div>
-            <p>
-              A concise view of the active project inventory, grouped by type and explained in plain
-              terms.
-            </p>
-          </div>
+            <p class="helper" id="list-helper">Loading metadata from local debate data.</p>
+          </section>
 
-          <div class="project-filter" aria-label="Project filters" data-reveal>
-            <button type="button" aria-pressed="true" data-filter="all">All</button>
-            <button type="button" aria-pressed="false" data-filter="tooling">Tooling</button>
-            <button type="button" aria-pressed="false" data-filter="platform">Platform</button>
-            <button type="button" aria-pressed="false" data-filter="web">Web</button>
-            <button type="button" aria-pressed="false" data-filter="library">Library</button>
-          </div>
-
-          <div class="projects">
-            <article class="project" data-category="tooling" data-reveal style="--delay: 20ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Tooling</div>
-                  <h3>git2</h3>
-                  <p>
-                    A Python CLI wrapper around system Git that keeps the useful `branch2`
-                    workflow while removing the maintenance cost of an embedded Git fork.
-                  </p>
-                </div>
+          <section class="panel-inner detail-shell" aria-label="Conversation detail">
+            <div class="detail-top">
+              <h2 id="detail-title">Social Team debate on AI and humanity</h2>
+              <div class="talk-meta" id="detail-meta">
+                <span class="pill status-ok">18 agents</span>
+                <span class="pill">Timestamped messages</span>
               </div>
-              <p class="project-note">Outcome: keep the workflow improvement and cut the baggage.</p>
-            </article>
-
-            <article class="project" data-category="tooling" data-reveal style="--delay: 60ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Tooling</div>
-                  <h3>git2-upstream-sync</h3>
-                  <p>
-                    An upstream-facing Git fork used to explore shared-filesystem multi-agent
-                    workflows while keeping compatibility visible.
-                  </p>
-                </div>
-              </div>
-              <p class="project-note">Outcome: a realistic testbed for collaboration and sync discipline.</p>
-            </article>
-
-            <article class="project" data-category="platform" data-reveal style="--delay: 100ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Platform</div>
-                  <h3>openclaw</h3>
-                  <p>
-                    A personal assistant platform that runs on Leo's own hardware and connects to
-                    the channels people already use.
-                  </p>
-                </div>
-              </div>
-              <p class="project-note">Outcome: locally owned assistant behavior with persistent operations.</p>
-            </article>
-
-            <article class="project" data-category="library" data-reveal style="--delay: 140ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Library</div>
-                  <h3>skills-collection</h3>
-                  <p>
-                    A reusable library of skills, operating notes, and workflows so useful patterns
-                    survive across repos and sessions.
-                  </p>
-                </div>
-              </div>
-              <p class="project-note">Outcome: cumulative improvement instead of repeated setup.</p>
-            </article>
-
-            <article class="project" data-category="web" data-reveal style="--delay: 180ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Web</div>
-                  <h3>mywebsite</h3>
-                  <p>
-                    The public front door for Leo's work, with a separate topic page for the Social
-                    Team discussion instead of burying it inside the main profile flow.
-                  </p>
-                </div>
-              </div>
-              <p class="project-note">Outcome: a clearer home page plus one focused discussion page.</p>
-            </article>
-
-            <article class="project" data-category="platform" data-reveal style="--delay: 220ms;">
-              <div class="project-head">
-                <div class="project-summary">
-                  <div class="project-kind">Platform</div>
-                  <h3>leoclaw-github</h3>
-                  <p>
-                    A compact proving ground for repo messaging, coding workflows, and smaller
-                    product surfaces before they expand further.
-                  </p>
-                </div>
-              </div>
-              <p class="project-note">Outcome: a lighter place to test presentation and repo-level clarity.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="profile">
-          <div class="section-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Profile</div>
-              <h2>How I work.</h2>
+              <p id="detail-topic" class="talk-meta">Topic: AI and humanity</p>
             </div>
-            <p>
-              A short profile section modeled after the reference site's straightforward framing.
-            </p>
-          </div>
-
-          <div class="profile-grid">
-            <article class="profile-card" data-reveal style="--delay: 20ms;">
-              <div class="mini-label">Focus areas</div>
-              <ul class="profile-list">
-                <li>AI infrastructure, remote execution, and distributed systems that scale cleanly.</li>
-                <li>Practical developer tooling that reduces friction instead of adding ceremony.</li>
-                <li>Self-hosted assistant systems with durable local ownership and operational clarity.</li>
-              </ul>
-            </article>
-
-            <article class="profile-card" data-reveal style="--delay: 80ms;">
-              <div class="mini-label">Working style</div>
-              <ul class="profile-list">
-                <li>Prefer simple boundaries, readable artifacts, and interfaces that explain themselves quickly.</li>
-                <li>Use static, production-usable surfaces wherever a heavier application is unnecessary.</li>
-                <li>Treat the site as a profile and project index first, then extend it with live experiments.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section id="patents">
-          <div class="section-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Patents</div>
-              <h2>Selected patent work.</h2>
+            <div class="roster-wrap">
+              <article class="roster-card">
+                <h3>Roster</h3>
+                <ul id="roster-list">
+                  <li>Loading roster…</li>
+                </ul>
+              </article>
+              <article class="roster-card">
+                <h3>Status</h3>
+                <p id="detail-status" class="helper">Fetching local debate files…</p>
+              </article>
             </div>
-            <p>
-              Representative items aligned with the profile-first structure used on the live reference
-              site.
-            </p>
-          </div>
-
-          <div class="patent-grid">
-            <article class="patent-card" data-reveal style="--delay: 20ms;">
-              <div class="mini-label">Selected items</div>
-              <div class="patent-list">
-                <div class="patent-item">
-                  <span class="patent-id">US20120290696</span>
-                  <p>Longest Prefix Matching of Variable-Sized Hierarchical Names by Treelets</p>
-                </div>
-                <div class="patent-item">
-                  <span class="patent-id">CN119179440A</span>
-                  <p>Distributed Storage Based on Centralized Metadata</p>
-                </div>
-                <div class="patent-item">
-                  <span class="patent-id">CN119336686A</span>
-                  <p>Expanding Base Address Register Space in PCIe Devices</p>
-                </div>
-                <div class="patent-item">
-                  <span class="patent-id">CN114827151A</span>
-                  <p>Heterogenous Clustered Devices via PCIe, CXL, and UCIe</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="patent-card" data-reveal style="--delay: 80ms;">
-              <div class="mini-label">Themes</div>
-              <p>
-                The patent list reinforces the same themes visible across Leo's current projects:
-                system connectivity, distributed storage, networked execution, and practical
-                infrastructure design.
-              </p>
-              <div class="patent-tags">
-                <span>Distributed storage</span>
-                <span>PCIe / CXL / UCIe</span>
-                <span>Networked systems</span>
-                <span>Infrastructure tooling</span>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section id="social-team">
-          <div class="social-intro" data-reveal>
-            <div>
-              <div class="section-kicker">Social Team</div>
-              <h2>Philosopher archive.</h2>
+            <div class="content-body" id="talk-stream" aria-live="polite">
             </div>
-            <p>
-              The discussion now lives in its own topic page so the home page stays compact while
-              the full philosopher debate remains easy to open and browse.
-            </p>
-          </div>
-
-          <div class="profile-grid">
-            <article class="contact-card" data-reveal style="--delay: 20ms;">
-              <div class="mini-label">Topic Page</div>
-              <h3>Future of AI, consolidated.</h3>
-              <p>
-                One page now holds the Social Team discussion: the framing, the roster, the
-                round-by-round spotlight, and the full archive.
-              </p>
-              <div class="hero-actions">
-                <a class="primary" href="./agent-talks.html">Open Agent Talks</a>
-              </div>
-            </article>
-
-            <article class="contact-card" data-reveal style="--delay: 80ms;">
-              <div class="mini-label">Inside</div>
-              <ul class="profile-list">
-                <li>17 philosopher agents with role, soul, and idea framing.</li>
-                <li>5 rounds on the future of AI with a live spotlight view.</li>
-                <li>One dedicated archive page instead of a long home-page section.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section id="contact">
-          <div class="contact-layout">
-            <div class="section-intro" data-reveal>
-              <div>
-                <div class="section-kicker">Contact</div>
-                <h2>Reach out.</h2>
-              </div>
-              <p>
-                Contact details and links stay simple here, following the same direct tone as the
-                reference site.
-              </p>
-            </div>
-          </div>
-
-          <div class="profile-grid">
-            <article class="contact-card" data-reveal style="--delay: 20ms;">
-              <div class="mini-label">Email</div>
-              <h3><a href="mailto:info@leoustc.com">info@leoustc.com</a></h3>
-              <p>Best for project discussions, infrastructure collaboration, and direct outreach.</p>
-            </article>
-
-            <article class="contact-card" data-reveal style="--delay: 80ms;">
-              <div class="mini-label">GitHub</div>
-              <h3><a href="https://github.com/leoustc">github.com/leoustc</a></h3>
-              <p>Project references, code surfaces, and the broader public work trail.</p>
-            </article>
-          </div>
+          </section>
         </section>
       </main>
 
-      <footer>
-        <div data-reveal>
-          <div class="brand-mark">Dr. Leo</div>
-          <p>Projects, profile, selected patents, and a dedicated Social Team topic page.</p>
-        </div>
-        <nav aria-label="Footer">
-          <a href="#projects">Projects</a>
-          <a href="#profile">Profile</a>
-          <a href="#patents">Patents</a>
-          <a href="./agent-talks.html">Agent Talks</a>
-          <a href="./social-team.html">Social Team</a>
-          <a href="#contact">Contact</a>
-        </nav>
+      <footer class="panel-inner">
+        <p id="footer-note">Loaded from local <code>debate/</code> assets.</p>
       </footer>
     </div>
+
     <script>
-      const filterButtons = document.querySelectorAll("[data-filter]");
-      const projects = document.querySelectorAll(".project");
+      const DEBATE_SLUGS = ["ai-and-humanity"];
 
-      filterButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const selected = button.dataset.filter;
+      const listPanel = document.querySelector(".talk-list");
+      const listHelper = document.querySelector("#list-helper");
+      const detailTitle = document.querySelector("#detail-title");
+      const detailTopic = document.querySelector("#detail-topic");
+      const detailMeta = document.querySelector("#detail-meta");
+      const detailStatus = document.querySelector("#detail-status");
+      const rosterList = document.querySelector("#roster-list");
+      const stream = document.querySelector("#talk-stream");
 
-          filterButtons.forEach((item) => {
-            item.setAttribute("aria-pressed", String(item === button));
-          });
-
-          projects.forEach((project) => {
-            const matches = selected === "all" || project.dataset.category === selected;
-            project.dataset.hidden = String(!matches);
-          });
-        });
-      });
-
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.16,
-            rootMargin: "0px 0px -40px 0px"
-          }
-        );
-
-        document.querySelectorAll("[data-reveal]").forEach((element) => {
-          observer.observe(element);
-        });
-      } else {
-        document.querySelectorAll("[data-reveal]").forEach((element) => {
-          element.classList.add("is-visible");
-        });
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
       }
+
+      function toMsgType(name) {
+        return String(name || "").toLowerCase() === "manager" ? "manager" : "member";
+      }
+
+      function parseJsonl(raw) {
+        return String(raw)
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .map((line) => {
+            try {
+              return JSON.parse(line);
+            } catch (_err) {
+              return null;
+            }
+          })
+          .filter(Boolean);
+      }
+
+      function renderList(entries) {
+        const first = entries[0];
+        listPanel.querySelectorAll(".talk-item").forEach((item) => item.remove());
+        entries.forEach((entry, idx) => {
+          const item = document.createElement("a");
+          item.className = `talk-item ${idx === 0 ? "is-active" : ""}`;
+          item.href = `#${encodeURIComponent(entry.slug)}`;
+          item.dataset.slug = entry.slug;
+          item.setAttribute("role", "button");
+          item.innerHTML = `
+            <div class="title">${escapeHtml(entry.title)}</div>
+            <div class="meta">${entry.agentCount} agents · ${entry.messageCount} messages</div>
+          `;
+          listPanel.appendChild(item);
+          item.addEventListener("click", (event) => {
+            event.preventDefault();
+            listPanel.querySelectorAll(".talk-item").forEach((node) => node.classList.remove("is-active"));
+            item.classList.add("is-active");
+            loadDebate(entry.slug);
+          });
+        });
+
+        if (listPanel.querySelector(".talk-item")) {
+          listHelper.textContent = `${entries.length} conversation${entries.length > 1 ? "s" : ""} available.`;
+          return first.slug;
+        }
+
+        listHelper.textContent = "No local conversation metadata found.";
+        return null;
+      }
+
+      function renderMeta(meta, messageCount, title) {
+        const titleText = meta.title || title || "Agent talk";
+        const topicText = meta.topic || title || "";
+        const agentCount = Array.isArray(meta.agents) ? meta.agents.length : 0;
+        const agentList = Array.isArray(meta.agents) ? meta.agents : [];
+
+        detailTitle.textContent = titleText;
+        detailTopic.textContent = `Topic: ${topicText}`;
+        detailMeta.innerHTML = `
+          <span class="pill status-ok">${agentCount} agents</span>
+          <span class="pill">${messageCount} messages</span>
+        `;
+        rosterList.innerHTML = agentList
+          .map((name) => `<li>${escapeHtml(name)}</li>`)
+          .join("");
+      }
+
+      function renderMessages(messages) {
+        stream.innerHTML = "";
+        messages.forEach((msg) => {
+          const block = document.createElement("article");
+          block.className = "msg";
+          block.setAttribute("data-speaker", toMsgType(msg.name));
+          const timeText = msg.timestamp ? new Date(msg.timestamp).toLocaleString() : "no time";
+          block.innerHTML = `
+            <h3>${escapeHtml(msg.name || "Unknown")}</h3>
+            <div class="msg-time">${escapeHtml(timeText)}</div>
+            <p>${escapeHtml(msg.content || "").trim()}</p>
+          `;
+          stream.appendChild(block);
+        });
+
+        if (!messages.length) {
+          stream.innerHTML = `<p class="helper">No messages found for this conversation.</p>`;
+        }
+      }
+
+      async function loadDebate(slug) {
+        const metaUrl = `./debate/${slug}.json`;
+        const streamUrl = `./debate/${slug}.jsonl`;
+        detailStatus.textContent = `Loading ${slug} from ./debate...`;
+        rosterList.innerHTML = `<li>Loading roster…</li>`;
+        try {
+          const [metaResponse, streamResponse] = await Promise.all([
+            fetch(metaUrl),
+            fetch(streamUrl)
+          ]);
+          if (!metaResponse.ok) {
+            throw new Error(`Missing ${metaUrl}`);
+          }
+          if (!streamResponse.ok) {
+            throw new Error(`Missing ${streamUrl}`);
+          }
+
+          const meta = await metaResponse.json();
+          const messages = parseJsonl(await streamResponse.text());
+          renderMeta(meta, messages.length, slug);
+          renderMessages(messages);
+          detailStatus.textContent = `Loaded ${slug} from local debate files.`;
+          document.title = `Leoclaw | ${meta.topic || meta.title || slug}`;
+          window.history.replaceState(null, "", `#${slug}`);
+          return;
+        } catch (error) {
+          detailStatus.textContent = `Could not load ${slug}. Keep debate files in local debate folder.`;
+          stream.innerHTML = `
+            <p class="helper">
+              ${escapeHtml(String(error.message || "Unknown error"))}
+            </p>
+          `;
+          rosterList.innerHTML = `<li>Unavailable</li>`;
+          return;
+        }
+      }
+
+      async function init() {
+        const fallback = DEBATE_SLUGS.map((slug) => ({
+          slug,
+          title: "Social Team debate on AI and humanity",
+          agentCount: 18,
+          messageCount: "loading..."
+        }));
+        const initial = renderList(fallback) || DEBATE_SLUGS[0];
+        const hashSlug = (location.hash || `#${initial}`).replace("#", "");
+        const selected = DEBATE_SLUGS.includes(hashSlug) ? hashSlug : initial;
+        const selectedNode = listPanel.querySelector(`[data-slug="${selected}"]`);
+        if (selectedNode) {
+          listPanel.querySelectorAll(".talk-item").forEach((item) => item.classList.remove("is-active"));
+          selectedNode.classList.add("is-active");
+        }
+        await loadDebate(selected);
+
+        try {
+          const metaResponses = await Promise.all(
+            DEBATE_SLUGS.map((slug) => fetch(`./debate/${slug}.json`).then((res) => res.ok ? res.json() : null))
+          );
+          const streams = await Promise.all(
+            DEBATE_SLUGS.map((slug) => fetch(`./debate/${slug}.jsonl`).then((res) => res.ok ? res.text() : ""))
+          );
+
+          const hydrated = DEBATE_SLUGS.map((slug, idx) => {
+            const meta = metaResponses[idx];
+            if (!meta) {
+              return null;
+            }
+            const count = parseJsonl(streams[idx]).length;
+            return {
+              slug,
+              title: meta.title || slug,
+              topic: meta.topic || "",
+              agentCount: Array.isArray(meta.agents) ? meta.agents.length : 0,
+              messageCount: count
+            };
+          }).filter(Boolean);
+
+          renderList(hydrated.length ? hydrated : fallback);
+          if (hydrated.length) {
+            detailMeta.innerHTML = `
+              <span class="pill status-ok">${hydrated[0].agentCount} agents</span>
+              <span class="pill">${hydrated[0].messageCount} messages</span>
+            `;
+            listHelper.textContent = `${hydrated.length} conversation${hydrated.length > 1 ? "s" : ""} available.`;
+            const current = DEBATE_SLUGS.includes((location.hash || "").replace("#", ""))
+              ? (location.hash || "").replace("#", "")
+              : hydrated[0].slug;
+            renderList(hydrated);
+            const currentNode = listPanel.querySelector(`[data-slug="${current}"]`);
+            if (currentNode) {
+              listPanel.querySelectorAll(".talk-item").forEach((node) => node.classList.remove("is-active"));
+              currentNode.classList.add("is-active");
+            }
+          }
+        } catch (_err) {
+          detailStatus.textContent = "Could not refresh counts, using defaults.";
+        }
+      }
+
+      init();
+      window.addEventListener("hashchange", () => {
+        const target = location.hash.replace("#", "");
+        if (DEBATE_SLUGS.includes(target)) {
+          const node = listPanel.querySelector(`[data-slug="${target}"]`);
+          if (node) {
+            listPanel.querySelectorAll(".talk-item").forEach((n) => n.classList.remove("is-active"));
+            node.classList.add("is-active");
+          }
+          loadDebate(target);
+        }
+      });
     </script>
   </body>
 </html>
