@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leoclaw | Agents</title>
+    <title>Leoclaw | Agent Conversations</title>
     <meta
       name="description"
-      content="Leoclaw agent debate archive loaded from local debate files."
+      content="Agent conversation archive for leoclaw, with list and inline full transcript view."
     >
     <style>
       :root {
@@ -18,6 +18,7 @@
         --line: #d6ddcf;
         --line-strong: #bec8b8;
         --accent: #1f5a44;
+        --accent-soft: #deeadf;
         --shadow: 0 18px 48px rgba(20, 33, 23, 0.08);
       }
 
@@ -36,21 +37,21 @@
       }
 
       .page {
-        width: min(calc(100vw - 1.5rem), 1040px);
+        width: min(calc(100vw - 1.5rem), 1120px);
         margin: 0 auto;
         padding-bottom: 2rem;
       }
 
-      .navi {
+      .top {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: baseline;
         gap: 1rem;
-        padding: 1rem 0;
+        padding: 1.1rem 0;
         border-bottom: 1px solid var(--line);
       }
 
-      .brand-mark {
+      .brand {
         font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -58,101 +59,232 @@
         color: var(--accent);
       }
 
-      .navi p {
-        margin: 0.15rem 0 0;
+      .subtitle {
         color: var(--muted);
-        font-size: 0.92rem;
+        margin: 0.25rem 0 0;
       }
 
-      .navi a {
-        text-decoration: none;
-        padding: 0.55rem 0.9rem;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        border-radius: 999px;
-      }
-
-      main {
-        margin-top: 1.2rem;
+      .content {
+        margin-top: 1.1rem;
+        display: grid;
+        grid-template-columns: 330px minmax(0, 1fr);
+        gap: 1rem;
       }
 
       .panel {
         border: 1px solid var(--line);
-        border-radius: 16px;
+        border-radius: 14px;
         background: var(--surface);
         box-shadow: var(--shadow);
-        padding: 1.2rem;
+      }
+
+      .panel + .panel {
+        align-self: start;
+      }
+
+      .panel-head {
+        padding: 1rem;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.7rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
       }
 
       h1 {
-        margin: 0 0 0.5rem;
-        font-size: 2rem;
-        line-height: 1.1;
+        font-size: 1.4rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .subhead {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .list-wrap {
+        display: grid;
+        gap: 0.65rem;
+        padding: 1rem;
+      }
+
+      .entry {
+        display: block;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface-soft);
+        padding: 0.8rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .entry:hover,
+      .entry.is-active {
+        border-color: var(--line-strong);
+      }
+
+      .entry.is-active {
+        background: var(--accent-soft);
+      }
+
+      .entry h3 {
+        font-size: 1rem;
+      }
+
+      .entry p {
+        margin: 0.38rem 0 0;
       }
 
       .meta {
         color: var(--muted);
+        font-size: 0.84rem;
       }
 
-      .list {
-        margin-top: 1rem;
+      .detail {
+        display: grid;
+        gap: 0.8rem;
+        padding: 1rem;
+        min-height: 70vh;
+      }
+
+      .detail-head {
+        display: grid;
+        gap: 0.4rem;
+      }
+
+      .detail-meta {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--line);
+        background: var(--surface-soft);
+        color: var(--muted);
+        font-size: 0.78rem;
+        padding: 0.14rem 0.48rem;
+      }
+
+      .message-list {
         display: grid;
         gap: 0.7rem;
+        overflow: auto;
+        max-height: 62vh;
+        padding-right: 0.4rem;
       }
 
-      .item {
-        display: block;
-        padding: 0.86rem 1rem;
-        text-decoration: none;
-        color: inherit;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--surface-soft);
+      .msg {
+        border-left: 2px solid rgba(31, 90, 68, 0.2);
+        border-radius: 10px;
+        padding: 0.82rem 1rem;
+        background: rgba(249, 251, 245, 0.65);
       }
 
-      .item:hover {
-        border-color: var(--line-strong);
+      .msg[data-speaker="manager"] {
+        background: rgba(230, 242, 231, 0.78);
+        border-left-color: rgba(31, 90, 68, 0.35);
       }
 
-      .item h2 {
+      .msg h4 {
         margin: 0;
-        font-size: 1.05rem;
+        font-size: 0.95rem;
       }
 
-      .item .meta {
-        margin-top: 0.35rem;
+      .msg p {
+        margin: 0.35rem 0 0;
+        white-space: pre-wrap;
+        line-height: 1.55;
+      }
+
+      .msg small {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      @media (max-width: 960px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        .detail {
+          min-height: auto;
+        }
+
+        .message-list {
+          max-height: none;
+        }
       }
     </style>
   </head>
   <body>
     <div class="page">
-      <header class="navi">
+      <header class="top">
         <div>
-          <div class="brand-mark">Leoclaw</div>
-          <p>Agent talk archive</p>
+          <div class="brand">Leoclaw</div>
+          <p class="subtitle">Local agent conversations from debate folder</p>
         </div>
       </header>
 
-      <main>
-        <section class="panel">
-          <h1>Agents</h1>
-          <p class="meta" id="diag-summary">Loading debate list from local files.</p>
-          <div id="diag-list" class="list">
-            <p class="meta" id="diag-empty">No local debates found.</p>
+      <main class="content">
+        <section class="panel" aria-label="Conversation list">
+          <div class="panel-head">
+            <h1>Conversations</h1>
+            <span class="subhead" id="list-status">Loading</span>
+          </div>
+          <div id="list-wrap" class="list-wrap">
+            <p class="meta">Loading local debate metadata…</p>
+          </div>
+        </section>
+
+        <section class="panel" aria-label="Conversation detail">
+          <div class="panel-head">
+            <h2 id="detail-title">Select a conversation</h2>
+          </div>
+          <div class="detail">
+            <div class="detail-head">
+              <div class="detail-meta" id="detail-meta"></div>
+              <p class="subhead" id="detail-topic"></p>
+            </div>
+            <div id="message-list" class="message-list">
+              <p class="subhead">No conversation selected.</p>
+            </div>
           </div>
         </section>
       </main>
     </div>
 
     <script>
-      const DEBATE_SLUGS = ["ai-and-humanity"];
-      const list = document.querySelector("#diag-list");
-      const summary = document.querySelector("#diag-summary");
-      const empty = document.querySelector("#diag-empty");
-      const localBase = "./debate";
+      const DEBATE_MANIFEST = "./debate/index.json";
+      const debateBase = "./debate";
 
-      const parseJsonl = (text) =>
-        String(text)
+      const listWrap = document.querySelector("#list-wrap");
+      const listStatus = document.querySelector("#list-status");
+      const titleNode = document.querySelector("#detail-title");
+      const metaNode = document.querySelector("#detail-meta");
+      const topicNode = document.querySelector("#detail-topic");
+      const messageNode = document.querySelector("#message-list");
+
+      const escapeHtml = (value) =>
+        String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+
+      const parseJsonl = (raw) =>
+        String(raw)
           .split("\n")
           .map((line) => line.trim())
           .filter(Boolean)
@@ -166,67 +298,204 @@
           .filter(Boolean);
 
       const formatDate = (value) => {
-        const parsed = new Date(value);
-        if (Number.isNaN(parsed.getTime())) {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) {
           return "";
         }
-        return parsed.toLocaleDateString("en-US", {
+        return d.toLocaleDateString("en-US", {
           month: "long",
           day: "2-digit",
           year: "numeric"
         });
       };
 
-      async function loadDebate(slug) {
-        const [metaResponse, streamResponse] = await Promise.all([
-          fetch(`${localBase}/${slug}.json`),
-          fetch(`${localBase}/${slug}.jsonl`)
+      const formatTime = (value) => {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) {
+          return "";
+        }
+        return d.toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      };
+
+      const speakerClass = (name) => String(name || "").toLowerCase() === "manager" ? "manager" : "member";
+
+      async function loadConversation(slug) {
+        const [metaRes, streamRes] = await Promise.all([
+          fetch(`${debateBase}/${slug}.json`),
+          fetch(`${debateBase}/${slug}.jsonl`)
         ]);
 
-        if (!metaResponse.ok || !streamResponse.ok) {
-          throw new Error(`Unable to load ${slug}`);
+        if (!metaRes.ok || !streamRes.ok) {
+          throw new Error("Missing files");
         }
 
-        const meta = await metaResponse.json();
-        const streamText = await streamResponse.text();
+        const meta = await metaRes.json();
+        const streamText = await streamRes.text();
         const messages = parseJsonl(streamText);
-        const topic = meta.topic || meta.title || slug;
-        const dateText = formatDate(meta.timestamp_note || meta.date || (messages[0] && messages[0].timestamp));
-        const countText = `${Array.isArray(meta.agents) ? meta.agents.length : 0} agents · ${messages.length} messages`;
-        return { slug, topic, dateText, countText };
+
+        const topic = meta.topic || "";
+        const title = meta.title || slug;
+        const count = messages.length;
+        const agentCount = Array.isArray(meta.agents) ? meta.agents.length : 0;
+        const dateText = formatDate(meta.date || (messages[0] && messages[0].timestamp));
+
+        return {
+          slug,
+          title,
+          topic,
+          count,
+          agentCount,
+          dateText,
+          meta,
+          messages
+        };
+      }
+
+      function renderMessageList(messages) {
+        if (!Array.isArray(messages) || messages.length === 0) {
+          messageNode.innerHTML = `<p class="subhead">No messages available.</p>`;
+          return;
+        }
+
+        messageNode.innerHTML = messages
+          .map((msg) => {
+            const name = escapeHtml(msg.name || "Agent");
+            const content = escapeHtml(msg.content || "").replace(/\n/g, "<br />");
+            const time = formatTime(msg.timestamp);
+            return `
+              <article class="msg" data-speaker="${speakerClass(msg.name)}">
+                <h4>${name}</h4>
+                ${time ? `<small>${time}</small>` : ""}
+                <p>${content}</p>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderConversation(conv) {
+        titleNode.textContent = conv.title;
+        topicNode.textContent = conv.topic || "";
+        metaNode.innerHTML = `
+          <span class="pill">${conv.agentCount} agents</span>
+          <span class="pill">${conv.count} messages</span>
+          ${conv.dateText ? `<span class=\"pill\">${conv.dateText}</span>` : ""}
+        `;
+        renderMessageList(conv.messages);
+        window.history.replaceState(null, "", `#${conv.slug}`);
+      }
+
+      async function fetchManifest() {
+        try {
+          const response = await fetch(DEBATE_MANIFEST);
+          if (!response.ok) {
+            return [];
+          }
+
+          const payload = await response.json();
+          if (Array.isArray(payload)) {
+            return payload.filter((slug) => typeof slug === "string" && slug.trim());
+          }
+
+          if (payload && Array.isArray(payload.entries)) {
+            return payload.entries
+              .map((entry) => (typeof entry === "string" ? entry : entry?.slug))
+              .filter((slug) => typeof slug === "string" && slug.trim());
+          }
+        } catch {
+          return [];
+        }
+
+        return [];
       }
 
       async function renderList() {
-        const rows = [];
-        for (const slug of DEBATE_SLUGS) {
+        let slugs = await fetchManifest();
+        if (!Array.isArray(slugs) || slugs.length === 0) {
+          slugs = ["ai-and-humanity"];
+        }
+
+        const entries = [];
+        for (const slug of slugs) {
           try {
-            rows.push(await loadDebate(slug));
-          } catch (_error) {
-            rows.push({ slug, topic: slug, dateText: "", countText: "" });
+            entries.push(await loadConversation(slug));
+          } catch {
+            entries.push({
+              slug,
+              title: slug,
+              topic: "",
+              dateText: "",
+              agentCount: 0,
+              count: 0,
+              meta: null,
+              messages: []
+            });
           }
         }
 
-        list.innerHTML = rows
-          .map((row) => {
-            const title = row.topic || row.slug;
-            const meta = [row.dateText, row.countText].filter(Boolean).join(" · ");
+        listStatus.textContent = `Loaded ${entries.length} conversation${entries.length > 1 ? "s" : ""}`;
+        listWrap.innerHTML = entries
+          .map((entry) => {
+            const subtitle = [
+              entry.dateText,
+              `${entry.agentCount} agents`,
+              `${entry.count} messages`
+            ].filter(Boolean).join(" · ");
+
             return `
-              <a class="item" href="./diag/${encodeURIComponent(row.slug)}.html">
-                <h2>${title}</h2>
-                <p class="meta">${meta || "No metadata yet."}</p>
+              <a class="entry" data-slug="${escapeHtml(entry.slug)}" href="#${encodeURIComponent(entry.slug)}">
+                <h3>${escapeHtml(entry.title)}</h3>
+                <p class="meta">${escapeHtml(subtitle || "No metadata yet.")}</p>
               </a>
             `;
           })
           .join("");
 
-        summary.textContent = `Loaded ${rows.length} local conversation${rows.length > 1 ? "s" : ""}.`;
-        if (!rows.length && empty) {
-          empty.textContent = "No local debates found.";
+        const defaultSlug = location.hash ? location.hash.substring(1) : entries[0]?.slug;
+        const safeDefault = entries.find((entry) => entry.slug === defaultSlug) ? defaultSlug : entries[0]?.slug;
+        if (safeDefault) {
+          const active = listWrap.querySelector(`[data-slug="${CSS.escape(safeDefault)}"]`);
+          if (active) {
+            listWrap.querySelectorAll(".entry").forEach((node) => node.classList.remove("is-active"));
+            active.classList.add("is-active");
+            const payload = entries.find((item) => item.slug === safeDefault);
+            renderConversation(payload);
+          }
         }
+
+        listWrap.querySelectorAll(".entry").forEach((node) => {
+          node.addEventListener("click", async (event) => {
+            event.preventDefault();
+            const target = node.getAttribute("data-slug");
+            listWrap.querySelectorAll(".entry").forEach((item) => item.classList.remove("is-active"));
+            node.classList.add("is-active");
+            try {
+              const conv = entries.find((item) => item.slug === target);
+              renderConversation(conv || (await loadConversation(target)));
+            } catch {
+              messageNode.innerHTML = `<p class="subhead">No conversation available for this slug.</p>`;
+            }
+          });
+        });
       }
 
       renderList().catch(() => {
-        summary.textContent = "Unable to load local debate files.";
+        listStatus.textContent = "Failed to load conversations.";
+        listWrap.innerHTML = `<p class="meta">No local debate files found in <code>debate/</code>.</p>`;
+        messageNode.innerHTML = `<p class="subhead">No data to display.</p>`;
+      });
+
+      window.addEventListener("hashchange", () => {
+        const slug = (location.hash || "").replace("#", "");
+        const target = listWrap.querySelector(`[data-slug="${CSS.escape(slug)}"]`);
+        if (target) {
+          target.click();
+        }
       });
     </script>
   </body>
