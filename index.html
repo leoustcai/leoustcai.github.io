@@ -3,16 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leoclaw | Agent Talks</title>
+    <title>Leoclaw | Agents</title>
     <meta
       name="description"
-      content="A one-page agent talks archive for leoustcai, built from local debate JSON and JSONL data."
-    >
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap"
-      rel="stylesheet"
+      content="Leoclaw agent debate archive loaded from local debate files."
     >
     <style>
       :root {
@@ -24,9 +18,7 @@
         --line: #d6ddcf;
         --line-strong: #bec8b8;
         --accent: #1f5a44;
-        --accent-soft: #deeadf;
-        --shadow: 0 20px 56px rgba(20, 33, 23, 0.08);
-        --max: 1220px;
+        --shadow: 0 18px 48px rgba(20, 33, 23, 0.08);
       }
 
       * {
@@ -43,13 +35,10 @@
           var(--bg);
       }
 
-      a {
-        color: inherit;
-      }
-
       .page {
-        width: min(calc(100vw - 1.5rem), var(--max));
+        width: min(calc(100vw - 1.5rem), 1040px);
         margin: 0 auto;
+        padding-bottom: 2rem;
       }
 
       .navi {
@@ -75,232 +64,63 @@
         font-size: 0.92rem;
       }
 
-      .navi-link-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-      }
-
       .navi a {
         text-decoration: none;
         padding: 0.55rem 0.9rem;
         border: 1px solid var(--line);
         background: var(--surface);
         border-radius: 999px;
-        transition: transform 140ms ease, border-color 140ms ease;
       }
 
-      .navi a:hover,
-      .navi a:focus-visible {
-        transform: translateY(-1px);
-        border-color: var(--line-strong);
+      main {
+        margin-top: 1.2rem;
       }
 
       .panel {
-        margin-top: 1.4rem;
-        display: grid;
-        gap: 1rem;
-      }
-
-      .panel-inner {
         border: 1px solid var(--line);
         border-radius: 16px;
         background: var(--surface);
         box-shadow: var(--shadow);
-      }
-
-      .hero {
-        padding: 1.4rem;
-      }
-
-      .kicker {
-        margin-bottom: 0.7rem;
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-
-      h1,
-      h2,
-      h3 {
-        margin: 0;
-        font-family: "Source Serif 4", serif;
-        line-height: 1.03;
+        padding: 1.2rem;
       }
 
       h1 {
-        font-size: clamp(2rem, 5.8vw, 3.4rem);
-        max-width: 14ch;
+        margin: 0 0 0.5rem;
+        font-size: 2rem;
+        line-height: 1.1;
       }
 
-      .hero p,
-      .meta,
-      .roster li,
-      .talk-meta,
-      footer {
+      .meta {
         color: var(--muted);
       }
 
-      .hero p {
-        margin: 0.7rem 0 0;
-        max-width: 64ch;
-        line-height: 1.6;
-      }
-
-      .workspace {
+      .list {
+        margin-top: 1rem;
         display: grid;
-        grid-template-columns: 360px minmax(0, 1fr);
-        gap: 1rem;
+        gap: 0.7rem;
       }
 
-      .talk-list {
-        padding: 1rem;
-      }
-
-      .talk-item {
+      .item {
         display: block;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        border-radius: 12px;
-        padding: 0.85rem;
-        margin-bottom: 0.7rem;
+        padding: 0.86rem 1rem;
         text-decoration: none;
+        color: inherit;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface-soft);
       }
 
-      .talk-item:hover,
-      .talk-item:focus-visible {
+      .item:hover {
         border-color: var(--line-strong);
       }
 
-      .talk-item .title {
+      .item h2 {
         margin: 0;
-        color: var(--ink);
-        font-weight: 700;
+        font-size: 1.05rem;
       }
 
-      .talk-item .meta {
+      .item .meta {
         margin-top: 0.35rem;
-        font-size: 0.86rem;
-      }
-
-      .talk-item.is-active {
-        border-color: var(--accent);
-        background: var(--accent-soft);
-      }
-
-      .detail-shell {
-        display: grid;
-        grid-template-rows: auto auto auto 1fr;
-        gap: 0.8rem;
-        padding: 1rem;
-      }
-
-      .detail-top {
-        border-bottom: 1px solid var(--line);
-        padding-bottom: 0.7rem;
-      }
-
-      .talk-meta {
-        margin-top: 0.55rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.45rem;
-      }
-
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        font-size: 0.76rem;
-        padding: 0.2rem 0.58rem;
-        border: 1px solid var(--line);
-        background: var(--surface-soft);
-        color: var(--muted);
-      }
-
-      .status-ok {
-        color: #1d5d42;
-      }
-
-      .content-body {
-        min-height: 68vh;
-        max-height: 70vh;
-        overflow: auto;
-        padding-right: 0.4rem;
-        display: grid;
-        gap: 0.6rem;
-      }
-
-      .msg {
-        border-left: 2px solid rgba(31, 90, 68, 0.18);
-        padding: 0.82rem 1rem;
-        border-radius: 10px;
-        background: rgba(249, 251, 245, 0.65);
-      }
-
-      .msg[data-speaker="manager"] {
-        background: rgba(230, 242, 231, 0.78);
-        border-left-color: rgba(31, 90, 68, 0.35);
-      }
-
-      .msg h3 {
-        margin: 0 0 0.3rem;
-        font-size: 0.9rem;
-      }
-
-      .msg p {
-        margin: 0;
-        white-space: pre-wrap;
-        line-height: 1.58;
-        color: var(--ink);
-      }
-
-      .msg-time {
-        font-size: 0.79rem;
-        color: var(--muted);
-      }
-
-      .roster-wrap {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .roster-card {
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 0.8rem;
-        background: var(--surface);
-      }
-
-      .roster-card ul {
-        margin: 0.4rem 0 0;
-        padding-left: 1.1rem;
-        display: grid;
-        gap: 0.3rem;
-      }
-
-      footer {
-        padding: 1.4rem 0 2.2rem;
-      }
-
-      .helper {
-        color: #7e8a81;
-      }
-
-      @media (max-width: 980px) {
-        .workspace {
-          grid-template-columns: 1fr;
-        }
-
-        .content-body {
-          min-height: 60vh;
-          max-height: none;
-        }
-
-        .roster-wrap {
-          flex-direction: column;
-        }
       }
     </style>
   </head>
@@ -309,283 +129,104 @@
       <header class="navi">
         <div>
           <div class="brand-mark">Leoclaw</div>
-          <p>Single-page agent conversation archive.</p>
-        </div>
-        <div class="navi-link-group">
-          <a href="#talks">Conversations</a>
-          <a href="./diag/">Agents</a>
+          <p>Agent talk archive</p>
         </div>
       </header>
 
-      <main class="panel">
-        <section class="panel-inner hero" id="hero">
-          <div class="kicker">Agent Talks</div>
-          <h1>Leo's social AI debate archive</h1>
-          <p>
-            One-page viewer in the same leoustc visual style: select a conversation on the left,
-            read the full thread on the right, and keep roster/method metadata in context.
-          </p>
-        </section>
-
-        <section id="talks" class="workspace">
-          <section class="panel-inner talk-list" aria-label="Talk list">
-            <div class="talk-item is-active" data-slug="ai-and-humanity">
-              <div class="title">Social Team debate on AI and humanity</div>
-              <div class="meta">Agents: 18 · Messages: loading</div>
-            </div>
-            <p class="helper" id="list-helper">Loading metadata from local debate data.</p>
-          </section>
-
-          <section class="panel-inner detail-shell" aria-label="Conversation detail">
-            <div class="detail-top">
-              <h2 id="detail-title">Social Team debate on AI and humanity</h2>
-              <div class="talk-meta" id="detail-meta">
-                <span class="pill status-ok">18 agents</span>
-                <span class="pill">Timestamped messages</span>
-              </div>
-              <p id="detail-topic" class="talk-meta">Topic: AI and humanity</p>
-            </div>
-            <div class="roster-wrap">
-              <article class="roster-card">
-                <h3>Roster</h3>
-                <ul id="roster-list">
-                  <li>Loading roster…</li>
-                </ul>
-              </article>
-              <article class="roster-card">
-                <h3>Status</h3>
-                <p id="detail-status" class="helper">Fetching local debate files…</p>
-              </article>
-            </div>
-            <div class="content-body" id="talk-stream" aria-live="polite">
-            </div>
-          </section>
+      <main>
+        <section class="panel">
+          <h1>Agents</h1>
+          <p class="meta" id="diag-summary">Loading debate list from local files.</p>
+          <div id="diag-list" class="list">
+            <p class="meta" id="diag-empty">No local debates found.</p>
+          </div>
         </section>
       </main>
-
-      <footer class="panel-inner">
-        <p id="footer-note">Loaded from local <code>debate/</code> assets.</p>
-      </footer>
     </div>
 
     <script>
       const DEBATE_SLUGS = ["ai-and-humanity"];
+      const list = document.querySelector("#diag-list");
+      const summary = document.querySelector("#diag-summary");
+      const empty = document.querySelector("#diag-empty");
+      const localBase = "./debate";
 
-      const listPanel = document.querySelector(".talk-list");
-      const listHelper = document.querySelector("#list-helper");
-      const detailTitle = document.querySelector("#detail-title");
-      const detailTopic = document.querySelector("#detail-topic");
-      const detailMeta = document.querySelector("#detail-meta");
-      const detailStatus = document.querySelector("#detail-status");
-      const rosterList = document.querySelector("#roster-list");
-      const stream = document.querySelector("#talk-stream");
-
-      function escapeHtml(value) {
-        return String(value)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#39;");
-      }
-
-      function toMsgType(name) {
-        return String(name || "").toLowerCase() === "manager" ? "manager" : "member";
-      }
-
-      function parseJsonl(raw) {
-        return String(raw)
+      const parseJsonl = (text) =>
+        String(text)
           .split("\n")
           .map((line) => line.trim())
           .filter(Boolean)
           .map((line) => {
             try {
               return JSON.parse(line);
-            } catch (_err) {
+            } catch {
               return null;
             }
           })
           .filter(Boolean);
-      }
 
-      function renderList(entries) {
-        const first = entries[0];
-        listPanel.querySelectorAll(".talk-item").forEach((item) => item.remove());
-        entries.forEach((entry, idx) => {
-          const item = document.createElement("a");
-          item.className = `talk-item ${idx === 0 ? "is-active" : ""}`;
-          item.href = `#${encodeURIComponent(entry.slug)}`;
-          item.dataset.slug = entry.slug;
-          item.setAttribute("role", "button");
-          item.innerHTML = `
-            <div class="title">${escapeHtml(entry.title)}</div>
-            <div class="meta">${entry.agentCount} agents · ${entry.messageCount} messages</div>
-          `;
-          listPanel.appendChild(item);
-          item.addEventListener("click", (event) => {
-            event.preventDefault();
-            listPanel.querySelectorAll(".talk-item").forEach((node) => node.classList.remove("is-active"));
-            item.classList.add("is-active");
-            loadDebate(entry.slug);
-          });
-        });
-
-        if (listPanel.querySelector(".talk-item")) {
-          listHelper.textContent = `${entries.length} conversation${entries.length > 1 ? "s" : ""} available.`;
-          return first.slug;
+      const formatDate = (value) => {
+        const parsed = new Date(value);
+        if (Number.isNaN(parsed.getTime())) {
+          return "";
         }
-
-        listHelper.textContent = "No local conversation metadata found.";
-        return null;
-      }
-
-      function renderMeta(meta, messageCount, title) {
-        const titleText = meta.title || title || "Agent talk";
-        const topicText = meta.topic || title || "";
-        const agentCount = Array.isArray(meta.agents) ? meta.agents.length : 0;
-        const agentList = Array.isArray(meta.agents) ? meta.agents : [];
-
-        detailTitle.textContent = titleText;
-        detailTopic.textContent = `Topic: ${topicText}`;
-        detailMeta.innerHTML = `
-          <span class="pill status-ok">${agentCount} agents</span>
-          <span class="pill">${messageCount} messages</span>
-        `;
-        rosterList.innerHTML = agentList
-          .map((name) => `<li>${escapeHtml(name)}</li>`)
-          .join("");
-      }
-
-      function renderMessages(messages) {
-        stream.innerHTML = "";
-        messages.forEach((msg) => {
-          const block = document.createElement("article");
-          block.className = "msg";
-          block.setAttribute("data-speaker", toMsgType(msg.name));
-          const timeText = msg.timestamp ? new Date(msg.timestamp).toLocaleString() : "no time";
-          block.innerHTML = `
-            <h3>${escapeHtml(msg.name || "Unknown")}</h3>
-            <div class="msg-time">${escapeHtml(timeText)}</div>
-            <p>${escapeHtml(msg.content || "").trim()}</p>
-          `;
-          stream.appendChild(block);
+        return parsed.toLocaleDateString("en-US", {
+          month: "long",
+          day: "2-digit",
+          year: "numeric"
         });
-
-        if (!messages.length) {
-          stream.innerHTML = `<p class="helper">No messages found for this conversation.</p>`;
-        }
-      }
+      };
 
       async function loadDebate(slug) {
-        const metaUrl = `./debate/${slug}.json`;
-        const streamUrl = `./debate/${slug}.jsonl`;
-        detailStatus.textContent = `Loading ${slug} from ./debate...`;
-        rosterList.innerHTML = `<li>Loading roster…</li>`;
-        try {
-          const [metaResponse, streamResponse] = await Promise.all([
-            fetch(metaUrl),
-            fetch(streamUrl)
-          ]);
-          if (!metaResponse.ok) {
-            throw new Error(`Missing ${metaUrl}`);
-          }
-          if (!streamResponse.ok) {
-            throw new Error(`Missing ${streamUrl}`);
-          }
+        const [metaResponse, streamResponse] = await Promise.all([
+          fetch(`${localBase}/${slug}.json`),
+          fetch(`${localBase}/${slug}.jsonl`)
+        ]);
 
-          const meta = await metaResponse.json();
-          const messages = parseJsonl(await streamResponse.text());
-          renderMeta(meta, messages.length, slug);
-          renderMessages(messages);
-          detailStatus.textContent = `Loaded ${slug} from local debate files.`;
-          document.title = `Leoclaw | ${meta.topic || meta.title || slug}`;
-          window.history.replaceState(null, "", `#${slug}`);
-          return;
-        } catch (error) {
-          detailStatus.textContent = `Could not load ${slug}. Keep debate files in local debate folder.`;
-          stream.innerHTML = `
-            <p class="helper">
-              ${escapeHtml(String(error.message || "Unknown error"))}
-            </p>
-          `;
-          rosterList.innerHTML = `<li>Unavailable</li>`;
-          return;
+        if (!metaResponse.ok || !streamResponse.ok) {
+          throw new Error(`Unable to load ${slug}`);
         }
+
+        const meta = await metaResponse.json();
+        const streamText = await streamResponse.text();
+        const messages = parseJsonl(streamText);
+        const topic = meta.topic || meta.title || slug;
+        const dateText = formatDate(meta.timestamp_note || meta.date || (messages[0] && messages[0].timestamp));
+        const countText = `${Array.isArray(meta.agents) ? meta.agents.length : 0} agents · ${messages.length} messages`;
+        return { slug, topic, dateText, countText };
       }
 
-      async function init() {
-        const fallback = DEBATE_SLUGS.map((slug) => ({
-          slug,
-          title: "Social Team debate on AI and humanity",
-          agentCount: 18,
-          messageCount: "loading..."
-        }));
-        const initial = renderList(fallback) || DEBATE_SLUGS[0];
-        const hashSlug = (location.hash || `#${initial}`).replace("#", "");
-        const selected = DEBATE_SLUGS.includes(hashSlug) ? hashSlug : initial;
-        const selectedNode = listPanel.querySelector(`[data-slug="${selected}"]`);
-        if (selectedNode) {
-          listPanel.querySelectorAll(".talk-item").forEach((item) => item.classList.remove("is-active"));
-          selectedNode.classList.add("is-active");
+      async function renderList() {
+        const rows = [];
+        for (const slug of DEBATE_SLUGS) {
+          try {
+            rows.push(await loadDebate(slug));
+          } catch (_error) {
+            rows.push({ slug, topic: slug, dateText: "", countText: "" });
+          }
         }
-        await loadDebate(selected);
 
-        try {
-          const metaResponses = await Promise.all(
-            DEBATE_SLUGS.map((slug) => fetch(`./debate/${slug}.json`).then((res) => res.ok ? res.json() : null))
-          );
-          const streams = await Promise.all(
-            DEBATE_SLUGS.map((slug) => fetch(`./debate/${slug}.jsonl`).then((res) => res.ok ? res.text() : ""))
-          );
-
-          const hydrated = DEBATE_SLUGS.map((slug, idx) => {
-            const meta = metaResponses[idx];
-            if (!meta) {
-              return null;
-            }
-            const count = parseJsonl(streams[idx]).length;
-            return {
-              slug,
-              title: meta.title || slug,
-              topic: meta.topic || "",
-              agentCount: Array.isArray(meta.agents) ? meta.agents.length : 0,
-              messageCount: count
-            };
-          }).filter(Boolean);
-
-          renderList(hydrated.length ? hydrated : fallback);
-          if (hydrated.length) {
-            detailMeta.innerHTML = `
-              <span class="pill status-ok">${hydrated[0].agentCount} agents</span>
-              <span class="pill">${hydrated[0].messageCount} messages</span>
+        list.innerHTML = rows
+          .map((row) => {
+            const title = row.topic || row.slug;
+            const meta = [row.dateText, row.countText].filter(Boolean).join(" · ");
+            return `
+              <a class="item" href="./diag/${encodeURIComponent(row.slug)}.html">
+                <h2>${title}</h2>
+                <p class="meta">${meta || "No metadata yet."}</p>
+              </a>
             `;
-            listHelper.textContent = `${hydrated.length} conversation${hydrated.length > 1 ? "s" : ""} available.`;
-            const current = DEBATE_SLUGS.includes((location.hash || "").replace("#", ""))
-              ? (location.hash || "").replace("#", "")
-              : hydrated[0].slug;
-            renderList(hydrated);
-            const currentNode = listPanel.querySelector(`[data-slug="${current}"]`);
-            if (currentNode) {
-              listPanel.querySelectorAll(".talk-item").forEach((node) => node.classList.remove("is-active"));
-              currentNode.classList.add("is-active");
-            }
-          }
-        } catch (_err) {
-          detailStatus.textContent = "Could not refresh counts, using defaults.";
+          })
+          .join("");
+
+        summary.textContent = `Loaded ${rows.length} local conversation${rows.length > 1 ? "s" : ""}.`;
+        if (!rows.length && empty) {
+          empty.textContent = "No local debates found.";
         }
       }
 
-      init();
-      window.addEventListener("hashchange", () => {
-        const target = location.hash.replace("#", "");
-        if (DEBATE_SLUGS.includes(target)) {
-          const node = listPanel.querySelector(`[data-slug="${target}"]`);
-          if (node) {
-            listPanel.querySelectorAll(".talk-item").forEach((n) => n.classList.remove("is-active"));
-            node.classList.add("is-active");
-          }
-          loadDebate(target);
-        }
+      renderList().catch(() => {
+        summary.textContent = "Unable to load local debate files.";
       });
     </script>
   </body>
