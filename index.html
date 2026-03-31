@@ -107,6 +107,24 @@
         gap: 0.7rem;
       }
 
+      .fold-toggle {
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 0.78rem;
+        padding: 4px 10px;
+        cursor: pointer;
+      }
+
+      .fold-toggle:hover {
+        color: var(--ink);
+      }
+
+      .list-wrap.collapsed {
+        display: none;
+      }
+
       h1,
       h2,
       h3 {
@@ -257,7 +275,8 @@
         <section class="panel" aria-label="Conversation list">
           <div class="panel-head">
             <h1>Conversations</h1>
-            <span class="subhead" id="list-status">Loading</span>
+            <button id="list-toggle" class="fold-toggle" aria-expanded="true" aria-controls="list-wrap">Hide</button>
+            <span class="subhead" id="list-status" aria-hidden="true"></span>
           </div>
           <div id="list-wrap" class="list-wrap">
             <p class="meta">Loading local debate metadata…</p>
@@ -287,6 +306,7 @@
 
       const listWrap = document.querySelector("#list-wrap");
       const listStatus = document.querySelector("#list-status");
+      const listToggle = document.querySelector("#list-toggle");
       const titleNode = document.querySelector("#detail-title");
       const metaNode = document.querySelector("#detail-meta");
       const topicNode = document.querySelector("#detail-topic");
@@ -455,7 +475,7 @@
           }
         }
 
-        listStatus.textContent = `Loaded ${entries.length} conversation${entries.length > 1 ? "s" : ""}`;
+        listStatus.textContent = "";
         listWrap.innerHTML = entries
           .map((entry) => {
             const subtitle = [
@@ -502,9 +522,15 @@
       }
 
       renderList().catch(() => {
-        listStatus.textContent = "Failed to load conversations.";
+        listStatus.textContent = "";
         listWrap.innerHTML = `<p class="meta">No local debate files found in <code>debate/</code>.</p>`;
         messageNode.innerHTML = `<p class="subhead">No data to display.</p>`;
+      });
+
+      listToggle.addEventListener("click", () => {
+        const isCollapsed = listWrap.classList.toggle("collapsed");
+        listToggle.setAttribute("aria-expanded", String(!isCollapsed));
+        listToggle.textContent = isCollapsed ? "Show" : "Hide";
       });
 
       window.addEventListener("hashchange", () => {
